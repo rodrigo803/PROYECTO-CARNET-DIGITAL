@@ -25,7 +25,7 @@ Este repositorio contiene el **Primer Alcance** del proyecto, enfocado exclusiva
 
 ## 🛠️ Tecnologías Utilizadas
 * **Backend:** .NET 10.0 (C#)
-* **IDE de Desarrollo:** Visual Studio 2022
+* **IDE de Desarrollo:** Visual Studio 2026
 * **Base de Datos:** SQL Server
 * **Autenticación:** JSON Web Tokens (JWT) & Refresh Tokens transaccionales
 
