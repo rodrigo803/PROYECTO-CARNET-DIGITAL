@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using CarnetDigital.Core.Entities;
 using CarnetDigital.Core.Interfaces;
+using CarnetDigital.Data.Data;
 using BCrypt.Net;
 using System.Net;
 using System.Net.Mail;
@@ -15,6 +16,15 @@ namespace CarnetDigital.Core.Services
     {
         // En el futuro, aquí inyectaremos el repositorio para guardar en SQL
         // private readonly IUsuarioRepository _repository;
+
+        // 1. Declaramos la variable de la base de datos
+        private readonly ApplicationDbContext _context;
+
+        // 2. El constructor que inyecta la conexión a SQL Server
+        public UsuarioService(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         public async Task<Usuario> CrearUsuarioAsync(Usuario usuario, string contrasenaPlana)
         {
@@ -34,7 +44,7 @@ namespace CarnetDigital.Core.Services
         {
             // 1. Encriptar contraseña y poner estado inicial
             usuario.ContrasenaEncriptada = BCrypt.Net.BCrypt.HashPassword(contrasenaPlana);
-            usuario.EstadoId = 2; // Suponiendo que 2 es "Pendiente de Confirmación" en tu tabla EstadoUsuario
+            usuario.Estado = "pendiente"; // Suponiendo que "pendiente" es "Pendiente de Confirmación" en tu tabla EstadoUsuario
 
             // 2. Generar Token y fecha de expiración (15 minutos a partir de ahora)
             usuario.TokenConfirmacion = Guid.NewGuid().ToString(); // Genera un código único aleatorio

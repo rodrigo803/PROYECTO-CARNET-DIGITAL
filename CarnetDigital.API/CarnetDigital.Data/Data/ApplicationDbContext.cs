@@ -12,16 +12,18 @@ namespace CarnetDigital.Data.Data
         {
         }
 
-        // Esta propiedad representa la tabla en la base de datos
+        // Estas son las tablas de tu microservicio
         public DbSet<Usuario> Usuarios { get; set; }
+        // Si creaste la entidad EstadoUsuario en Core/Entities, la agregas aquí también:
+        // public DbSet<EstadoUsuario> EstadoUsuario { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configuraciones específicas de las tablas (Fluent API)
+            // Le decimos a Entity Framework que el Email es la llave primaria de Usuario
             modelBuilder.Entity<Usuario>()
-                .HasKey(u => u.Email); // Define el email como llave primaria
+                .HasKey(u => u.Email);
         }
     }
 }

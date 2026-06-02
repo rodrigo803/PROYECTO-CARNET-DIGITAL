@@ -61,7 +61,7 @@ namespace CarnetDigital.API.Controllers
         {
             try
             {
-                [cite_start]// Los datos no pueden ser vacíos 
+                // Los datos no pueden ser vacíos 
                 if (string.IsNullOrWhiteSpace(peticion.FotoBase64) || string.IsNullOrWhiteSpace(peticion.Email))
                     return BadRequest("Todos los datos son requeridos.");
 
@@ -157,6 +157,10 @@ namespace CarnetDigital.API.Controllers
         public string TipoIdentificacion { get; set; }
         public string TipoUsuario { get; set; }
         public string Contrasena { get; set; }
+        public string Rol { get; internal set; }
+        public int TipoIdentificacionId { get; internal set; }
+        public int TipoUsuarioId { get; internal set; }
+        public int RolId { get; internal set; }
     }
 
     public class CambioEstadoDto
