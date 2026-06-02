@@ -10,5 +10,6 @@ namespace CarnetDigital.Core.Interfaces
         Task<Usuario> CrearUsuarioAsync(Usuario usuario, string contrasenaPlana);
         Task<Usuario> AutoregistroAsync(Usuario usuario, string contrasenaPlana);
         Task<bool> CambiarEstadoAsync(string email, int nuevoEstadoId);
+        Task<string> GenerarQRBase64Async(string identificacion);
     }
 }

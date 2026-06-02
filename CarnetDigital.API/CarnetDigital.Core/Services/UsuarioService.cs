@@ -6,6 +6,8 @@ using CarnetDigital.Core.Interfaces;
 using BCrypt.Net;
 using System.Net;
 using System.Net.Mail;
+using System.Text.Json;
+using QRCoder;
 
 namespace CarnetDigital.Core.Services
 {
@@ -48,6 +50,7 @@ namespace CarnetDigital.Core.Services
             return true;
         }
 
+        // Método auxiliar para el envío del correo (Usando SMTP de Gmail para desarrollo local)
         private void EnviarCorreoConfirmacion(string emailDestino, string token)
         {
             try
@@ -130,6 +133,47 @@ namespace CarnetDigital.Core.Services
             await _context.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<string> GenerarQRBase64Async(string identificacion)
+        {
+            // 1. Buscar al usuario por su Identificación (cédula), no por email
+            // En un escenario real, aquí usarías .Include() de Entity Framework 
+            // para traer también sus carreras o áreas e instituciones.
+            var usuario = await _context.Usuarios
+                .FirstOrDefaultAsync(u => u.Identificacion == identificacion);
+
+            if (usuario == null)
+                throw new Exception("Usuario no encontrado con esa identificación.");
+
+            // 2. Construir el objeto anónimo con la información requerida para el carnet
+            var datosCarnet = new
+            {
+                Nombre = usuario.NombreCompleto,
+                Identificacion = usuario.Identificacion,
+                // Aquí deberías mapear los nombres reales desde las tablas relacionadas
+                Tipo = usuario.TipoUsuarioId == 1 ? "Estudiante" : "Funcionario",
+                Institucion = "Colegio Universitario de Cartago",
+                CarrerasAreas = "Programación / TI",
+                Vencimiento = DateTime.Now.AddYears(1).ToString("yyyy-MM-dd") // Ejemplo de regla de negocio
+            };
+
+            // 3. Convertir el objeto a formato JSON
+            string jsonString = JsonSerializer.Serialize(datosCarnet);
+
+            // 4. Generar el Código QR
+            using QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            // ECCLevel.Q permite un buen nivel de corrección de errores (útil si las pantallas de celular están sucias o rotas)
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(jsonString, QRCodeGenerator.ECCLevel.Q);
+
+            // Usamos PngByteQRCode para obtener directamente los bytes de la imagen sin depender de System.Drawing
+            using PngByteQRCode qrCode = new PngByteQRCode(qrCodeData);
+
+            // El parámetro 20 indica el tamaño de los píxeles del QR
+            byte[] qrCodeImageBytes = qrCode.GetGraphic(20);
+
+            // 5. Convertir a Base64 y retornar
+            return Convert.ToBase64String(qrCodeImageBytes);
         }
     }
 }

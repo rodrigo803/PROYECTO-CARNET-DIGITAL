@@ -75,6 +75,77 @@ namespace CarnetDigital.API.Controllers
                 return BadRequest(new { Mensaje = ex.Message });
             }
         }
+
+        [AllowAnonymous]
+        [HttpPost("autoregistro")]
+        public async Task<IActionResult> Autoregistro([FromBody] UsuarioRegistroDto dto)
+        {
+            try
+            {
+                var nuevoUsuario = new Usuario
+                {
+                    Email = dto.Email,
+                    NombreCompleto = dto.NombreCompleto,
+                    Identificacion = dto.Identificacion,
+                    TipoIdentificacionId = dto.TipoIdentificacionId,
+                    TipoUsuarioId = dto.TipoUsuarioId,
+                    RolId = dto.RolId
+                };
+
+                await _usuarioService.AutoregistroAsync(nuevoUsuario, dto.Contrasena);
+                return Ok(new { Mensaje = "Registro exitoso. Revisa tu correo electrónico para confirmar la cuenta (expira en 15 minutos)." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Mensaje = ex.Message });
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpGet("autoregistro/confirmar")]
+        public async Task<IActionResult> ConfirmarRegistro([FromQuery] string token)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(token))
+                    return BadRequest("El token no puede estar vacío.");
+
+                await _usuarioService.ConfirmarRegistroAsync(token);
+
+                // Retornamos un HTML simple para que el usuario lo vea bonito en el navegador
+                return Content("<html><body><h2>¡Tu cuenta ha sido activada exitosamente!</h2><p>Ya puedes iniciar sesión en la aplicación móvil.</p></body></html>", "text/html");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Mensaje = ex.Message });
+            }
+        }
+
+        [Authorize] // Asegura que solo usuarios logueados puedan pedir el QR
+        [HttpGet("usuario/qr/{identificacion}")]
+        public async Task<IActionResult> ObtenerQR(string identificacion)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(identificacion))
+                    return BadRequest("Debe proveer una identificación válida.");
+
+                var qrBase64 = await _usuarioService.GenerarQRBase64Async(identificacion);
+
+                // Retornamos el Base64. 
+                // El frontend o la app móvil solo tendrá que poner: "data:image/png;base64," + qrBase64
+                return Ok(new
+                {
+                    Identificacion = identificacion,
+                    QrImagenBase64 = qrBase64,
+                    Formato = "image/png"
+                });
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new { Mensaje = ex.Message });
+            }
+        }
     }
 
     // DTO (Data Transfer Object) para recibir solo los datos necesarios en la petición
