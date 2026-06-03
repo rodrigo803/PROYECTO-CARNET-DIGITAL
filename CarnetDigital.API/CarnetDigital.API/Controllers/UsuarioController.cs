@@ -2,6 +2,7 @@
 using CarnetDigital.Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace CarnetDigital.API.Controllers
 {
@@ -151,6 +152,7 @@ namespace CarnetDigital.API.Controllers
     // DTO (Data Transfer Object) para recibir solo los datos necesarios en la petición
     public class UsuarioRegistroDto
     {
+        
         public string Email { get; set; }
         public string NombreCompleto { get; set; }
         public string Identificacion { get; set; }
@@ -165,13 +167,13 @@ namespace CarnetDigital.API.Controllers
 
     public class CambioEstadoDto
     {
-        public string Email { get; set; }
+        public string? Email { get; set; }
         public int EstadoId { get; set; }
     }
 
     public class FotografiaDto
     {
-        public string Email { get; set; }
-        public string FotoBase64 { get; set; }
+        public string? Email { get; set; }
+        public string? FotoBase64 { get; set; }
     }
 }
