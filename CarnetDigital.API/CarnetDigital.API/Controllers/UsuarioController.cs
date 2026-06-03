@@ -36,7 +36,7 @@ namespace CarnetDigital.API.Controllers
             return Ok(new { Mensaje = "Usuario creado exitosamente", Usuario = resultado.Email });
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPatch("usuarios/estado")] // Endpoint exacto
         public async Task<IActionResult> CambiarEstado([FromBody] CambioEstadoDto peticion)
         {
@@ -56,7 +56,7 @@ namespace CarnetDigital.API.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPut("usuario/fotografia")]
         public async Task<IActionResult> ActualizarFotografia([FromBody] FotografiaDto peticion)
         {
@@ -122,7 +122,7 @@ namespace CarnetDigital.API.Controllers
             }
         }
 
-        //[Authorize] // Asegura que solo usuarios logueados puedan pedir el QR
+        [Authorize] // Asegura que solo usuarios logueados puedan pedir el QR
         [HttpGet("usuario/qr/{identificacion}")]
         public async Task<IActionResult> ObtenerQR(string identificacion)
         {
