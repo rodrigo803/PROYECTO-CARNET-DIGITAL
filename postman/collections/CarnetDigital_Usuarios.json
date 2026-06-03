@@ -1,0 +1,176 @@
+{
+	"info": {
+		"name": "Microservicio Usuarios - Carnet Digital",
+		"description": "Pruebas de los endpoints SRV10 al SRV14",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "SRV11 - Autoregistro",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"rodrigo.ramirez@cuc.cr\",\n  \"nombreCompleto\": \"Rodrigo Rene Elias Ramirez\",\n  \"identificacion\": \"11112222\",\n  \"tipoIdentificacionId\": 1,\n  \"tipoUsuarioId\": 1,\n  \"rolId\": 1,\n  \"contrasena\": \"MiClaveSecreta123\"\n}"
+				},
+				"url": {
+					"raw": "https://localhost:7123/api/usuario/autoregistro",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7123",
+					"path": [
+						"api",
+						"usuario",
+						"autoregistro"
+					]
+				}
+			}
+		},
+		{
+			"name": "SRV11 - Confirmar Registro",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7123/api/usuario/autoregistro/confirmar?token=PEGA_AQUI_EL_TOKEN_DE_LA_BASE_DE_DATOS",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7123",
+					"path": [
+						"api",
+						"usuario",
+						"autoregistro",
+						"confirmar"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "PEGA_AQUI_EL_TOKEN_DE_LA_BASE_DE_DATOS"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "SRV10 - Crear Usuario (Admin)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"admin@cuc.cr\",\n  \"nombreCompleto\": \"Administrador Sistema\",\n  \"identificacion\": \"99998888\",\n  \"tipoIdentificacionId\": 1,\n  \"tipoUsuarioId\": 3,\n  \"rolId\": 1,\n  \"contrasena\": \"AdminPass456\"\n}"
+				},
+				"url": {
+					"raw": "https://localhost:7123/api/usuario/crear",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7123",
+					"path": [
+						"api",
+						"usuario",
+						"crear"
+					]
+				}
+			}
+		},
+		{
+			"name": "SRV12 - Cambiar Estado",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"rodrigo.ramirez@cuc.cr\",\n  \"estadoId\": 2\n}"
+				},
+				"url": {
+					"raw": "https://localhost:7123/api/usuario/usuarios/estado",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7123",
+					"path": [
+						"api",
+						"usuario",
+						"usuarios",
+						"estado"
+					]
+				}
+			}
+		},
+		{
+			"name": "SRV13 - Actualizar Fotografía",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"rodrigo.ramirez@cuc.cr\",\n  \"fotoBase64\": \"iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==\"\n}"
+				},
+				"url": {
+					"raw": "https://localhost:7123/api/usuario/usuario/fotografia",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7123",
+					"path": [
+						"api",
+						"usuario",
+						"usuario",
+						"fotografia"
+					]
+				}
+			}
+		},
+		{
+			"name": "SRV14 - Obtener Código QR",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7123/api/usuario/usuario/qr/11112222",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7123",
+					"path": [
+						"api",
+						"usuario",
+						"usuario",
+						"qr",
+						"11112222"
+					]
+				}
+			}
+		}
+	]
+}
