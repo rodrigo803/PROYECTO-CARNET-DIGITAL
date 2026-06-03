@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CarnetDigital.Core.Entities;
+﻿using CarnetDigital.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace CarnetDigital.Data.Data
+namespace CarnetDigital.Data.Data // Usa el namespace que tengas configurado aquí
 {
     public class ApplicationDbContext : DbContext
     {
@@ -12,10 +9,11 @@ namespace CarnetDigital.Data.Data
         {
         }
 
-        // Estas son las tablas de tu microservicio
+        // ¡AQUÍ ESTÁ LA MAGIA! Esto quita la línea roja de _context.Usuarios
         public DbSet<Usuario> Usuarios { get; set; }
-        // Si creaste la entidad EstadoUsuario en Core/Entities, la agregas aquí también:
-        // public DbSet<EstadoUsuario> EstadoUsuario { get; set; }
+
+        // Y esto quita la línea roja de _context.EstadoUsuario
+        public DbSet<EstadoUsuario> EstadoUsuario { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
