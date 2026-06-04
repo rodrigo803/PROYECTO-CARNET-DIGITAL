@@ -58,3 +58,35 @@ GO
 IF NOT EXISTS (SELECT name FROM sys.indexes WHERE name = 'IX_RefreshTokens_Token')
     CREATE INDEX IX_RefreshTokens_Token ON RefreshTokens(Token);
 GO
+
+USE AuthDB_V2;
+GO
+
+-- ==============================================================
+-- INSERTS DE PRUEBA (Contraseña para ambos: 123456)
+-- Hash BCrypt real para '123456': $2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxep68pdd6k82Zk1q
+-- ==============================================================
+
+INSERT INTO UsersAuth (Email, PasswordHash, UserType, IsActive, CreatedAt)
+VALUES 
+(
+    'rodrigo_actualizado@correo.com', 
+    '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxep68pdd6k82Zk1q', 
+    'Admin', 
+    1, 
+    GETDATE()
+);
+
+INSERT INTO UsersAuth (Email, PasswordHash, UserType, IsActive, CreatedAt)
+VALUES 
+(
+    'estudiante@cuc.cr', 
+    '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxep68pdd6k82Zk1q', 
+    'Estudiante', 
+    1, 
+    GETDATE()
+);
+
+-- Revisamos que se hayan insertado correctamente
+SELECT * FROM UsersAuth;
+GO

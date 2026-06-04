@@ -90,7 +90,12 @@ namespace CarnetDigital.API.Controllers
                     Identificacion = dto.Identificacion,
                     TipoIdentificacionId = dto.TipoIdentificacionId,
                     TipoUsuarioId = dto.TipoUsuarioId,
-                    RolId = dto.RolId
+                    RolId = dto.RolId,
+
+                    // Agregamos esto para evitar que lleguen nulos a SQL Server
+                    TipoIdentificacion = dto.TipoIdentificacion,
+                    TipoUsuario = dto.TipoUsuario,
+                    FotografiaBase64 = ""
                 };
 
                 await _usuarioService.AutoregistroAsync(nuevoUsuario, dto.Contrasena);
@@ -152,17 +157,16 @@ namespace CarnetDigital.API.Controllers
     // DTO (Data Transfer Object) para recibir solo los datos necesarios en la petición
     public class UsuarioRegistroDto
     {
-        
         public string Email { get; set; }
         public string NombreCompleto { get; set; }
         public string Identificacion { get; set; }
         public string TipoIdentificacion { get; set; }
         public string TipoUsuario { get; set; }
         public string Contrasena { get; set; }
-        public string Rol { get; internal set; }
-        public int TipoIdentificacionId { get; internal set; }
-        public int TipoUsuarioId { get; internal set; }
-        public int RolId { get; internal set; }
+        public string Rol { get; set; }                 // Se quitó el internal
+        public int TipoIdentificacionId { get; set; }    // Se quitó el internal
+        public int TipoUsuarioId { get; set; }           // Se quitó el internal
+        public int RolId { get; set; }                  // Se quitó el internal
     }
 
     public class CambioEstadoDto
