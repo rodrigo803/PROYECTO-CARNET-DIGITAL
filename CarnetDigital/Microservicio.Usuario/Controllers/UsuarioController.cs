@@ -36,7 +36,6 @@ namespace Microservicio.Usuario.Controllers
 
                 TipoIdentificacion = dto.TipoIdentificacion,
                 TipoUsuario = dto.TipoUsuario,
-                Rol = dto.Rol,
                 FotografiaBase64 = ""
             };
 
@@ -98,11 +97,12 @@ namespace Microservicio.Usuario.Controllers
                     Email = dto.Email,
                     NombreCompleto = dto.NombreCompleto,
                     Identificacion = dto.Identificacion,
+
+                    // ¡AQUÍ ESTÁ LA SOLUCIÓN! Asegúrate de tener estas 3 líneas:
                     TipoIdentificacionId = dto.TipoIdentificacionId,
                     TipoUsuarioId = dto.TipoUsuarioId,
                     RolId = dto.RolId,
 
-                    // Agregamos esto para evitar que lleguen nulos a SQL Server
                     TipoIdentificacion = dto.TipoIdentificacion,
                     TipoUsuario = dto.TipoUsuario,
                     FotografiaBase64 = ""
@@ -173,7 +173,7 @@ namespace Microservicio.Usuario.Controllers
             return Ok(new { Mensaje = "Datos actualizados correctamente." });
         }
 
-        [Authorize(Roles = "Administrador")]
+        [Authorize]
         [HttpDelete("eliminar")]
         public async Task<IActionResult> EliminarUsuario(string email)
         {

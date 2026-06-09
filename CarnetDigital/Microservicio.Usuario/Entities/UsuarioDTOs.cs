@@ -7,13 +7,15 @@
             public string Email { get; set; }
             public string NombreCompleto { get; set; }
             public string Identificacion { get; set; }
+            public string Contrasena { get; set; }
+
+            // ¡AQUÍ ESTÁ EL CAMBIO! Ahora son enteros (int)
+            public int TipoIdentificacionId { get; set; }
+            public int TipoUsuarioId { get; set; }
+            public int RolId { get; set; }
+
             public string TipoIdentificacion { get; set; }
             public string TipoUsuario { get; set; }
-            public string Contrasena { get; set; }
-            public string Rol { get; set; }                 // Se quitó el internal
-            public int TipoIdentificacionId { get; set; }    // Se quitó el internal
-            public int TipoUsuarioId { get; set; }           // Se quitó el internal
-            public int RolId { get; set; }                  // Se quitó el internal
         }
 
         public class CambioEstadoDto

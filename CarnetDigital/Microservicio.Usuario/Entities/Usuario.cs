@@ -27,7 +27,6 @@ namespace Microservicio.Usuario.Entities
         public int RolId { get; set; }
         public string TipoIdentificacion { get; set; }
         public string TipoUsuario { get; set; }
-        public string Rol { get; internal set; }
     }
 
     public class EstadoUsuario
