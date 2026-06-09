@@ -28,8 +28,16 @@ namespace Microservicio.Usuario.Controllers
                 Email = dto.Email,
                 NombreCompleto = dto.NombreCompleto,
                 Identificacion = dto.Identificacion,
+
+                // ¡AQUÍ ESTÁ LA SOLUCIÓN! Asegúrate de tener estas 3 líneas:
+                TipoIdentificacionId = dto.TipoIdentificacionId,
+                TipoUsuarioId = dto.TipoUsuarioId,
+                RolId = dto.RolId,
+
                 TipoIdentificacion = dto.TipoIdentificacion,
-                TipoUsuario = dto.TipoUsuario
+                TipoUsuario = dto.TipoUsuario,
+                Rol = dto.Rol,
+                FotografiaBase64 = ""
             };
 
             // Llamamos a la lógica para encriptar y procesar
@@ -157,7 +165,7 @@ namespace Microservicio.Usuario.Controllers
 
         [Authorize]
         [HttpPut("actualizar")]
-        public async Task<IActionResult> ActualizarUsuario([FromBody] Entities.Usuario registro)
+        public async Task<IActionResult> ActualizarUsuario([FromBody] UsuarioActualizacionDto registro)
         {
             var exito = await _usuarioService.ActualizarUsuarioAsync(registro);
             if (!exito) return NotFound("Usuario no encontrado.");

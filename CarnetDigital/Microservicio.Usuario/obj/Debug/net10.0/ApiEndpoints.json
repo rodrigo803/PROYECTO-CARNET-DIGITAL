@@ -9,7 +9,7 @@
     "Parameters": [
       {
         "Name": "registro",
-        "Type": "Microservicio.Usuario.Entities.Usuario",
+        "Type": "Microservicio.Usuario.Entities.UsuarioDTOs\u002BUsuarioActualizacionDto",
         "IsRequired": true
       }
     ],

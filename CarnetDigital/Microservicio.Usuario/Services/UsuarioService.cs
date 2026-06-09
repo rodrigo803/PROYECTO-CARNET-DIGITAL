@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Text.Json;
+using static Microservicio.Usuario.Entities.UsuarioDTOs;
 
 namespace Microservicio.Usuario.Services
 {
@@ -26,13 +27,17 @@ namespace Microservicio.Usuario.Services
             usuario.ContrasenaEncriptada = BCrypt.Net.BCrypt.HashPassword(contrasenaPlana);
 
             // 2. Reglas de negocio iniciales (CORREGIDO A Id NUMÉRICO)
-            // 1 = Activo, 2 = Inactivo, 3 = Pendiente_Confirmacion
+            // ... código de arriba (encriptar contraseña, etc) ...
             usuario.EstadoId = 1;
+            usuario.FotografiaBase64 = "";
+
+            // Agrega estas dos líneas para cumplir con las reglas de SQL Server:
+            usuario.TokenConfirmacion = "";
+            usuario.FechaExpiracionToken = DateTime.Now;
 
             // 3. Guardar en la base de datos
             _context.Usuarios.Add(usuario);
             await _context.SaveChangesAsync();
-
             return usuario;
         }
 
@@ -162,7 +167,7 @@ namespace Microservicio.Usuario.Services
             return Convert.ToBase64String(qrCodeImageBytes);
         }
 
-        public async Task<bool> ActualizarUsuarioAsync(Entities.Usuario registro)
+        public async Task<bool> ActualizarUsuarioAsync(UsuarioActualizacionDto registro)
         {
             var usuario = await _context.Usuarios.FindAsync(registro.Email);
             if (usuario == null) return false;
