@@ -1,11 +1,11 @@
 {
 	"info": {
-		"name": "Microservicio.Usuario - Carnet Digital",
+		"name": "Microservicio.Usuario - Carnet Digital (Completo)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "POST SRV11 - Autoregistro",
+			"name": "1. POST SRV11 - Autoregistro (Estudiante)",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -34,7 +34,46 @@
 			}
 		},
 		{
-			"name": "PATCH SRV12 - Cambiar Estado",
+			"name": "2. POST - Crear Usuario (Admin)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "PEGAR_TU_TOKEN_DE_ADMIN_AQUI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Email\": \"nuevo_profesor@correo.com\",\n  \"NombreCompleto\": \"Carlos Perez (Profesor)\",\n  \"Identificacion\": \"401230456\",\n  \"Contrasena\": \"ClaveSegura123\",\n  \"TipoIdentificacionId\": 1,\n  \"TipoUsuarioId\": 2,\n  \"RolId\": 2,\n  \"Rol\": \"Profesor\",\n  \"TipoUsuario\": \"Funcionario\",\n  \"TipoIdentificacion\": \"Cedula Nacional\"\n}"
+				},
+				"url": {
+					"raw": "https://localhost:7001/api/usuario/crear",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7001",
+					"path": [
+						"api",
+						"usuario",
+						"crear"
+					]
+				}
+			}
+		},
+		{
+			"name": "3. PATCH SRV12 - Cambiar Estado",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -73,7 +112,46 @@
 			}
 		},
 		{
-			"name": "GET SRV14 - Obtener Código QR",
+			"name": "4. PATCH SRV13 - Actualizar Fotografía",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "PEGAR_TU_TOKEN_AQUI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Email\": \"rodrigo_actualizado@correo.com\",\n  \"FotoBase64\": \"iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=\"\n}"
+				},
+				"url": {
+					"raw": "https://localhost:7001/api/usuario/fotografia",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7001",
+					"path": [
+						"api",
+						"usuario",
+						"fotografia"
+					]
+				}
+			}
+		},
+		{
+			"name": "5. GET SRV14 - Obtener Código QR",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -104,7 +182,7 @@
 			}
 		},
 		{
-			"name": "PUT - Actualizar Usuario",
+			"name": "6. PUT - Actualizar Datos",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -143,14 +221,14 @@
 			}
 		},
 		{
-			"name": "DELETE - Eliminar Usuario",
+			"name": "7. DELETE - Eliminar Usuario",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "PEGAR_TU_TOKEN_AQUI",
+							"value": "PEGAR_TU_TOKEN_DE_ADMIN_AQUI",
 							"type": "string"
 						}
 					]
