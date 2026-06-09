@@ -1,12 +1,11 @@
 {
 	"info": {
-		"name": "Microservicio Usuarios - Carnet Digital",
-		"description": "Pruebas de los endpoints SRV10 al SRV14",
+		"name": "Microservicio.Usuario - Carnet Digital",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "SRV11 - Autoregistro",
+			"name": "POST SRV11 - Autoregistro",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -17,15 +16,15 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"email\": \"rodrigo.ramirez@cuc.cr\",\n  \"nombreCompleto\": \"Rodrigo Rene Elias Ramirez\",\n  \"identificacion\": \"11112222\",\n  \"tipoIdentificacionId\": 1,\n  \"tipoUsuarioId\": 1,\n  \"rolId\": 1,\n  \"contrasena\": \"MiClaveSecreta123\"\n}"
+					"raw": "{\n  \"Email\": \"rodrigo_actualizado@correo.com\",\n  \"NombreCompleto\": \"Rodrigo Rene Elias Ramirez\",\n  \"Identificacion\": \"301230456\",\n  \"Contrasena\": \"ClaveSegura123\",\n  \"TipoIdentificacionId\": 1,\n  \"TipoUsuarioId\": 1,\n  \"RolId\": 1,\n  \"Rol\": \"Estudiante\",\n  \"TipoUsuario\": \"Estudiante\",\n  \"TipoIdentificacion\": \"Cedula Nacional\"\n}"
 				},
 				"url": {
-					"raw": "https://localhost:7123/api/usuario/autoregistro",
+					"raw": "https://localhost:7001/api/usuario/autoregistro",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "7123",
+					"port": "7001",
 					"path": [
 						"api",
 						"usuario",
@@ -35,64 +34,18 @@
 			}
 		},
 		{
-			"name": "SRV11 - Confirmar Registro",
+			"name": "PATCH SRV12 - Cambiar Estado",
 			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "https://localhost:7123/api/usuario/autoregistro/confirmar?token=PEGA_AQUI_EL_TOKEN_DE_LA_BASE_DE_DATOS",
-					"protocol": "https",
-					"host": [
-						"localhost"
-					],
-					"port": "7123",
-					"path": [
-						"api",
-						"usuario",
-						"autoregistro",
-						"confirmar"
-					],
-					"query": [
+				"auth": {
+					"type": "bearer",
+					"bearer": [
 						{
 							"key": "token",
-							"value": "PEGA_AQUI_EL_TOKEN_DE_LA_BASE_DE_DATOS"
+							"value": "PEGAR_TU_TOKEN_AQUI",
+							"type": "string"
 						}
 					]
-				}
-			}
-		},
-		{
-			"name": "SRV10 - Crear Usuario (Admin)",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"email\": \"admin@cuc.cr\",\n  \"nombreCompleto\": \"Administrador Sistema\",\n  \"identificacion\": \"99998888\",\n  \"tipoIdentificacionId\": 1,\n  \"tipoUsuarioId\": 3,\n  \"rolId\": 1,\n  \"contrasena\": \"AdminPass456\"\n}"
 				},
-				"url": {
-					"raw": "https://localhost:7123/api/usuario/crear",
-					"protocol": "https",
-					"host": [
-						"localhost"
-					],
-					"port": "7123",
-					"path": [
-						"api",
-						"usuario",
-						"crear"
-					]
-				}
-			}
-		},
-		{
-			"name": "SRV12 - Cambiar Estado",
-			"request": {
 				"method": "PATCH",
 				"header": [
 					{
@@ -102,27 +55,67 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"email\": \"rodrigo.ramirez@cuc.cr\",\n  \"estadoId\": 2\n}"
+					"raw": "{\n  \"Email\": \"rodrigo_actualizado@correo.com\",\n  \"EstadoId\": 1\n}"
 				},
 				"url": {
-					"raw": "https://localhost:7123/api/usuario/usuarios/estado",
+					"raw": "https://localhost:7001/api/usuario/estado",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "7123",
+					"port": "7001",
 					"path": [
 						"api",
 						"usuario",
-						"usuarios",
 						"estado"
 					]
 				}
 			}
 		},
 		{
-			"name": "SRV13 - Actualizar Fotografía",
+			"name": "GET SRV14 - Obtener Código QR",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "PEGAR_TU_TOKEN_AQUI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7001/api/usuario/qr/301230456",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7001",
+					"path": [
+						"api",
+						"usuario",
+						"qr",
+						"301230456"
+					]
+				}
+			}
+		},
+		{
+			"name": "PUT - Actualizar Usuario",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "PEGAR_TU_TOKEN_AQUI",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PUT",
 				"header": [
 					{
@@ -132,42 +125,55 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"email\": \"rodrigo.ramirez@cuc.cr\",\n  \"fotoBase64\": \"iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==\"\n}"
+					"raw": "{\n  \"Email\": \"rodrigo_actualizado@correo.com\",\n  \"NombreCompleto\": \"Rodrigo Rene Elias Ramirez (Modificado)\",\n  \"Identificacion\": \"301230456\"\n}"
 				},
 				"url": {
-					"raw": "https://localhost:7123/api/usuario/usuario/fotografia",
+					"raw": "https://localhost:7001/api/usuario/actualizar",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "7123",
+					"port": "7001",
 					"path": [
 						"api",
 						"usuario",
-						"usuario",
-						"fotografia"
+						"actualizar"
 					]
 				}
 			}
 		},
 		{
-			"name": "SRV14 - Obtener Código QR",
+			"name": "DELETE - Eliminar Usuario",
 			"request": {
-				"method": "GET",
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "PEGAR_TU_TOKEN_AQUI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "https://localhost:7123/api/usuario/usuario/qr/11112222",
+					"raw": "https://localhost:7001/api/usuario/eliminar?email=rodrigo_actualizado@correo.com",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "7123",
+					"port": "7001",
 					"path": [
 						"api",
 						"usuario",
-						"usuario",
-						"qr",
-						"11112222"
+						"eliminar"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "rodrigo_actualizado@correo.com"
+						}
 					]
 				}
 			}
