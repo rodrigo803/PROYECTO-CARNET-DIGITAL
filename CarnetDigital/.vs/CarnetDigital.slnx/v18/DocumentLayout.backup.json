@@ -42,8 +42,7 @@
               "RelativeToolTip": "Microservicio.Usuario\\Entities\\Usuario.cs",
               "ViewState": "AgIAAAoAAAAAAAAAAAAgwBwAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-09T05:52:03.69Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-09T05:52:03.69Z"
             },
             {
               "$type": "Document",
@@ -68,8 +67,7 @@
               "RelativeToolTip": "Microservicio.Usuario\\Controllers\\UsuarioController.cs",
               "ViewState": "AgIAAF8AAAAAAAAAAAAMwGoAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-09T05:33:21.526Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-09T05:33:21.526Z"
             },
             {
               "$type": "Document",
@@ -81,8 +79,7 @@
               "RelativeToolTip": "Microservicio.Usuario\\Services\\UsuarioService.cs",
               "ViewState": "AgIAAKYAAAAAAAAAAAAiwLcAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-06T06:05:08.45Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-06T06:05:08.45Z"
             }
           ]
         }
