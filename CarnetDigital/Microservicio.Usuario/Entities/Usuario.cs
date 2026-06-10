@@ -5,10 +5,10 @@ namespace Microservicio.Usuario.Entities
 {
     public class Usuario
     {
-        [Key]
         [EmailAddress]
         public string Email { get; set; }
 
+        [Key]
         public string Identificacion { get; set; }
         public string NombreCompleto { get; set; }
         public string ContrasenaEncriptada { get; set; }
