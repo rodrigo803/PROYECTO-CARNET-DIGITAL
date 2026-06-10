@@ -3,7 +3,6 @@ using AuditService.Models;
 using Dapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace AuditService.Controllers
 {
@@ -21,50 +20,37 @@ namespace AuditService.Controllers
         // ==========================
         // POST /bitacora
         // ==========================
-        [Authorize]
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateBitacoraRequest request)
         {
-            if (request.UsuarioId <= 0 ||
-                string.IsNullOrWhiteSpace(request.Descripcion))
+            // Cambié <= 0 por < 0 para permitir que el Sistema guarde logs con ID 0
+            if (request.UsuarioId < 0 || string.IsNullOrWhiteSpace(request.Descripcion))
             {
                 return BadRequest(new { mensaje = "Datos inválidos" });
             }
 
-            //Usuario desde token
-            var userIdClaim = User.FindFirst("uid");
-
-            if (userIdClaim == null)
-                return Unauthorized();
-
-            int userIdFromToken = int.Parse(userIdClaim.Value);
-
-            //Validar coincidencia
-            if (userIdFromToken != request.UsuarioId)
-            {
-                return Unauthorized(new { mensaje = "Usuario no coincide con token" });
-            }
-
             using var conn = _db.CreateConnection();
 
+            // Usamos directamente el UsuarioId que nos manda el otro microservicio
             await conn.ExecuteAsync(@"
                 INSERT INTO Bitacora (UsuarioId, Descripcion)
                 VALUES (@UserId, @Descripcion)",
                 new
                 {
-                    UserId = userIdFromToken,
+                    UserId = request.UsuarioId,
                     Descripcion = request.Descripcion
                 });
 
-            return Ok(new { mensaje = "Registro guardado" });
+            return Ok(new { mensaje = "Registro guardado en bitácora" });
         }
 
         // ==========================
         // GET /bitacora
         // ==========================
-        [Authorize]
+        [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get()  
         {
             using var conn = _db.CreateConnection();
 
