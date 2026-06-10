@@ -3,15 +3,15 @@
     "Name": "Nuevo perfil",
     "Projects": [
       {
-        "Path": "Microservicio.Usuario\\Microservicio.Usuario.csproj",
+        "Path": "Microservicio.Instituciones\\Microservicio.Instituciones.csproj",
         "Action": "Start"
       },
       {
-        "Path": "AuditService\\AuditService.csproj",
+        "Path": "Microservicio.Carreras\\Microservicio.Carreras.csproj",
         "Action": "Start"
       },
       {
-        "Path": "AuthService\\AuthService.csproj",
+        "Path": "Microservicio.Areas\\Microservicio.Areas.csproj",
         "Action": "Start"
       }
     ]
