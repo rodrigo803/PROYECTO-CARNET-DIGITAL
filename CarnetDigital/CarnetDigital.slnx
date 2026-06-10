@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="AuditService/AuditService.csproj" />
   <Project Path="AuthService/AuthService.csproj" />
+  <Project Path="Microservicio.Instituciones/Microservicio.Instituciones.csproj" Id="b92447c6-f970-41bf-a25b-afe99cea0d54" />
   <Project Path="Microservicio.Usuario/Microservicio.Usuario.csproj" />
 </Solution>
