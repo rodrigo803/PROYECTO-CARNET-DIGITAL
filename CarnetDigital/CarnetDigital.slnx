@@ -1,7 +1,10 @@
 <Solution>
   <Project Path="AuditService/AuditService.csproj" />
   <Project Path="AuthService/AuthService.csproj" />
+  <Project Path="Microservicio.Areas/Microservicio.Areas.csproj" Id="8afe6bc4-a76f-48dc-a736-5d94b9799454" />
   <Project Path="Microservicio.Carreras/Microservicio.Carreras.csproj" Id="e0cf225c-d4cd-429b-ae7d-0c83f5c3b248" />
   <Project Path="Microservicio.Instituciones/Microservicio.Instituciones.csproj" Id="b92447c6-f970-41bf-a25b-afe99cea0d54" />
+  <Project Path="Microservicio.TiposIdentificacion/Microservicio.TiposIdentificacion.csproj" Id="6bfa0726-c722-4133-aab7-64e68f42508c" />
+  <Project Path="Microservicio.TiposUsuario/Microservicio.TiposUsuario.csproj" Id="77cd1f88-7f06-47ae-9aa2-5042e66fc1ea" />
   <Project Path="Microservicio.Usuario/Microservicio.Usuario.csproj" />
 </Solution>
