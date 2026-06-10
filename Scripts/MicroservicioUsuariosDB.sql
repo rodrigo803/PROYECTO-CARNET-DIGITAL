@@ -17,9 +17,9 @@ INSERT INTO EstadoUsuario (Nombre) VALUES ('Activo'), ('Inactivo'), ('Pendiente_
 -- =========================================================================
 -- SRV10, SRV11, SRV13, SRV14: Tabla Central de Usuarios
 -- =========================================================================
-CREATE TABLE Usuario (
-    Email VARCHAR(200) PRIMARY KEY, 
-    Identificacion VARCHAR(100) NOT NULL,
+CREATE TABLE Usuarios (
+    Identificacion VARCHAR(100) PRIMARY KEY, 
+    Email VARCHAR(200) NOT NULL,
     NombreCompleto VARCHAR(300) NOT NULL,
     ContrasenaEncriptada VARCHAR(500) NOT NULL,
 
@@ -39,36 +39,3 @@ CREATE TABLE Usuario (
     TipoUsuarioId INT NOT NULL,        -- SRV5
     RolId INT NOT NULL                 -- SRV8
 );
-
--- =========================================================================
--- Tablas Intermedias (Listas de un usuario)
--- =========================================================================
-
--- Teléfonos del usuario (No es un catálogo externo, pertenece directamente al usuario)
-CREATE TABLE UsuarioTelefono (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    UsuarioEmail VARCHAR(200) NOT NULL FOREIGN KEY REFERENCES Usuario(Email),
-    Telefono VARCHAR(20) NOT NULL
-);
-
--- Instituciones asociadas (Referencia al SRV2 de tu compañero)
-CREATE TABLE UsuarioInstitucion (
-    UsuarioEmail VARCHAR(200) NOT NULL FOREIGN KEY REFERENCES Usuario(Email),
-    InstitucionId INT NOT NULL, -- Solo el ID, sin llave foránea
-    PRIMARY KEY (UsuarioEmail, InstitucionId)
-);
-
--- Carreras asociadas (Referencia al SRV3 de tu compañero)
-CREATE TABLE UsuarioCarrera (
-    UsuarioEmail VARCHAR(200) NOT NULL FOREIGN KEY REFERENCES Usuario(Email),
-    CarreraId INT NOT NULL, -- Solo el ID, sin llave foránea
-    PRIMARY KEY (UsuarioEmail, CarreraId)
-);
-
--- Áreas de trabajo asociadas (Referencia al SRV4 de tu compañero)
-CREATE TABLE UsuarioArea (
-    UsuarioEmail VARCHAR(200) NOT NULL FOREIGN KEY REFERENCES Usuario(Email),
-    AreaTrabajoId INT NOT NULL, -- Solo el ID, sin llave foránea
-    PRIMARY KEY (UsuarioEmail, AreaTrabajoId)
-);
-GO
