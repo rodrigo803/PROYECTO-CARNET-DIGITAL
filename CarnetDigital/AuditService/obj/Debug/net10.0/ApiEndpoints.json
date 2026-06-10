@@ -1,0 +1,28 @@
+[
+  {
+    "ContainingType": "AuditService.Controllers.BitacoraController",
+    "Method": "Create",
+    "RelativePath": "bitacora",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "AuditService.Models.CreateBitacoraRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuditService.Controllers.BitacoraController",
+    "Method": "Get",
+    "RelativePath": "bitacora",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]

@@ -1,0 +1,10 @@
+workspace:
+  id: a61f145d-46ea-4ec6-83d0-54e49f5aa576
+localResources:
+  specs:
+    - ..\CarnetDigital.API\CarnetDigital.API\obj\Debug\net10.0\EndpointInfo\CarnetDigital.API.json
+  collections:
+    - ../postman/collections/Microservicio Usuarios - Carnet Digital
+cloudResources:
+  collections:
+    ../postman/collections/Microservicio Usuarios - Carnet Digital: 55376546-9c78456d-a423-40dc-a065-0abd7993616e
