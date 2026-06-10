@@ -47,7 +47,7 @@ namespace Microservicio.Usuario.Services
 
             // 4. BITÁCORA
             int cedulaInt = int.TryParse(usuario.Identificacion, out int result) ? result : 0;
-            await _bitacora.RegistrarAccionAsync(cedulaInt, $"El administrador registró al usuario {usuario.Email}");
+            await _bitacora.RegistrarAccionAsync(cedulaInt, $"El administrador registró al usuario {usuario.Identificacion}");
 
             // 5. Enviar el correo electrónico
             await EnviarCorreoConfirmacion(usuario.Email, usuario.TokenConfirmacion);
@@ -72,7 +72,7 @@ namespace Microservicio.Usuario.Services
 
             // 4. BITÁCORA
             int cedulaInt = int.TryParse(usuario.Identificacion, out int result) ? result : 0;
-            await _bitacora.RegistrarAccionAsync(cedulaInt, $"Autoregistro exitoso. El usuario {usuario.Email} quedó en estado Pendiente.");
+            await _bitacora.RegistrarAccionAsync(cedulaInt, $"Autoregistro exitoso. El usuario {usuario.Identificacion} quedó en estado Pendiente.");
 
             // 5. Enviar el correo electrónico (Ahora con await)
             await EnviarCorreoConfirmacion(usuario.Email, usuario.TokenConfirmacion);
@@ -136,14 +136,14 @@ namespace Microservicio.Usuario.Services
 
             // BITÁCORA
             int cedulaInt = int.TryParse(usuario.Identificacion, out int result) ? result : 0;
-            await _bitacora.RegistrarAccionAsync(cedulaInt, $"El usuario {usuario.Email} confirmó su cuenta exitosamente mediante el token.");
+            await _bitacora.RegistrarAccionAsync(cedulaInt, $"El usuario {usuario.Identificacion} confirmó su cuenta exitosamente mediante el token.");
 
             return true;
         }
 
-        public async Task<bool> CambiarEstadoAsync(string email, int nuevoEstadoId)
+        public async Task<bool> CambiarEstadoAsync(string Identificacion, int nuevoEstadoId)
         {
-            var usuario = await _context.Usuarios.FindAsync(email);
+            var usuario = await _context.Usuarios.FindAsync(Identificacion);
             if (usuario == null) return false;
 
             var estadoExiste = await _context.EstadoUsuario.AnyAsync(e => e.Id == nuevoEstadoId);
@@ -154,12 +154,12 @@ namespace Microservicio.Usuario.Services
 
             // BITÁCORA
             int cedulaInt = int.TryParse(usuario.Identificacion, out int result) ? result : 0;
-            await _bitacora.RegistrarAccionAsync(cedulaInt, $"El estado del usuario {usuario.Email} fue cambiado al EstadoId: {usuario.EstadoId}.");
+            await _bitacora.RegistrarAccionAsync(cedulaInt, $"El estado del usuario {usuario.Identificacion} fue cambiado al EstadoId: {usuario.EstadoId}.");   
 
             return true;
         }
 
-        public async Task<bool> ActualizarFotografiaAsync(string email, string fotoBase64)
+        public async Task<bool> ActualizarFotografiaAsync(string Identificacion, string fotoBase64)
         {
             int longitud = fotoBase64.Length;
             int padding = fotoBase64.EndsWith("==") ? 2 : (fotoBase64.EndsWith("=") ? 1 : 0);
@@ -170,7 +170,7 @@ namespace Microservicio.Usuario.Services
                 throw new Exception("La imagen supera el límite de 1MB.");
             }
 
-            var usuario = await _context.Usuarios.FindAsync(email);
+            var usuario = await _context.Usuarios.FindAsync(Identificacion);
             if (usuario == null) return false;
 
             usuario.FotografiaBase64 = fotoBase64;
@@ -178,7 +178,7 @@ namespace Microservicio.Usuario.Services
 
             // BITÁCORA
             int cedulaInt = int.TryParse(usuario.Identificacion, out int result) ? result : 0;
-            await _bitacora.RegistrarAccionAsync(cedulaInt, $"El usuario {usuario.Email} actualizó su fotografía del carnet.");
+            await _bitacora.RegistrarAccionAsync(cedulaInt, $"El usuario {usuario.Identificacion} actualizó su fotografía del carnet.");
 
             return true;
         }
@@ -218,37 +218,37 @@ namespace Microservicio.Usuario.Services
 
         public async Task<bool> ActualizarUsuarioAsync(UsuarioActualizacionDto registro)
         {
-            var usuario = await _context.Usuarios.FindAsync(registro.Email);
+            var usuario = await _context.Usuarios.FindAsync(registro.Identificacion);
             if (usuario == null) return false;
 
             usuario.NombreCompleto = registro.NombreCompleto;
-            usuario.Identificacion = registro.Identificacion;
+            usuario.Email = registro.Email;
 
             await _context.SaveChangesAsync();
 
             // BITÁCORA
             int cedulaInt = int.TryParse(registro.Identificacion, out int result) ? result : 0;
-            await _bitacora.RegistrarAccionAsync(cedulaInt, $"Se modificaron los datos personales del usuario {registro.Email}.");
+            await _bitacora.RegistrarAccionAsync(cedulaInt, $"Se modificaron los datos personales del usuario {registro.Identificacion}.");
 
             return true;
         }
 
-        public async Task<bool> EliminarUsuarioAsync(string email)
+        public async Task<bool> EliminarUsuarioAsync(string identificacion) // <-- CAMBIO AQUÍ
         {
-            var usuario = await _context.Usuarios.FindAsync(email);
+            // FindAsync busca automáticamente por la Llave Primaria (que ahora es la cédula)
+            var usuario = await _context.Usuarios.FindAsync(identificacion); // <-- CAMBIO AQUÍ
+
             if (usuario == null)
             {
-                // BITÁCORA (Intento fallido)
-                await _bitacora.RegistrarAccionAsync(0, $"Alerta: Intento fallido de eliminación. Usuario {email} no encontrado.");
+                await _bitacora.RegistrarAccionAsync(0, $"Alerta: Intento fallido de eliminación. Usuario {identificacion} no encontrado.");
                 return false;
             }
 
             _context.Usuarios.Remove(usuario);
             await _context.SaveChangesAsync();
 
-            // BITÁCORA
             int cedulaInt = int.TryParse(usuario.Identificacion, out int result) ? result : 0;
-            await _bitacora.RegistrarAccionAsync(cedulaInt, $"El usuario {usuario.Email} fue eliminado permanentemente del sistema.");
+            await _bitacora.RegistrarAccionAsync(cedulaInt, $"El usuario con cédula {usuario.Identificacion} fue eliminado permanentemente del sistema.");
 
             return true;
         }
