@@ -1,0 +1,18 @@
+$kind: http-request
+url: https://localhost:7123/api/usuario/autoregistro
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "email": "rodrigo.ramirez@cuc.cr",
+      "nombreCompleto": "Rodrigo Rene Elias Ramirez",
+      "identificacion": "11112222",
+      "tipoIdentificacionId": 1,
+      "tipoUsuarioId": 1,
+      "rolId": 1,
+      "contrasena": "MiClaveSecreta123"
+    }
+order: 1000

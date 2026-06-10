@@ -1,6 +1,0 @@
-<Solution>
-  <Project Path="CarnetDigital.API/CarnetDigital.API.csproj" />
-  <Project Path="CarnetDigital.Core/CarnetDigital.Core.csproj" />
-  <Project Path="CarnetDigital.Data/CarnetDigital.Data.csproj" />
-  <Project Path="CarnetDigital.Tests/CarnetDigital.Tests.csproj" />
-</Solution>
