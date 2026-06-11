@@ -67,3 +67,4 @@ C:\Users\segur\CarnetDigital\AuditService\obj\Debug\net10.0\refint\AuditService.
 C:\Users\segur\CarnetDigital\AuditService\obj\Debug\net10.0\AuditService.pdb
 C:\Users\segur\CarnetDigital\AuditService\obj\Debug\net10.0\AuditService.genruntimeconfig.cache
 C:\Users\segur\CarnetDigital\AuditService\obj\Debug\net10.0\ref\AuditService.dll
+C:\Users\segur\CarnetDigital\AuditService\obj\Debug\net10.0\AuditService.sourcelink.json

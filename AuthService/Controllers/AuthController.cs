@@ -48,10 +48,10 @@ namespace AuthService.Controllers
                 return Unauthorized(new { mensaje = "Usuario y/o contraseña incorrectos" });
             }
 
-            // ✅ JWT
+            //JWT
             var (token, exp) = _jwt.GenerateToken((int)user.Id);
 
-            // ✅ Refresh Token
+            // Refresh Token
             var refreshToken = Guid.NewGuid().ToString();
 
             var refreshExp = DateTime.UtcNow.AddMinutes(
@@ -99,16 +99,16 @@ namespace AuthService.Controllers
             if (tokenData == null || tokenData.Expiration < DateTime.UtcNow)
                 return Unauthorized(new { mensaje = "No autorizado" });
 
-            // ✅ Invalidar token usado
+            // Invalidar token usado
             await conn.ExecuteAsync(
                 "UPDATE RefreshTokens SET IsRevoked = 1 WHERE Id = @id",
                 new { id = tokenData.Id }
             );
 
-            // ✅ Generar nuevo JWT
+            // Generar nuevo JWT
             var (newAccessToken, exp) = _jwt.GenerateToken((int)tokenData.UserId);
 
-            // ✅ Nuevo refresh token
+            // Nuevo refresh token
             var newRefreshToken = Guid.NewGuid().ToString();
 
             var refreshExp = DateTime.UtcNow.AddMinutes(
@@ -182,7 +182,7 @@ namespace AuthService.Controllers
 
             using var conn = _db.CreateConnection();
 
-            // 🔐 BCrypt
+            //  BCrypt
             var hash = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
             var sql = @"

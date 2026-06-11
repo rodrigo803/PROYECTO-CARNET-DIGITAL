@@ -3,7 +3,7 @@ using Microsoft.Data.SqlClient;
 
 namespace UserService.Data
 {
-    public class UserDb
+    public class OrganizationDb
     {
         private readonly string _connectionString;
 
