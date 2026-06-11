@@ -27,6 +27,20 @@ namespace Microservicio.Usuario.Entities
         public int RolId { get; set; }
         public string TipoIdentificacion { get; set; }
         public string TipoUsuario { get; set; }
+
+        // Relaciones (El usuario puede tener más de una)
+        public List<string> Telefonos { get; set; } = new List<string>();
+        public List<int> InstitucionesIds { get; set; } = new List<int>();
+        public List<int> CarrerasIds { get; set; } = new List<int>();
+        public List<int> AreasIds { get; set; } = new List<int>();
+
+        // Esto le indica al código que un Usuario posee "listas" de datos en otras tablas
+
+        public virtual ICollection<UsuarioTelefono> Telefonos { get; set; } = new List<UsuarioTelefono>();
+        public virtual ICollection<UsuarioCarrera> CarrerasAsociadas { get; set; } = new List<UsuarioCarrera>();
+        public virtual ICollection<UsuarioArea> AreasAsociadas { get; set; } = new List<UsuarioArea>();
+        public virtual ICollection<UsuarioInstitucion> InstitucionesAsociadas { get; set; } = new List<UsuarioInstitucion>();
+
     }
 
     public class EstadoUsuario
@@ -35,4 +49,6 @@ namespace Microservicio.Usuario.Entities
         public int Id { get; set; }
         public string Nombre { get; set; }
     }
+
+
 }
