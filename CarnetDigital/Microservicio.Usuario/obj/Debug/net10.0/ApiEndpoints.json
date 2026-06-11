@@ -65,16 +65,37 @@
   },
   {
     "ContainingType": "Microservicio.Usuario.Controllers.UsuarioController",
-    "Method": "EliminarUsuario",
-    "RelativePath": "api/Usuario/eliminar",
+    "Method": "Eliminar",
+    "RelativePath": "api/Usuario/eliminar/{identificacion}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "email",
+        "Name": "identificacion",
         "Type": "System.String",
-        "IsRequired": false
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Microservicio.Usuario.Controllers.UsuarioController",
+    "Method": "CambiarEstado",
+    "RelativePath": "api/Usuario/estado/{identificacion}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "peticion",
+        "Type": "Microservicio.Usuario.Entities.UsuarioDTOs\u002BCambioEstadoDto",
+        "IsRequired": true
+      },
+      {
+        "Name": "Identificacion",
+        "Type": "System.String",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -106,22 +127,6 @@
       {
         "Name": "identificacion",
         "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Microservicio.Usuario.Controllers.UsuarioController",
-    "Method": "CambiarEstado",
-    "RelativePath": "api/Usuario/usuarios/estado",
-    "HttpMethod": "PATCH",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "peticion",
-        "Type": "Microservicio.Usuario.Entities.UsuarioDTOs\u002BCambioEstadoDto",
         "IsRequired": true
       }
     ],

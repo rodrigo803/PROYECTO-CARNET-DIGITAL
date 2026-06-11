@@ -10,19 +10,17 @@ namespace Microservicio.Usuario.Repository
         {
         }
 
-        // ¡AQUÍ ESTÁ LA MAGIA! Esto quita la línea roja de _context.Usuarios
         public DbSet<Entities.Usuario> Usuarios { get; set; }
-
-        // Y esto quita la línea roja de _context.EstadoUsuario
         public DbSet<EstadoUsuario> EstadoUsuario { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Le decimos a Entity Framework que el Email es la llave primaria de Usuario
+            // ¡CORRECCIÓN APLICADA!
+            // Ahora le decimos a Entity Framework que la Identificación es la Llave Primaria
             modelBuilder.Entity<Entities.Usuario>()
-                .HasKey(u => u.Email);
+                .HasKey(u => u.Identificacion);
         }
     }
 }

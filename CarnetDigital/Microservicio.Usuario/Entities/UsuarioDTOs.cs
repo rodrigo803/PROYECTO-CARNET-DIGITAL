@@ -20,13 +20,13 @@
 
         public class CambioEstadoDto
         {
-            public string? Email { get; set; }
+            public string? Identificacion { get; set; }
             public int EstadoId { get; set; }
         }
 
         public class FotografiaDto
         {
-            public string? Email { get; set; }
+            public string? Identificacion { get; set; }
             public string? FotoBase64 { get; set; }
         }
 

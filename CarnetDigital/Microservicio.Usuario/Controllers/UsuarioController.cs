@@ -46,15 +46,15 @@ namespace Microservicio.Usuario.Controllers
         }
 
         [Authorize]
-        [HttpPatch("usuarios/estado")] // Endpoint exacto
-        public async Task<IActionResult> CambiarEstado([FromBody] CambioEstadoDto peticion)
+        [HttpPatch("estado/{identificacion}")] // Endpoint exacto
+        public async Task<IActionResult> CambiarEstado([FromBody] CambioEstadoDto peticion, [FromRoute] string Identificacion)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(peticion.Email))
+                if (string.IsNullOrWhiteSpace(peticion.Identificacion))
                     return BadRequest("El identificador no puede estar vacío");
 
-                var exito = await _usuarioService.CambiarEstadoAsync(peticion.Email, peticion.EstadoId);
+                var exito = await _usuarioService.CambiarEstadoAsync(peticion.Identificacion, peticion.EstadoId);
                 if (!exito) return NotFound(new { Mensaje = "Usuario no encontrado" });
 
                 return Ok(new { Mensaje = "Estado actualizado correctamente" });
@@ -72,10 +72,10 @@ namespace Microservicio.Usuario.Controllers
             try
             {
                 // Los datos no pueden ser vacíos 
-                if (string.IsNullOrWhiteSpace(peticion.FotoBase64) || string.IsNullOrWhiteSpace(peticion.Email))
+                if (string.IsNullOrWhiteSpace(peticion.FotoBase64) || string.IsNullOrWhiteSpace(peticion.Identificacion))
                     return BadRequest("Todos los datos son requeridos.");
 
-                var exito = await _usuarioService.ActualizarFotografiaAsync(peticion.Email, peticion.FotoBase64);
+                var exito = await _usuarioService.ActualizarFotografiaAsync(peticion.Identificacion, peticion.FotoBase64);
                 if (!exito) return NotFound("Usuario no encontrado.");
 
                 return Ok(new { Mensaje = "Fotografía actualizada exitosamente." });
@@ -174,13 +174,12 @@ namespace Microservicio.Usuario.Controllers
         }
 
         [Authorize]
-        [HttpDelete("eliminar")]
-        public async Task<IActionResult> EliminarUsuario(string email)
+        [HttpDelete("eliminar/{identificacion}")]
+        public async Task<IActionResult> Eliminar(string identificacion)
         {
-            var exito = await _usuarioService.EliminarUsuarioAsync(email);
-            if (!exito) return NotFound("Usuario no encontrado.");
-
-            return Ok(new { Mensaje = "Usuario eliminado correctamente." });
+            var resultado = await _usuarioService.EliminarUsuarioAsync(identificacion);
+            if (!resultado) return NotFound("Usuario no encontrado.");
+            return Ok("Usuario eliminado exitosamente.");
         }
     }
 }
