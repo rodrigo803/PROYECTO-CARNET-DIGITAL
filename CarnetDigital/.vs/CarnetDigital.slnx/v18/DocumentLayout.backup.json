@@ -3,16 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{409A12A5-97EB-0285-32B1-333587BC52AE}|Microservicio.Usuario\\Microservicio.Usuario.csproj|c:\\users\\rodri\\documents\\proyectos git\\proyecto-carnet-digital\\carnetdigital\\microservicio.usuario\\entities\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{409A12A5-97EB-0285-32B1-333587BC52AE}|Microservicio.Usuario\\Microservicio.Usuario.csproj|solutionrelative:microservicio.usuario\\entities\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{409A12A5-97EB-0285-32B1-333587BC52AE}|Microservicio.Usuario\\Microservicio.Usuario.csproj|c:\\users\\rodri\\documents\\proyectos git\\proyecto-carnet-digital\\carnetdigital\\microservicio.usuario\\controllers\\usuariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{409A12A5-97EB-0285-32B1-333587BC52AE}|Microservicio.Usuario\\Microservicio.Usuario.csproj|solutionrelative:microservicio.usuario\\controllers\\usuariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{409A12A5-97EB-0285-32B1-333587BC52AE}|Microservicio.Usuario\\Microservicio.Usuario.csproj|c:\\users\\rodri\\documents\\proyectos git\\proyecto-carnet-digital\\carnetdigital\\microservicio.usuario\\services\\usuarioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{409A12A5-97EB-0285-32B1-333587BC52AE}|Microservicio.Usuario\\Microservicio.Usuario.csproj|solutionrelative:microservicio.usuario\\services\\usuarioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{409A12A5-97EB-0285-32B1-333587BC52AE}|Microservicio.Usuario\\Microservicio.Usuario.csproj|c:\\users\\rodri\\documents\\proyectos git\\proyecto-carnet-digital\\carnetdigital\\microservicio.usuario\\services\\iusuarioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{409A12A5-97EB-0285-32B1-333587BC52AE}|Microservicio.Usuario\\Microservicio.Usuario.csproj|solutionrelative:microservicio.usuario\\services\\iusuarioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{409A12A5-97EB-0285-32B1-333587BC52AE}|Microservicio.Usuario\\Microservicio.Usuario.csproj|c:\\users\\rodri\\documents\\proyectos git\\proyecto-carnet-digital\\carnetdigital\\microservicio.usuario\\services\\usuarioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{409A12A5-97EB-0285-32B1-333587BC52AE}|Microservicio.Usuario\\Microservicio.Usuario.csproj|solutionrelative:microservicio.usuario\\services\\usuarioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -31,28 +35,40 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Usuario.cs",
+              "DocumentMoniker": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Usuario\\Entities\\Usuario.cs",
+              "RelativeDocumentMoniker": "Microservicio.Usuario\\Entities\\Usuario.cs",
+              "ToolTip": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Usuario\\Entities\\Usuario.cs",
+              "RelativeToolTip": "Microservicio.Usuario\\Entities\\Usuario.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAuwBAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-11T21:30:54.169Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "UsuarioController.cs",
               "DocumentMoniker": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Usuario\\Controllers\\UsuarioController.cs",
               "RelativeDocumentMoniker": "Microservicio.Usuario\\Controllers\\UsuarioController.cs",
               "ToolTip": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Usuario\\Controllers\\UsuarioController.cs",
               "RelativeToolTip": "Microservicio.Usuario\\Controllers\\UsuarioController.cs",
-              "ViewState": "AgIAACcAAAAAAAAAAAAowEQAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAACQAAAAAAAAAAAAowDEAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-11T07:01:49.542Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "UsuarioService.cs",
               "DocumentMoniker": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Usuario\\Services\\UsuarioService.cs",
               "RelativeDocumentMoniker": "Microservicio.Usuario\\Services\\UsuarioService.cs",
               "ToolTip": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Usuario\\Services\\UsuarioService.cs",
               "RelativeToolTip": "Microservicio.Usuario\\Services\\UsuarioService.cs",
-              "ViewState": "AgIAALMAAAAAAAAAAAAuwJkAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAJwAAAAAAAAAAAAmwLcAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-11T07:00:01.654Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-11T07:00:01.654Z"
             },
             {
               "$type": "Document",
@@ -64,8 +80,7 @@
               "RelativeToolTip": "Microservicio.Usuario\\Services\\IUsuarioService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAABXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-11T06:57:22.096Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-11T06:57:22.096Z"
             }
           ]
         }

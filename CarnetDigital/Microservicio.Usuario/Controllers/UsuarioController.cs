@@ -20,6 +20,7 @@ namespace Microservicio.Usuario.Controllers
             _usuarioService = usuarioService;
         }
 
+        [Authorize]
         [HttpPost("crear")]
         public async Task<IActionResult> CrearUsuario([FromBody] UsuarioRegistroDto dto)
         {
@@ -45,6 +46,7 @@ namespace Microservicio.Usuario.Controllers
             return Ok(new { Mensaje = "Usuario creado exitosamente", Usuario = resultado.Email });
         }
 
+        [Authorize]
         [HttpPatch("estado/{identificacion}")] // La variable aquí se llama 'identificacion'
         public async Task<IActionResult> CambiarEstado(string identificacion, [FromBody] CambioEstadoDto peticion)
         {
