@@ -3199,23 +3199,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\seral\\.nuget\\packages\\": {},
+    "C:\\Users\\rodri\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Dev\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Microservicio.Carreras.csproj",
+      "projectUniqueName": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Microservicio.Carreras.csproj",
       "projectName": "Microservicio.Carreras",
-      "projectPath": "C:\\Dev\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Microservicio.Carreras.csproj",
-      "packagesPath": "C:\\Users\\seral\\.nuget\\packages\\",
-      "outputPath": "C:\\Dev\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\obj\\",
+      "projectPath": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Microservicio.Carreras.csproj",
+      "packagesPath": "C:\\Users\\rodri\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\seral\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\rodri\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -3224,6 +3224,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

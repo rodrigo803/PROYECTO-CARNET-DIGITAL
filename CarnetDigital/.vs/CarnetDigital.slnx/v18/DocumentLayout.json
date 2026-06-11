@@ -50,8 +50,7 @@
               "RelativeToolTip": "Microservicio.Usuario\\Entities\\UsuarioDTOs.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-11T04:18:52.907Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-11T04:18:52.907Z"
             },
             {
               "$type": "Document",
@@ -63,8 +62,7 @@
               "RelativeToolTip": "Microservicio.Usuario\\Repository\\ApplicationDbContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACoAAABHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-11T04:15:22.618Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-11T04:15:22.618Z"
             },
             {
               "$type": "Document",
@@ -74,7 +72,7 @@
               "RelativeDocumentMoniker": "Microservicio.Usuario\\Entities\\Usuario.cs",
               "ToolTip": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Usuario\\Entities\\Usuario.cs",
               "RelativeToolTip": "Microservicio.Usuario\\Entities\\Usuario.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAAuwCYAAABWAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAYwBwAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-10T19:00:59.774Z",
               "EditorCaption": ""
@@ -89,8 +87,7 @@
               "RelativeToolTip": "Microservicio.Usuario\\Program.cs",
               "ViewState": "AgIAAA8AAAAAAAAAAAAAACIAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-10T05:36:46.072Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-10T05:36:46.072Z"
             },
             {
               "$type": "Document",
@@ -102,8 +99,7 @@
               "RelativeToolTip": "Microservicio.Usuario\\Services\\UsuarioService.cs",
               "ViewState": "AgIAANoAAAAAAAAAAAAuwDIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-06T06:05:08.45Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-06T06:05:08.45Z"
             },
             {
               "$type": "Document",
@@ -115,8 +111,7 @@
               "RelativeToolTip": "Microservicio.Usuario\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-06-10T05:25:22.906Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-10T05:25:22.906Z"
             }
           ]
         }
