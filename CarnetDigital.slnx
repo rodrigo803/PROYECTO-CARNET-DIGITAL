@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="AuditService/AuditService.csproj" />
+  <Project Path="AuthorizationService/AuthorizationService.csproj" />
+  <Project Path="AuthService/AuthService.csproj" />
+  <Project Path="CatalogService/CatalogService.csproj" />
+  <Project Path="OrganizationService/OrganizationService.csproj" />
+  <Project Path="UserService/UserService.csproj" />
+</Solution>

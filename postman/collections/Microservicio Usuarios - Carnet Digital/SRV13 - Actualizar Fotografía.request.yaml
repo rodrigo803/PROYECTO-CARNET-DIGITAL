@@ -1,0 +1,13 @@
+$kind: http-request
+url: https://localhost:7123/api/usuario/usuario/fotografia
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "email": "rodrigo.ramirez@cuc.cr",
+      "fotoBase64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+    }
+order: 5000

@@ -1,0 +1,19 @@
+[
+  {
+    "Name": "Nuevo perfil",
+    "Projects": [
+      {
+        "Path": "Microservicio.Instituciones\\Microservicio.Instituciones.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Microservicio.Carreras\\Microservicio.Carreras.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Microservicio.Areas\\Microservicio.Areas.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

@@ -1,0 +1,280 @@
+{
+  "info": {
+    "_postman_id": "59bf3510-7997-499a-a215-46d881edcb17",
+    "name": "Microservicio.Usuario - Carnet Digital (Completo)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "55376546",
+    "_collection_link": "https://go.postman.co/collection/55376546-59bf3510-7997-499a-a215-46d881edcb17?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "1. POST SRV11 - Autoregistro (Estudiante)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"Email\": \"rodrigo_actualizado@correo.com\",\n  \"NombreCompleto\": \"Rodrigo Rene Elias Ramirez\",\n  \"Identificacion\": \"301230456\",\n  \"Contrasena\": \"ClaveSegura123\",\n  \"TipoIdentificacionId\": 1,\n  \"TipoUsuarioId\": 1,\n  \"RolId\": 1,\n  \"Rol\": \"Estudiante\",\n  \"TipoUsuario\": \"Estudiante\",\n  \"TipoIdentificacion\": \"Cedula Nacional\"\n}"
+        },
+        "url": {
+          "raw": "https://localhost:7001/api/usuario/autoregistro",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "7001",
+          "path": [
+            "api",
+            "usuario",
+            "autoregistro"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "2. POST - Crear Usuario (Admin)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIzIiwiZXhwIjoxNzgwOTgyMTU1LCJpc3MiOiJBdXRoU2VydmljZSIsImF1ZCI6IkF1dGhTZXJ2aWNlVXNlcnMifQ.ngN9SonBMMlGbdNUvh6XE8Duw00LkM8xYIsbifZTWow",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"Email\": \"alumno_definitivo@correo.com\",\n  \"Identificacion\": \"205550444\",\n  \"NombreCompleto\": \"Carlos Arturo Definitivo\",\n  \"Contrasena\": \"ClaveSecreta123\",\n  \"TipoIdentificacionId\": 1,\n  \"TipoUsuarioId\": 1,\n  \"RolId\": 1,\n  \"TipoIdentificacion\": \"Cedula Nacional\",\n  \"TipoUsuario\": \"Estudiante\",\n  \"Rol\": \"Estudiante\"\n}"
+        },
+        "url": {
+          "raw": "https://localhost:7035/api/usuario/crear",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "7035",
+          "path": [
+            "api",
+            "usuario",
+            "crear"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "3. PATCH SRV12 - Cambiar Estado",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIzIiwiZXhwIjoxNzgxMTYxMTkxLCJpc3MiOiJBdXRoU2VydmljZSIsImF1ZCI6IkF1dGhTZXJ2aWNlVXNlcnMifQ.TLqTCbZOvn9RR1igvSyghSg65T4saXlngsHemhCu5Ok",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"Identificacion\": \"1110088544\",\n    \"EstadoId\": 1\n}"
+        },
+        "url": {
+          "raw": "https://localhost:7035/api/Usuario/usuarios/estado",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "7035",
+          "path": [
+            "api",
+            "Usuario",
+            "usuarios",
+            "estado"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "4. PUT SRV13 - Actualizar Fotografía",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIzIiwiZXhwIjoxNzgxMTYyNjU0LCJpc3MiOiJBdXRoU2VydmljZSIsImF1ZCI6IkF1dGhTZXJ2aWNlVXNlcnMifQ.E8cC09DqeQ0t88_lYjk2ZyZlxihV7qQf0qPC-c6zdPo",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"Identificacion\": \"1110088544\",\n    \"FotoBase64\": \"iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==\"\n}"
+        },
+        "url": {
+          "raw": "https://localhost:7035/api/Usuario/usuario/fotografia",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "7035",
+          "path": [
+            "api",
+            "Usuario",
+            "usuario",
+            "fotografia"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "5. GET SRV14 - Obtener Código QR",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "PEGAR_TU_TOKEN_AQUI",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:7001/api/usuario/qr/301230456",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "7001",
+          "path": [
+            "api",
+            "usuario",
+            "qr",
+            "301230456"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "6. PUT - Actualizar Datos",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIzIiwiZXhwIjoxNzgxMjAzODQyLCJpc3MiOiJBdXRoU2VydmljZSIsImF1ZCI6IkF1dGhTZXJ2aWNlVXNlcnMifQ.2YNZXOmgdez5eKRAwRz_obFOkTN1UDhWJst6aZKMpKE",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"Email\": \"rodrigoelias803@gmail.com\",\n  \"NombreCompleto\": \"Dennis Solano Sojo\",\n  \"Identificacion\": \"301244569\"\n}"
+        },
+        "url": {
+          "raw": "https://localhost:7035/api/usuario/actualizar",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "7035",
+          "path": [
+            "api",
+            "usuario",
+            "actualizar"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "7. DELETE - Eliminar Usuario",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "PEGAR_TU_TOKEN_DE_ADMIN_AQUI",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "https://localhost:7035/api/usuario/eliminar?email=alumno_definitivo@correo.com",
+          "protocol": "https",
+          "host": [
+            "localhost"
+          ],
+          "port": "7035",
+          "path": [
+            "api",
+            "usuario",
+            "eliminar"
+          ],
+          "query": [
+            {
+              "key": "email",
+              "value": "alumno_definitivo@correo.com"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "7. CONFIRMAR USUARIO",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    }
+  ]
+}

@@ -1,0 +1,823 @@
+{
+  "info": {
+    "_postman_id": "0d56f546-c4ff-4e67-94e3-54bfa0bb7f33",
+    "name": "CarnetDigital_SRV2aSRV6",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "55410992",
+    "_collection_link": "https://go.postman.co/collection/55410992-0d56f546-c4ff-4e67-94e3-54bfa0bb7f33?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "SRV2 - Instituciones",
+      "item": [
+        {
+          "name": "GET - Obtener todas las instituciones",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIzIiwiZXhwIjoxNzgxMTE2MjQyLCJpc3MiOiJBdXRoU2VydmljZSIsImF1ZCI6IkF1dGhTZXJ2aWNlVXNlcnMifQ.vH-7jMoc_5Pu7NvmU1uaxZJDbTtbo5AInxYTP0H4gqY",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7301/api/Instituciones",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7301",
+              "path": [
+                "api",
+                "Instituciones"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Obtener institución por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7301/api/Instituciones/1",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7301",
+              "path": [
+                "api",
+                "Instituciones",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST - Crear institución",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Colegio Universitario de Cartago\",\r\n  \"email\": \"info@cuc.ac.cr\",\r\n  \"telefono\": \"25502200\",\r\n  \"dominios\": [\"cuc.ac.cr\", \"cuc.cr\"]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7301/api/Instituciones",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7301",
+              "path": [
+                "api",
+                "Instituciones"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT - Modificar institución",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Universidad de Costa Rica - Sede Rodrigo Facio\",\r\n  \"email\": \"contacto@ucr.ac.cr\",\r\n  \"telefono\": \"25115555\",\r\n  \"dominios\": [\r\n    \"ucr.ac.cr\",\r\n    \"ucr.cr\",\r\n    \"estudiantes.ucr.ac.cr\"\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7301/api/Instituciones",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7301",
+              "path": [
+                "api",
+                "Instituciones"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE - Eliminar institución",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7301/api/Instituciones",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7301",
+              "path": [
+                "api",
+                "Instituciones"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIzIiwiZXhwIjoxNzgxMTE2MjQyLCJpc3MiOiJBdXRoU2VydmljZSIsImF1ZCI6IkF1dGhTZXJ2aWNlVXNlcnMifQ.vH-7jMoc_5Pu7NvmU1uaxZJDbTtbo5AInxYTP0H4gqY",
+            "type": "string"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "SRV3 - Carreras",
+      "item": [
+        {
+          "name": "GET - Obtener todas las carreras",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7302/api/Carreras",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7302",
+              "path": [
+                "api",
+                "Carreras"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST - Crear carrera",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Carrera Falsa\",\r\n  \"director\": \"Test\",\r\n  \"email\": \"test@cuc.ac.cr\",\r\n  \"telefono\": \"25502211\",\r\n  \"idInstitucion\": 999\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7302/api/Carreras",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7302",
+              "path": [
+                "api",
+                "Carreras"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Obtener carrera por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7302/api/Carreras/1",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7302",
+              "path": [
+                "api",
+                "Carreras",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT - Modificar carrera",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Ingeniería en Computación\",\r\n  \"director\": \"María González Vargas\",\r\n  \"email\": \"computacion.empresarial@cuc.ac.cr\",\r\n  \"telefono\": \"25502299\",\r\n  \"idInstitucion\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7302/api/Carreras/2",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7302",
+              "path": [
+                "api",
+                "Carreras",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE - Eliminar carrera",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7302/api/Carreras/1",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7302",
+              "path": [
+                "api",
+                "Carreras",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIzIiwiZXhwIjoxNzgxMTE2MjQyLCJpc3MiOiJBdXRoU2VydmljZSIsImF1ZCI6IkF1dGhTZXJ2aWNlVXNlcnMifQ.vH-7jMoc_5Pu7NvmU1uaxZJDbTtbo5AInxYTP0H4gqY",
+            "type": "string"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "SRV4 - Áreas de Trabajo",
+      "item": [
+        {
+          "name": "GET - Obtener todas las áreas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7303/api/Areas",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7303",
+              "path": [
+                "api",
+                "Areas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST - Crear áreas",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Departamento de Tecnologías de Información\",\r\n  \"idInstitucion\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7303/api/Areas",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7303",
+              "path": [
+                "api",
+                "Areas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Obtener área por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7303/api/Areas/3",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7303",
+              "path": [
+                "api",
+                "Areas",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT - Modificar área",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Departamento de TI y Sistemas de Información\",\r\n  \"idInstitucion\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7303/api/Areas/3",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7303",
+              "path": [
+                "api",
+                "Areas",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE - Eliminar área",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Departamento de TI y Sistemas\",\r\n  \"idInstitucion\": 2\r\n}"
+            },
+            "url": {
+              "raw": "https://localhost:7303/api/Areas/2",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7303",
+              "path": [
+                "api",
+                "Areas",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIzIiwiZXhwIjoxNzgxMTE2MjQyLCJpc3MiOiJBdXRoU2VydmljZSIsImF1ZCI6IkF1dGhTZXJ2aWNlVXNlcnMifQ.vH-7jMoc_5Pu7NvmU1uaxZJDbTtbo5AInxYTP0H4gqY",
+            "type": "string"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "SRV5 - Tipos de Usuario",
+      "item": [
+        {
+          "name": "POST - Crear tipo usuario",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Profesor\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7304/api/TiposUsuario",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7304",
+              "path": [
+                "api",
+                "TiposUsuario"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Obtener todos los tipos de usuario",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7304/api/TiposUsuario",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7304",
+              "path": [
+                "api",
+                "TiposUsuario"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Obtener tipo de usuario por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7304/api/TiposUsuario/4",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7304",
+              "path": [
+                "api",
+                "TiposUsuario",
+                "4"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT - Modificar tipo de usuario",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Profesores\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7304/api/TiposUsuario/4",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7304",
+              "path": [
+                "api",
+                "TiposUsuario",
+                "4"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE - Eliminar tipo de usuario",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7304/api/TiposUsuario/4",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7304",
+              "path": [
+                "api",
+                "TiposUsuario",
+                "4"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIzIiwiZXhwIjoxNzgxMTE2MjQyLCJpc3MiOiJBdXRoU2VydmljZSIsImF1ZCI6IkF1dGhTZXJ2aWNlVXNlcnMifQ.vH-7jMoc_5Pu7NvmU1uaxZJDbTtbo5AInxYTP0H4gqY",
+            "type": "string"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "SRV6 - Tipos de Identificación",
+      "item": [
+        {
+          "name": "POST - Crear tipo de identificación",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"DIMEX\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7305/api/TiposIdentificacion",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7305",
+              "path": [
+                "api",
+                "TiposIdentificacion"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Obtener todos los tipos de identificacion",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7305/api/TiposIdentificacion",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7305",
+              "path": [
+                "api",
+                "TiposIdentificacion"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Obtener tipo de identificacion por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7305/api/TiposIdentificacion/3",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7305",
+              "path": [
+                "api",
+                "TiposIdentificacion",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT - Modificar tipo de identificacion",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Licencia B1\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7305/api/TiposIdentificacion/3",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7305",
+              "path": [
+                "api",
+                "TiposIdentificacion",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE - Eliminar tipo de identificacion",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7305/api/TiposIdentificacion/3",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7305",
+              "path": [
+                "api",
+                "TiposIdentificacion",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIzIiwiZXhwIjoxNzgxMTE2MjQyLCJpc3MiOiJBdXRoU2VydmljZSIsImF1ZCI6IkF1dGhTZXJ2aWNlVXNlcnMifQ.vH-7jMoc_5Pu7NvmU1uaxZJDbTtbo5AInxYTP0H4gqY",
+            "type": "string"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

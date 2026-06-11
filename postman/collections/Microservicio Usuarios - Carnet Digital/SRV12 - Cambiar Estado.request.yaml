@@ -1,0 +1,13 @@
+$kind: http-request
+url: http://localhost:5068/api/usuario/usuarios/estado
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "email": "rodrigo.ramirez@cuc.cr",
+      "estadoId": 2
+    }
+order: 4000
