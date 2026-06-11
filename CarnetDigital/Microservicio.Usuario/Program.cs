@@ -32,11 +32,6 @@ builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
 builder.Services.AddControllers();
 
-builder.Services.AddHttpContextAccessor();
-
-// 4. HttpClient para BitacoraApiClient
-builder.Services.AddHttpClient<IBitacoraService, BitacoraApiClient>();
-
 var app = builder.Build();
 
 app.UseHttpsRedirection();

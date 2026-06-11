@@ -5,10 +5,10 @@ namespace Microservicio.Usuario.Entities
 {
     public class Usuario
     {
+        [Key]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Key]
         public string Identificacion { get; set; }
         public string NombreCompleto { get; set; }
         public string ContrasenaEncriptada { get; set; }
@@ -27,7 +27,6 @@ namespace Microservicio.Usuario.Entities
         public int RolId { get; set; }
         public string TipoIdentificacion { get; set; }
         public string TipoUsuario { get; set; }
-
     }
 
     public class EstadoUsuario
@@ -36,6 +35,4 @@ namespace Microservicio.Usuario.Entities
         public int Id { get; set; }
         public string Nombre { get; set; }
     }
-
-
 }
