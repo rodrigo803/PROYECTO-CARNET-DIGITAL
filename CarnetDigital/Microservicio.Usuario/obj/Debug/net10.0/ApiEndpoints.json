@@ -88,13 +88,13 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "peticion",
-        "Type": "Microservicio.Usuario.Entities.UsuarioDTOs\u002BCambioEstadoDto",
+        "Name": "identificacion",
+        "Type": "System.String",
         "IsRequired": true
       },
       {
-        "Name": "Identificacion",
-        "Type": "System.String",
+        "Name": "peticion",
+        "Type": "Microservicio.Usuario.Entities.UsuarioDTOs\u002BCambioEstadoDto",
         "IsRequired": true
       }
     ],

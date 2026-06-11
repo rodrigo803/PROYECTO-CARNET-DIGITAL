@@ -45,17 +45,20 @@ namespace Microservicio.Usuario.Controllers
             return Ok(new { Mensaje = "Usuario creado exitosamente", Usuario = resultado.Email });
         }
 
-        [Authorize]
-        [HttpPatch("estado/{identificacion}")] // Endpoint exacto
-        public async Task<IActionResult> CambiarEstado([FromBody] CambioEstadoDto peticion, [FromRoute] string Identificacion)
+        [HttpPatch("estado/{identificacion}")] // La variable aquí se llama 'identificacion'
+        public async Task<IActionResult> CambiarEstado(string identificacion, [FromBody] CambioEstadoDto peticion)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(peticion.Identificacion))
-                    return BadRequest("El identificador no puede estar vacío");
+                // 1. Usamos 'identificacion' (que viene de la URL) 
+                // 2. Usamos 'peticion.EstadoId' (que viene del Body)
+                if (string.IsNullOrWhiteSpace(identificacion))
+                    return BadRequest("El identificador es obligatorio en la URL");
 
-                var exito = await _usuarioService.CambiarEstadoAsync(peticion.Identificacion, peticion.EstadoId);
-                if (!exito) return NotFound(new { Mensaje = "Usuario no encontrado" });
+                var exito = await _usuarioService.CambiarEstadoAsync(identificacion, peticion.EstadoId);
+
+                if (!exito)
+                    return NotFound(new { Mensaje = "Usuario no encontrado" });
 
                 return Ok(new { Mensaje = "Estado actualizado correctamente" });
             }
