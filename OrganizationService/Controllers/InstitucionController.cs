@@ -33,7 +33,7 @@ namespace OrganizationService.Controllers
 
             var requestMsg = new HttpRequestMessage(
                 HttpMethod.Get,
-                "https://localhost:7014/validate"
+                "https://localhost:7181/validate"
             );
 
             requestMsg.Headers.Add("Authorization", authHeader);
