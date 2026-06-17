@@ -27,7 +27,7 @@ namespace Microservicio.Carreras.Entities
         [Required]
         public bool Activo { get; set; } = true;
 
-        // FK lógica (sin navegación porque vive en otra BD/microservicio)
+        // FK lógica 
         [Required]
         public int IdInstitucion { get; set; }
     }

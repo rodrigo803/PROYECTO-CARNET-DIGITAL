@@ -1,5 +1,6 @@
+using Microservicio.TiposIdentificacion;
 using Microservicio.TiposIdentificacion.Data;
-using Microservicio.TiposIdentificacion.Interfaces;
+using Microservicio.TiposIdentificacion.Repository;
 using Microservicio.TiposIdentificacion.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -8,8 +9,13 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-builder.Services.AddOpenApi();
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+});
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<TiposIdentificacionDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("TiposIdentificacionDb")));
@@ -25,8 +31,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidAudience = builder.Configuration["Jwt:Audience"],
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SigningKey"]!)
-            ),
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SigningKey"]!)),
             ValidateLifetime = true,
             ClockSkew = TimeSpan.Zero
         };
@@ -36,22 +41,26 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddHttpClient<IBitacoraService, BitacoraService>(client =>
 {
-    var auditUrl = builder.Configuration["ExternalServices:AuditServiceUrl"]!;
-    client.BaseAddress = new Uri(auditUrl);
+    client.BaseAddress = new Uri(builder.Configuration["ExternalServices:AuditServiceUrl"]!);
 });
 
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddScoped<ITiposIdentificacionRepository, TiposIdentificacionRepository>();
+builder.Services.AddScoped<ITiposIdentificacionService, TiposIdentificacionService>();
 
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapControllers();
+
+app.MapTiposIdentificacionEndpoints();
 
 app.Run();

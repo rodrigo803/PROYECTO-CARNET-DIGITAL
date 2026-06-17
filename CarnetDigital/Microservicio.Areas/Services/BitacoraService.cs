@@ -1,5 +1,4 @@
-﻿using Microservicio.Areas.DTOs;
-using Microservicio.Areas.Interfaces;
+﻿using Microservicio.Areas.Entities;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
@@ -21,9 +20,14 @@ namespace Microservicio.Areas.Services
         {
             try
             {
-                var request = new BitacoraRequest { UsuarioId = usuarioId, Descripcion = descripcion };
+                var request = new BitacoraRequest
+                {
+                    UsuarioId = usuarioId,
+                    Descripcion = descripcion
+                };
+
                 var json = JsonSerializer.Serialize(request);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var content = new StringContent(json, Encoding.UTF8, new MediaTypeHeaderValue("application/json"));
 
                 _httpClient.DefaultRequestHeaders.Authorization =
                     new AuthenticationHeaderValue("Bearer", token);

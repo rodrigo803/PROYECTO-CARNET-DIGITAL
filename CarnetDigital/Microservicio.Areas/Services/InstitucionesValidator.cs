@@ -1,5 +1,4 @@
-﻿using Microservicio.Areas.DTOs;
-using Microservicio.Areas.Interfaces;
+﻿using Microservicio.Areas.Entities;
 using System.Net.Http.Headers;
 using System.Text.Json;
 

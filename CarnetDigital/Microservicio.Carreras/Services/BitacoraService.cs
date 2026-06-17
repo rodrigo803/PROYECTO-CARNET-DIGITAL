@@ -1,5 +1,4 @@
-﻿using Microservicio.Carreras.DTOs;
-using Microservicio.Carreras.Interfaces;
+﻿using Microservicio.Carreras.Entities;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
@@ -28,7 +27,7 @@ namespace Microservicio.Carreras.Services
                 };
 
                 var json = JsonSerializer.Serialize(request);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var content = new StringContent(json, Encoding.UTF8, new MediaTypeHeaderValue("application/json"));
 
                 _httpClient.DefaultRequestHeaders.Authorization =
                     new AuthenticationHeaderValue("Bearer", token);

@@ -1,5 +1,4 @@
-﻿using Microservicio.Instituciones.DTOs;
-using Microservicio.Instituciones.Interfaces;
+﻿using Microservicio.Instituciones.Entities;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;

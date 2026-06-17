@@ -1,5 +1,4 @@
-﻿using Microservicio.Carreras.DTOs;
-using Microservicio.Carreras.Interfaces;
+﻿using Microservicio.Carreras.Entities;
 using System.Net.Http.Headers;
 using System.Text.Json;
 

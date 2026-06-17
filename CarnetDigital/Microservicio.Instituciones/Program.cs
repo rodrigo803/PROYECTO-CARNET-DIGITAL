@@ -1,5 +1,6 @@
+using Microservicio.Instituciones;
 using Microservicio.Instituciones.Data;
-using Microservicio.Instituciones.Interfaces;
+using Microservicio.Instituciones.Repository;
 using Microservicio.Instituciones.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -8,20 +9,19 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllers();
-builder.Services.AddOpenApi();
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+});
+builder.Services.AddMvc();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-// =====================================================================
-// DbContext para la BD de Instituciones (SRV2)
-// =====================================================================
+// DbContext
 builder.Services.AddDbContext<InstitucionesDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("InstitucionesDb")));
 
-// =====================================================================
-// Configuración de autenticación JWT
-// Valida tokens emitidos por el AuthService (SRV1)
-// =====================================================================
+// JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -29,15 +29,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         {
             ValidateIssuer = true,
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
-
             ValidateAudience = true,
             ValidAudience = builder.Configuration["Jwt:Audience"],
-
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SigningKey"]!)
-            ),
-
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SigningKey"]!)),
             ValidateLifetime = true,
             ClockSkew = TimeSpan.Zero
         };
@@ -45,28 +41,30 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
-// =====================================================================
-// BitacoraService (consume el AuditService de - SRV9)
-// =====================================================================
+// BitacoraService
 builder.Services.AddHttpClient<IBitacoraService, BitacoraService>(client =>
 {
-    var auditUrl = builder.Configuration["ExternalServices:AuditServiceUrl"]!;
-    client.BaseAddress = new Uri(auditUrl);
+    client.BaseAddress = new Uri(builder.Configuration["ExternalServices:AuditServiceUrl"]!);
 });
 
 builder.Services.AddHttpContextAccessor();
 
+// Repository y Service de Instituciones
+builder.Services.AddScoped<IInstitucionesRepository, InstitucionesRepository>();
+builder.Services.AddScoped<IInstitucionesService, InstitucionesService>();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapControllers();
+
+app.MapInstitucionesEndpoints();
 
 app.Run();
