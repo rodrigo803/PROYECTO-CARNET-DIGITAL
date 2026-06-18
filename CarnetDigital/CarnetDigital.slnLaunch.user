@@ -1,0 +1,19 @@
+[
+  {
+    "Name": "Nuevo perfil",
+    "Projects": [
+      {
+        "Path": "AuditService\\AuditService.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "AuthService\\AuthService.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Microservicio.Usuario\\Microservicio.Usuario.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

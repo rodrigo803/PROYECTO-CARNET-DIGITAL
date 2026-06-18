@@ -1,0 +1,183 @@
+[
+  {
+    "ContainingType": "Microservicio.Usuario.Services.UsuarioEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapUsuarioEndpoints\u003Eb__0_6",
+    "RelativePath": "api/usuario/actualizar",
+    "HttpMethod": "PUT",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "registro",
+        "Type": "Microservicio.Usuario.Entities.UsuarioDTOs\u002BUsuarioActualizacionDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Microservicio.Usuario.Services.UsuarioEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapUsuarioEndpoints\u003Eb__0_1",
+    "RelativePath": "api/usuario/autoregistro",
+    "HttpMethod": "POST",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Microservicio.Usuario.Entities.UsuarioDTOs\u002BUsuarioRegistroDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Microservicio.Usuario.Services.UsuarioEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapUsuarioEndpoints\u003Eb__0_2",
+    "RelativePath": "api/usuario/autoregistro/confirmar",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "token",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Microservicio.Usuario.Services.UsuarioEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapUsuarioEndpoints\u003Eb__0_0",
+    "RelativePath": "api/usuario/crear",
+    "HttpMethod": "POST",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Microservicio.Usuario.Entities.UsuarioDTOs\u002BUsuarioRegistroDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Microservicio.Usuario.Services.UsuarioEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapUsuarioEndpoints\u003Eb__0_7",
+    "RelativePath": "api/usuario/eliminar/{identificacion}",
+    "HttpMethod": "DELETE",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "identificacion",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Microservicio.Usuario.Services.UsuarioEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapUsuarioEndpoints\u003Eb__0_3",
+    "RelativePath": "api/usuario/estado/{identificacion}",
+    "HttpMethod": "PATCH",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "identificacion",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "peticion",
+        "Type": "Microservicio.Usuario.Entities.UsuarioDTOs\u002BCambioEstadoDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Microservicio.Usuario.Services.UsuarioEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapUsuarioEndpoints\u003Eb__0_4",
+    "RelativePath": "api/usuario/fotografia",
+    "HttpMethod": "PATCH",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "peticion",
+        "Type": "Microservicio.Usuario.Entities.UsuarioDTOs\u002BFotografiaDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Microservicio.Usuario.Services.UsuarioEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapUsuarioEndpoints\u003Eb__0_5",
+    "RelativePath": "api/usuario/qr/{identificacion}",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "identificacion",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  }
+]
