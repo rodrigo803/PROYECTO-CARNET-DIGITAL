@@ -2,7 +2,7 @@
 using Microservicio.Usuario.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection; // <-- Requerido para IServiceScopeFactory
+using Microsoft.Extensions.DependencyInjection;
 using QRCoder;
 using System;
 using System.Collections.Generic;
@@ -12,12 +12,12 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using static Microservicio.Usuario.Entities.UsuarioDTOs;
+using static Microservicio.Usuario.Services.CatalogosApiClient;
 
 namespace Microservicio.Usuario.Services
 {
     public class UsuarioService : IUsuarioService
     {
-        // Reemplazamos ApplicationDbContext directo por el generador de Scopes
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly IBitacoraService _bitacora;
         private readonly IConfiguration _config;
@@ -31,9 +31,22 @@ namespace Microservicio.Usuario.Services
 
         public async Task<UsuarioActualizacionDto> CrearUsuarioAsync(Entities.Usuario usuario, string contrasenaPlana)
         {
-            // Creamos el hilo seguro para la base de datos
             using var scope = _scopeFactory.CreateScope();
             var _context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var _catalogos = scope.ServiceProvider.GetRequiredService<ICatalogosApiClient>(); // Inyectamos cliente
+
+            // 1. REGLAS DE NEGOCIO DEL CARNET DIGITAL
+            if (usuario.InstitucionesIds == null || usuario.InstitucionesIds.Count == 0)
+                throw new Exception("El usuario debe pertenecer a al menos una institución.");
+
+            if (usuario.TipoUsuarioId == 1 && (usuario.CarrerasIds == null || usuario.CarrerasIds.Count == 0))
+                throw new Exception("Si el usuario es estudiante, debe tener carreras asociadas.");
+
+            if (usuario.TipoUsuarioId == 2 && (usuario.AreasIds == null || usuario.AreasIds.Count == 0))
+                throw new Exception("Si el usuario es funcionario, debe tener áreas asociadas.");
+
+            // 2. VALIDAR CONTRA LOS MICROSERVICIOS
+            await _catalogos.ValidarCatalogosAsync(usuario.TipoIdentificacionId, usuario.TipoUsuarioId, usuario.InstitucionesIds, usuario.CarrerasIds, usuario.AreasIds);
 
             usuario.ContrasenaEncriptada = BCrypt.Net.BCrypt.HashPassword(contrasenaPlana);
             usuario.EstadoId = 3;
@@ -49,7 +62,6 @@ namespace Microservicio.Usuario.Services
 
             await EnviarCorreoConfirmacion(usuario.Email, usuario.TokenConfirmacion);
 
-            // Retornamos el DTO
             return new UsuarioActualizacionDto
             {
                 Identificacion = usuario.Identificacion,
@@ -62,8 +74,21 @@ namespace Microservicio.Usuario.Services
         {
             using var scope = _scopeFactory.CreateScope();
             var _context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var _catalogos = scope.ServiceProvider.GetRequiredService<ICatalogosApiClient>(); // Inyectamos cliente
 
-            // Mapeamos los datos del DTO a la Entidad Usuario
+            // 1. REGLAS DE NEGOCIO DEL CARNET DIGITAL
+            if (dto.InstitucionesIds == null || dto.InstitucionesIds.Count == 0)
+                throw new Exception("El usuario debe pertenecer a al menos una institución.");
+
+            if (dto.TipoUsuarioId == 1 && (dto.CarrerasIds == null || dto.CarrerasIds.Count == 0))
+                throw new Exception("Si el usuario es estudiante, debe tener carreras asociadas.");
+
+            if (dto.TipoUsuarioId == 2 && (dto.AreasIds == null || dto.AreasIds.Count == 0))
+                throw new Exception("Si el usuario es funcionario, debe tener áreas asociadas.");
+
+            // 2. VALIDAR CONTRA LOS MICROSERVICIOS
+            await _catalogos.ValidarCatalogosAsync(dto.TipoIdentificacionId, dto.TipoUsuarioId, dto.InstitucionesIds, dto.CarrerasIds, dto.AreasIds);
+
             var usuario = new Entities.Usuario
             {
                 Identificacion = dto.Identificacion,
@@ -72,13 +97,18 @@ namespace Microservicio.Usuario.Services
                 TipoIdentificacionId = dto.TipoIdentificacionId,
                 TipoUsuarioId = dto.TipoUsuarioId,
                 RolId = dto.RolId,
-                TipoIdentificacion = dto.TipoIdentificacion,
-                TipoUsuario = dto.TipoUsuario,
-                ContrasenaEncriptada = BCrypt.Net.BCrypt.HashPassword(dto.Contrasena), // Encriptamos directo del DTO
+                TipoIdentificacion = dto.TipoIdentificacion, // Opcional si ya solo usas IDs
+                TipoUsuario = dto.TipoUsuario,               // Opcional si ya solo usas IDs
+                ContrasenaEncriptada = BCrypt.Net.BCrypt.HashPassword(dto.Contrasena),
                 EstadoId = 3,
                 FotografiaBase64 = "",
                 TokenConfirmacion = Guid.NewGuid().ToString(),
-                FechaExpiracionToken = DateTime.Now.AddMinutes(15)
+                FechaExpiracionToken = DateTime.Now.AddMinutes(15),
+
+                // Mapeo de las listas
+                InstitucionesIds = dto.InstitucionesIds,
+                CarrerasIds = dto.CarrerasIds,
+                AreasIds = dto.AreasIds
             };
 
             _context.Usuarios.Add(usuario);
@@ -166,7 +196,7 @@ namespace Microservicio.Usuario.Services
             var _context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
             var usuario = await _context.Usuarios.FindAsync(Identificacion);
-            if (usuario == null) return null; // Retornamos null en lugar de false
+            if (usuario == null) return null;
 
             var estadoExiste = await _context.EstadoUsuario.AnyAsync(e => e.Id == nuevoEstadoId);
             if (!estadoExiste) throw new Exception("El estado indicado no existe.");
@@ -199,11 +229,9 @@ namespace Microservicio.Usuario.Services
                 throw new Exception("La imagen supera el límite de 1MB.");
             }
 
-            // Buscamos usando el DTO
             var usuario = await _context.Usuarios.FindAsync(peticion.Identificacion);
             if (usuario == null) return null;
 
-            // Actualizamos usando el DTO
             usuario.FotografiaBase64 = peticion.FotoBase64;
             await _context.SaveChangesAsync();
 
@@ -222,6 +250,7 @@ namespace Microservicio.Usuario.Services
         {
             using var scope = _scopeFactory.CreateScope();
             var _context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var _catalogos = scope.ServiceProvider.GetRequiredService<ICatalogosApiClient>(); // Inyectamos cliente
 
             var usuario = await _context.Usuarios
                 .FirstOrDefaultAsync(u => u.Identificacion == identificacion);
@@ -229,13 +258,19 @@ namespace Microservicio.Usuario.Services
             if (usuario == null)
                 throw new Exception("Usuario no encontrado con esa identificación.");
 
+            // Consultas asíncronas para obtener los nombres reales del ecosistema
+            string nombreTipo = await _catalogos.ObtenerNombreTipoUsuarioAsync(usuario.TipoUsuarioId);
+            string nombresInstituciones = await _catalogos.ObtenerNombresInstitucionesAsync(usuario.InstitucionesIds);
+            string nombresCarrerasAreas = await _catalogos.ObtenerNombresCarrerasOAreasAsync(usuario.TipoUsuarioId, usuario.CarrerasIds, usuario.AreasIds);
+
+            // Reemplazo del texto estático por los datos reales de los catálogos
             var datosCarnet = new
             {
                 Nombre = usuario.NombreCompleto,
                 Identificacion = usuario.Identificacion,
-                Tipo = usuario.TipoUsuarioId == 1 ? "Estudiante" : "Funcionario",
-                Institucion = "Colegio Universitario de Cartago",
-                CarrerasAreas = "Programación / TI",
+                Tipo = nombreTipo,
+                Institucion = nombresInstituciones,
+                CarrerasAreas = nombresCarrerasAreas,
                 Vencimiento = DateTime.Now.AddYears(1).ToString("yyyy-MM-dd")
             };
 
@@ -290,7 +325,6 @@ namespace Microservicio.Usuario.Services
                 return null;
             }
 
-            // Rescatamos los datos antes de eliminarlos de la BD
             var datosEliminados = new UsuarioActualizacionDto
             {
                 Identificacion = usuario.Identificacion,

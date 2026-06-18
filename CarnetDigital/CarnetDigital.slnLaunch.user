@@ -29,6 +29,10 @@
       {
         "Path": "Microservicio.TiposUsuario\\Microservicio.TiposUsuario.csproj",
         "Action": "Start"
+      },
+      {
+        "Path": "Microservicio.Usuario\\Microservicio.Usuario.csproj",
+        "Action": "Start"
       }
     ]
   }

@@ -32,6 +32,13 @@ namespace Microservicio.Usuario.Entities
         public string? TipoIdentificacion { get; set; }
         [NotMapped]
         public string? TipoUsuario { get; set; }
+
+        /// <summary>
+        /// Relaciones con los otros microservicios
+        /// </summary>
+        public List<int> InstitucionesIds { get; set; } = new List<int>();
+        public List<int> CarrerasIds { get; set; } = new List<int>();
+        public List<int> AreasIds { get; set; } = new List<int>();
     }
 
     public class EstadoUsuario

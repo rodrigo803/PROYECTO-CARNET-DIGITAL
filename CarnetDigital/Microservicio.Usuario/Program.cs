@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using static Microservicio.Usuario.Services.CatalogosApiClient;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,9 @@ builder.Services.AddAuthorization();
 // 4. INYECCIÓN DE DEPENDENCIAS (Minimal APIs Architecture)
 // AddHttpClient inyecta el HttpClient y registra automáticamente la Bitácora. ¡No ocupa AddSingleton!
 builder.Services.AddHttpClient<IBitacoraService, BitacoraApiClient>();
+
+// Registramos el cliente para el microservicio de Sergio
+builder.Services.AddHttpClient<ICatalogosApiClient, CatalogosApiClient>();
 
 // Registramos el servicio principal como Singleton (utilizando el ScopeFactory internamente)
 builder.Services.AddSingleton<IUsuarioService, UsuarioService>();
