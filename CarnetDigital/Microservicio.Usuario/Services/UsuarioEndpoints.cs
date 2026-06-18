@@ -25,7 +25,12 @@ namespace Microservicio.Usuario.Services
                     TipoUsuarioId = dto.TipoUsuarioId,
                     RolId = dto.RolId,
                     TipoIdentificacion = dto.TipoIdentificacion,
-                    TipoUsuario = dto.TipoUsuario
+                    TipoUsuario = dto.TipoUsuario,
+
+                    // ¡ESTO ES LO QUE FALTABA!
+                    InstitucionesIds = dto.InstitucionesIds,
+                    CarrerasIds = dto.CarrerasIds,
+                    AreasIds = dto.AreasIds
                 };
 
                 var usuarioCreado = await servicio.CrearUsuarioAsync(nuevoUsuario, dto.Contrasena);

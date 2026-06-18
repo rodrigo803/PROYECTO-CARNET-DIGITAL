@@ -1,4 +1,5 @@
 ﻿using BCrypt.Net;
+using Microservicio.Usuario.Entities;
 using Microservicio.Usuario.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -45,6 +46,7 @@ namespace Microservicio.Usuario.Services
             if (usuario.TipoUsuarioId == 2 && (usuario.AreasIds == null || usuario.AreasIds.Count == 0))
                 throw new Exception("Si el usuario es funcionario, debe tener áreas asociadas.");
 
+
             // 2. VALIDAR CONTRA LOS MICROSERVICIOS
             await _catalogos.ValidarCatalogosAsync(usuario.TipoIdentificacionId, usuario.TipoUsuarioId, usuario.InstitucionesIds, usuario.CarrerasIds, usuario.AreasIds);
 
@@ -85,6 +87,13 @@ namespace Microservicio.Usuario.Services
 
             if (dto.TipoUsuarioId == 2 && (dto.AreasIds == null || dto.AreasIds.Count == 0))
                 throw new Exception("Si el usuario es funcionario, debe tener áreas asociadas.");
+
+            // --- ESTO TE DIRÁ LA VERDAD ---
+            Console.WriteLine("------------------------------------------");
+            Console.WriteLine($"DEBUG: Instituciones recibidas: {(dto.InstitucionesIds != null ? dto.InstitucionesIds.Count : "NULL")}");
+            Console.WriteLine($"DEBUG: Carreras recibidas: {(dto.CarrerasIds != null ? dto.CarrerasIds.Count : "NULL")}");
+            Console.WriteLine($"DEBUG: JSON completo: {JsonSerializer.Serialize(dto)}");
+            Console.WriteLine("------------------------------------------");
 
             // 2. VALIDAR CONTRA LOS MICROSERVICIOS
             await _catalogos.ValidarCatalogosAsync(dto.TipoIdentificacionId, dto.TipoUsuarioId, dto.InstitucionesIds, dto.CarrerasIds, dto.AreasIds);

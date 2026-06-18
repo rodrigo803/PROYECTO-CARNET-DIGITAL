@@ -1,17 +1,23 @@
+USE master;
+GO
+DROP DATABASE IF EXISTS MicroservicioUsuariosDB;
+GO
+
 CREATE DATABASE MicroservicioUsuariosDB;
 GO
+
 USE MicroservicioUsuariosDB;
 GO
 
 -- =========================================================================
--- SRV12: Estado de Usuarios (Catálogo interno de tu microservicio)
+-- SRV12: Estado de Usuarios
 -- =========================================================================
 CREATE TABLE EstadoUsuario (
     Id INT IDENTITY(1,1) PRIMARY KEY,
     Nombre VARCHAR(50) NOT NULL
 );
 
--- Insertamos los estados básicos por defecto para que puedas probar
+-- Insertamos los estados básicos
 INSERT INTO EstadoUsuario (Nombre) VALUES ('Activo'), ('Inactivo'), ('Pendiente_Confirmacion');
 
 -- =========================================================================
@@ -23,19 +29,25 @@ CREATE TABLE Usuarios (
     NombreCompleto VARCHAR(300) NOT NULL,
     ContrasenaEncriptada VARCHAR(500) NOT NULL,
 
-    -- SRV13: Fotografía en Base64
+    -- SRV13: Fotografía
     FotografiaBase64 VARCHAR(MAX) NULL,
 
     -- SRV11: Datos para controlar el autoregistro
     TokenConfirmacion VARCHAR(100) NULL,
     FechaExpiracionToken DATETIME NULL,
 
-    -- Relación INTERNA (Sí lleva Foreign Key porque la tabla está arriba)
+    -- Relación INTERNA
     EstadoId INT NOT NULL FOREIGN KEY REFERENCES EstadoUsuario(Id),
 
-    -- Relaciones EXTERNAS (Guardan el Id, pero NO llevan Foreign Key porque 
-    -- esas tablas pertenecen a los microservicios de tus compañeros)
-    TipoIdentificacionId INT NOT NULL, -- SRV6
-    TipoUsuarioId INT NOT NULL,        -- SRV5
-    RolId INT NOT NULL                 -- SRV8
+    -- Relaciones EXTERNAS (IDs base)
+    TipoIdentificacionId INT NOT NULL, 
+    TipoUsuarioId INT NOT NULL,        
+    RolId INT NOT NULL,
+
+    -- NUEVAS COLUMNAS PARA MICROSERVICIOS (Almacenan listas como JSON)
+    -- Aunque en C# los manejas como List<int>, en SQL son VARCHAR(MAX)
+    InstitucionesIds VARCHAR(MAX) NOT NULL DEFAULT '[]',
+    CarrerasIds VARCHAR(MAX) NOT NULL DEFAULT '[]',
+    AreasIds VARCHAR(MAX) NOT NULL DEFAULT '[]'
 );
+GO
