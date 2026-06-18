@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Microservicio.Carreras")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8c836b01969209b9d06c5f78e350f16d5be00125")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a092b449e3310a2eceb09431d37e381aa160bcdc")]
 [assembly: System.Reflection.AssemblyProductAttribute("Microservicio.Carreras")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Microservicio.Carreras")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -11,12 +11,12 @@
       "RelativeMoniker": "D:0:0:{409A12A5-97EB-0285-32B1-333587BC52AE}|Microservicio.Usuario\\Microservicio.Usuario.csproj|solutionrelative:microservicio.usuario\\services\\usuarioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{409A12A5-97EB-0285-32B1-333587BC52AE}|Microservicio.Usuario\\Microservicio.Usuario.csproj|c:\\users\\rodri\\documents\\proyectos git\\proyecto-carnet-digital\\carnetdigital\\microservicio.usuario\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{409A12A5-97EB-0285-32B1-333587BC52AE}|Microservicio.Usuario\\Microservicio.Usuario.csproj|solutionrelative:microservicio.usuario\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{409A12A5-97EB-0285-32B1-333587BC52AE}|Microservicio.Usuario\\Microservicio.Usuario.csproj|c:\\users\\rodri\\documents\\proyectos git\\proyecto-carnet-digital\\carnetdigital\\microservicio.usuario\\services\\iusuarioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{409A12A5-97EB-0285-32B1-333587BC52AE}|Microservicio.Usuario\\Microservicio.Usuario.csproj|solutionrelative:microservicio.usuario\\services\\iusuarioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{409A12A5-97EB-0285-32B1-333587BC52AE}|Microservicio.Usuario\\Microservicio.Usuario.csproj|c:\\users\\rodri\\documents\\proyectos git\\proyecto-carnet-digital\\carnetdigital\\microservicio.usuario\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{409A12A5-97EB-0285-32B1-333587BC52AE}|Microservicio.Usuario\\Microservicio.Usuario.csproj|solutionrelative:microservicio.usuario\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,28 +38,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "IUsuarioService.cs",
-              "DocumentMoniker": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Usuario\\Services\\IUsuarioService.cs",
-              "RelativeDocumentMoniker": "Microservicio.Usuario\\Services\\IUsuarioService.cs",
-              "ToolTip": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Usuario\\Services\\IUsuarioService.cs",
-              "RelativeToolTip": "Microservicio.Usuario\\Services\\IUsuarioService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-17T23:57:43.587Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
               "Title": "UsuarioService.cs",
               "DocumentMoniker": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Usuario\\Services\\UsuarioService.cs",
               "RelativeDocumentMoniker": "Microservicio.Usuario\\Services\\UsuarioService.cs",
               "ToolTip": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Usuario\\Services\\UsuarioService.cs",
               "RelativeToolTip": "Microservicio.Usuario\\Services\\UsuarioService.cs",
-              "ViewState": "AgIAADAAAAAAAAAAAAAowDUBAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADYBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-17T23:52:19.668Z",
+              "WhenOpened": "2026-06-18T00:57:01.976Z",
               "EditorCaption": ""
             },
             {
@@ -70,22 +57,35 @@
               "RelativeDocumentMoniker": "Microservicio.Usuario\\Services\\UsuarioEndpoints.cs",
               "ToolTip": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Usuario\\Services\\UsuarioEndpoints.cs",
               "RelativeToolTip": "Microservicio.Usuario\\Services\\UsuarioEndpoints.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAARAAAAAAAAAA==",
+              "ViewState": "AgIAAFAAAAAAAAAAAAAkwHMAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-17T23:44:41.339Z",
+              "WhenOpened": "2026-06-18T00:57:00.584Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "IUsuarioService.cs",
+              "DocumentMoniker": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Usuario\\Services\\IUsuarioService.cs",
+              "RelativeDocumentMoniker": "Microservicio.Usuario\\Services\\IUsuarioService.cs",
+              "ToolTip": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Usuario\\Services\\IUsuarioService.cs",
+              "RelativeToolTip": "Microservicio.Usuario\\Services\\IUsuarioService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-18T00:56:15.827Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Usuario\\Program.cs",
               "RelativeDocumentMoniker": "Microservicio.Usuario\\Program.cs",
               "ToolTip": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Usuario\\Program.cs",
               "RelativeToolTip": "Microservicio.Usuario\\Program.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAB8AAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-12T02:32:38.573Z",
+              "WhenOpened": "2026-06-18T00:55:39.653Z",
               "EditorCaption": ""
             }
           ]
