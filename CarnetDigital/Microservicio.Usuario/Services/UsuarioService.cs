@@ -2,7 +2,6 @@
 using Microservicio.Usuario.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection; // <-- Requerido para IServiceScopeFactory
 using QRCoder;
 using System;
 using System.Collections.Generic;
@@ -17,84 +16,68 @@ namespace Microservicio.Usuario.Services
 {
     public class UsuarioService : IUsuarioService
     {
-        // Reemplazamos ApplicationDbContext directo por el generador de Scopes
-        private readonly IServiceScopeFactory _scopeFactory;
+        private readonly ApplicationDbContext _context;
         private readonly IBitacoraService _bitacora;
-        private readonly IConfiguration _config;
+        private readonly IConfiguration _config; // <-- ¡Movido adentro de la clase!
 
-        public UsuarioService(IServiceScopeFactory scopeFactory, IBitacoraService bitacora, IConfiguration config)
+        // <-- ¡Agregado el parámetro al constructor!
+        public UsuarioService(ApplicationDbContext context, IBitacoraService bitacora, IConfiguration config)
         {
-            _scopeFactory = scopeFactory;
+            _context = context;
             _bitacora = bitacora;
             _config = config;
         }
 
-        public async Task<UsuarioActualizacionDto> CrearUsuarioAsync(Entities.Usuario usuario, string contrasenaPlana)
+        public async Task<Entities.Usuario> CrearUsuarioAsync(Entities.Usuario usuario, string contrasenaPlana)
         {
-            // Creamos el hilo seguro para la base de datos
-            using var scope = _scopeFactory.CreateScope();
-            var _context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-
+            // 1. Encriptar la contraseña
             usuario.ContrasenaEncriptada = BCrypt.Net.BCrypt.HashPassword(contrasenaPlana);
-            usuario.EstadoId = 3;
+
+            // 2. Reglas de negocio iniciales (Modificado para requerir confirmación)
+            usuario.EstadoId = 3; // 3 = Pendiente_Confirmacion
             usuario.FotografiaBase64 = "";
+
+            // Generar Token y fecha de expiración
             usuario.TokenConfirmacion = Guid.NewGuid().ToString();
             usuario.FechaExpiracionToken = DateTime.Now.AddMinutes(15);
 
+            // 3. Guardar en la base de datos
             _context.Usuarios.Add(usuario);
             await _context.SaveChangesAsync();
 
+            // 4. BITÁCORA
             int cedulaInt = int.TryParse(usuario.Identificacion, out int result) ? result : 0;
             await _bitacora.RegistrarAccionAsync(cedulaInt, $"El administrador registró al usuario {usuario.Identificacion}");
 
+            // 5. Enviar el correo electrónico
             await EnviarCorreoConfirmacion(usuario.Email, usuario.TokenConfirmacion);
 
-            // Retornamos el DTO
-            return new UsuarioActualizacionDto
-            {
-                Identificacion = usuario.Identificacion,
-                Email = usuario.Email,
-                NombreCompleto = usuario.NombreCompleto
-            };
+            return usuario;
         }
 
-        public async Task<UsuarioActualizacionDto> AutoregistroAsync(UsuarioRegistroDto dto)
+        public async Task<bool> AutoregistroAsync(Entities.Usuario usuario, string contrasenaPlana)
         {
-            using var scope = _scopeFactory.CreateScope();
-            var _context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            // 1. Encriptar contraseña y poner estado inicial
+            usuario.ContrasenaEncriptada = BCrypt.Net.BCrypt.HashPassword(contrasenaPlana);
+            usuario.EstadoId = 3; // 3 = Pendiente_Confirmacion
+            usuario.FotografiaBase64 = ""; // Aseguramos que no vaya nulo
 
-            // Mapeamos los datos del DTO a la Entidad Usuario
-            var usuario = new Entities.Usuario
-            {
-                Identificacion = dto.Identificacion,
-                Email = dto.Email,
-                NombreCompleto = dto.NombreCompleto,
-                TipoIdentificacionId = dto.TipoIdentificacionId,
-                TipoUsuarioId = dto.TipoUsuarioId,
-                RolId = dto.RolId,
-                TipoIdentificacion = dto.TipoIdentificacion,
-                TipoUsuario = dto.TipoUsuario,
-                ContrasenaEncriptada = BCrypt.Net.BCrypt.HashPassword(dto.Contrasena), // Encriptamos directo del DTO
-                EstadoId = 3,
-                FotografiaBase64 = "",
-                TokenConfirmacion = Guid.NewGuid().ToString(),
-                FechaExpiracionToken = DateTime.Now.AddMinutes(15)
-            };
+            // 2. Generar Token y fecha de expiración (15 minutos a partir de ahora)
+            usuario.TokenConfirmacion = Guid.NewGuid().ToString();
+            usuario.FechaExpiracionToken = DateTime.Now.AddMinutes(15);
 
+            // 3. Guardar en la base de datos
             _context.Usuarios.Add(usuario);
             await _context.SaveChangesAsync();
 
+            // 4. BITÁCORA
             int cedulaInt = int.TryParse(usuario.Identificacion, out int result) ? result : 0;
             await _bitacora.RegistrarAccionAsync(cedulaInt, $"Autoregistro exitoso. El usuario {usuario.Identificacion} quedó en estado Pendiente.");
 
+            // 5. Enviar el correo electrónico (Ahora con await)
             await EnviarCorreoConfirmacion(usuario.Email, usuario.TokenConfirmacion);
 
-            return new UsuarioActualizacionDto
-            {
-                Identificacion = usuario.Identificacion,
-                Email = usuario.Email,
-                NombreCompleto = usuario.NombreCompleto
-            };
+            return true;
         }
 
         private async Task EnviarCorreoConfirmacion(string emailDestino, string token)
@@ -103,6 +86,7 @@ namespace Microservicio.Usuario.Services
             {
                 string enlaceConfirmacion = $"https://localhost:7123/api/usuario/autoregistro/confirmar?token={token}";
 
+                // 1. Extraemos la sección de configuración del appsettings.json
                 var smtpSettings = _config.GetSection("SmtpSettings");
                 string servidor = smtpSettings["Server"] ?? "smtp.gmail.com";
                 int puerto = int.TryParse(smtpSettings["Port"], out int p) ? p : 587;
@@ -110,18 +94,21 @@ namespace Microservicio.Usuario.Services
                 string contrasenaAplicacion = smtpSettings["AppPassword"];
 
                 MailMessage correo = new MailMessage();
+                // Usamos el correo emisor dinámico de la configuración
                 correo.From = new MailAddress(correoEmisor, "Carnet Digital CUC");
                 correo.To.Add(emailDestino);
                 correo.Subject = "Confirma tu registro en Carnet Digital CUC";
                 correo.Body = $"<h1>Bienvenido</h1><p>Para activar tu cuenta, haz clic en el siguiente enlace antes de 15 minutos:</p><br><a href='{enlaceConfirmacion}'>Confirmar Cuenta</a>";
                 correo.IsBodyHtml = true;
 
+                // 2. Configuramos el cliente SMTP con las variables leídas
                 SmtpClient smtp = new SmtpClient(servidor, puerto);
                 smtp.Credentials = new NetworkCredential(correoEmisor, contrasenaAplicacion);
                 smtp.EnableSsl = true;
 
                 smtp.Send(correo);
 
+                // BITÁCORA (Acción del sistema)
                 await _bitacora.RegistrarAccionAsync(0, $"Sistema: Se envió el correo de confirmación a la dirección {emailDestino}.");
             }
             catch (Exception ex)
@@ -131,11 +118,8 @@ namespace Microservicio.Usuario.Services
             }
         }
 
-        public async Task<UsuarioActualizacionDto?> ConfirmarRegistroAsync(string token)
+        public async Task<bool> ConfirmarRegistroAsync(string token)
         {
-            using var scope = _scopeFactory.CreateScope();
-            var _context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-
             var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.TokenConfirmacion == token);
 
             if (usuario == null) throw new Exception("Token inválido o usuario no encontrado.");
@@ -143,30 +127,24 @@ namespace Microservicio.Usuario.Services
             if (DateTime.Now > usuario.FechaExpiracionToken)
                 throw new Exception("El token ha expirado. Han pasado más de 15 minutos.");
 
-            usuario.EstadoId = 1;
+            // Activar el usuario y limpiar el token por seguridad
+            usuario.EstadoId = 1; // 1 = Activo
             usuario.TokenConfirmacion = null;
             usuario.FechaExpiracionToken = null;
 
             await _context.SaveChangesAsync();
 
+            // BITÁCORA
             int cedulaInt = int.TryParse(usuario.Identificacion, out int result) ? result : 0;
             await _bitacora.RegistrarAccionAsync(cedulaInt, $"El usuario {usuario.Identificacion} confirmó su cuenta exitosamente mediante el token.");
 
-            return new UsuarioActualizacionDto
-            {
-                Identificacion = usuario.Identificacion,
-                Email = usuario.Email,
-                NombreCompleto = usuario.NombreCompleto
-            };
+            return true;
         }
 
-        public async Task<UsuarioActualizacionDto?> CambiarEstadoAsync(string Identificacion, int nuevoEstadoId)
+        public async Task<bool> CambiarEstadoAsync(string Identificacion, int nuevoEstadoId)
         {
-            using var scope = _scopeFactory.CreateScope();
-            var _context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-
             var usuario = await _context.Usuarios.FindAsync(Identificacion);
-            if (usuario == null) return null; // Retornamos null en lugar de false
+            if (usuario == null) return false;
 
             var estadoExiste = await _context.EstadoUsuario.AnyAsync(e => e.Id == nuevoEstadoId);
             if (!estadoExiste) throw new Exception("El estado indicado no existe.");
@@ -174,24 +152,17 @@ namespace Microservicio.Usuario.Services
             usuario.EstadoId = nuevoEstadoId;
             await _context.SaveChangesAsync();
 
+            // BITÁCORA
             int cedulaInt = int.TryParse(usuario.Identificacion, out int result) ? result : 0;
-            await _bitacora.RegistrarAccionAsync(cedulaInt, $"El estado del usuario {usuario.Identificacion} fue cambiado al EstadoId: {usuario.EstadoId}.");
+            await _bitacora.RegistrarAccionAsync(cedulaInt, $"El estado del usuario {usuario.Identificacion} fue cambiado al EstadoId: {usuario.EstadoId}.");   
 
-            return new UsuarioActualizacionDto
-            {
-                Identificacion = usuario.Identificacion,
-                Email = usuario.Email,
-                NombreCompleto = usuario.NombreCompleto
-            };
+            return true;
         }
 
-        public async Task<UsuarioActualizacionDto?> ActualizarFotografiaAsync(FotografiaDto peticion)
+        public async Task<bool> ActualizarFotografiaAsync(string Identificacion, string fotoBase64)
         {
-            using var scope = _scopeFactory.CreateScope();
-            var _context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-
-            int longitud = peticion.FotoBase64.Length;
-            int padding = peticion.FotoBase64.EndsWith("==") ? 2 : (peticion.FotoBase64.EndsWith("=") ? 1 : 0);
+            int longitud = fotoBase64.Length;
+            int padding = fotoBase64.EndsWith("==") ? 2 : (fotoBase64.EndsWith("=") ? 1 : 0);
             long pesoBytes = (long)(longitud * 3 / 4) - padding;
 
             if (pesoBytes > 1048576)
@@ -199,30 +170,21 @@ namespace Microservicio.Usuario.Services
                 throw new Exception("La imagen supera el límite de 1MB.");
             }
 
-            // Buscamos usando el DTO
-            var usuario = await _context.Usuarios.FindAsync(peticion.Identificacion);
-            if (usuario == null) return null;
+            var usuario = await _context.Usuarios.FindAsync(Identificacion);
+            if (usuario == null) return false;
 
-            // Actualizamos usando el DTO
-            usuario.FotografiaBase64 = peticion.FotoBase64;
+            usuario.FotografiaBase64 = fotoBase64;
             await _context.SaveChangesAsync();
 
+            // BITÁCORA
             int cedulaInt = int.TryParse(usuario.Identificacion, out int result) ? result : 0;
             await _bitacora.RegistrarAccionAsync(cedulaInt, $"El usuario {usuario.Identificacion} actualizó su fotografía del carnet.");
 
-            return new UsuarioActualizacionDto
-            {
-                Identificacion = usuario.Identificacion,
-                Email = usuario.Email,
-                NombreCompleto = usuario.NombreCompleto
-            };
+            return true;
         }
 
         public async Task<string> GenerarQRBase64Async(string identificacion)
         {
-            using var scope = _scopeFactory.CreateScope();
-            var _context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-
             var usuario = await _context.Usuarios
                 .FirstOrDefaultAsync(u => u.Identificacion == identificacion);
 
@@ -247,56 +209,40 @@ namespace Microservicio.Usuario.Services
             using PngByteQRCode qrCode = new PngByteQRCode(qrCodeData);
             byte[] qrCodeImageBytes = qrCode.GetGraphic(20);
 
+            // BITÁCORA
             int cedulaInt = int.TryParse(identificacion, out int result) ? result : 0;
             await _bitacora.RegistrarAccionAsync(cedulaInt, $"Se generó y consultó el código QR para la identificación {identificacion}.");
 
             return Convert.ToBase64String(qrCodeImageBytes);
         }
 
-        public async Task<UsuarioActualizacionDto?> ActualizarUsuarioAsync(UsuarioActualizacionDto registro)
+        public async Task<bool> ActualizarUsuarioAsync(UsuarioActualizacionDto registro)
         {
-            using var scope = _scopeFactory.CreateScope();
-            var _context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-
             var usuario = await _context.Usuarios.FindAsync(registro.Identificacion);
-            if (usuario == null) return null;
+            if (usuario == null) return false;
 
             usuario.NombreCompleto = registro.NombreCompleto;
-            usuario.Email = registro.Email;
+            usuario.Email = registro.Email; // <--- Esto está bien, el correo es mutable ahora
 
             await _context.SaveChangesAsync();
 
+            // BITÁCORA
             int cedulaInt = int.TryParse(registro.Identificacion, out int result) ? result : 0;
             await _bitacora.RegistrarAccionAsync(cedulaInt, $"Se modificaron los datos personales del usuario {registro.Identificacion}.");
 
-            return new UsuarioActualizacionDto
-            {
-                Identificacion = usuario.Identificacion,
-                Email = usuario.Email,
-                NombreCompleto = usuario.NombreCompleto
-            };
+            return true;
         }
 
-        public async Task<UsuarioActualizacionDto?> EliminarUsuarioAsync(string identificacion)
+        public async Task<bool> EliminarUsuarioAsync(string identificacion) // <-- CAMBIO AQUÍ
         {
-            using var scope = _scopeFactory.CreateScope();
-            var _context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-
-            var usuario = await _context.Usuarios.FindAsync(identificacion);
+            // FindAsync busca automáticamente por la Llave Primaria (que ahora es la cédula)
+            var usuario = await _context.Usuarios.FindAsync(identificacion); // <-- CAMBIO AQUÍ
 
             if (usuario == null)
             {
                 await _bitacora.RegistrarAccionAsync(0, $"Alerta: Intento fallido de eliminación. Usuario {identificacion} no encontrado.");
-                return null;
+                return false;
             }
-
-            // Rescatamos los datos antes de eliminarlos de la BD
-            var datosEliminados = new UsuarioActualizacionDto
-            {
-                Identificacion = usuario.Identificacion,
-                Email = usuario.Email,
-                NombreCompleto = usuario.NombreCompleto
-            };
 
             _context.Usuarios.Remove(usuario);
             await _context.SaveChangesAsync();
@@ -304,7 +250,7 @@ namespace Microservicio.Usuario.Services
             int cedulaInt = int.TryParse(usuario.Identificacion, out int result) ? result : 0;
             await _bitacora.RegistrarAccionAsync(cedulaInt, $"El usuario con cédula {usuario.Identificacion} fue eliminado permanentemente del sistema.");
 
-            return datosEliminados;
+            return true;
         }
     }
 }

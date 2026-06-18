@@ -27,25 +27,20 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("UsuariosDb")));
 
-// 3. Herramientas del Sistema
+// 3. Inyección de tu Servicio
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+
+builder.Services.AddControllers();
+
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddAuthorization();
 
-// 4. INYECCIÓN DE DEPENDENCIAS (Minimal APIs Architecture)
-// AddHttpClient inyecta el HttpClient y registra automáticamente la Bitácora. ¡No ocupa AddSingleton!
+// 4. HttpClient para BitacoraApiClient
 builder.Services.AddHttpClient<IBitacoraService, BitacoraApiClient>();
-
-// Registramos el servicio principal como Singleton (utilizando el ScopeFactory internamente)
-builder.Services.AddSingleton<IUsuarioService, UsuarioService>();
 
 var app = builder.Build();
 
-// 5. MAPEO DE MINIMAL APIs
-app.MapUsuarioEndpoints();
-
-// 6. PIPELINE HTTP
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.MapControllers();
 app.Run();
