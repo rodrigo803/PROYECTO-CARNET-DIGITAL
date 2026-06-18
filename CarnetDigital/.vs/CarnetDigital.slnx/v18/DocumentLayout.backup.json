@@ -36,7 +36,7 @@
               "RelativeDocumentMoniker": "Microservicio.Usuario\\Services\\UsuarioEndpoints.cs",
               "ToolTip": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Usuario\\Services\\UsuarioEndpoints.cs",
               "RelativeToolTip": "Microservicio.Usuario\\Services\\UsuarioEndpoints.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAgwCUAAAAmAAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAgwCAAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-18T05:53:27.487Z",
               "EditorCaption": ""
@@ -51,8 +51,7 @@
               "RelativeToolTip": "Microservicio.Usuario\\Services\\CatalogosApiClient.cs",
               "ViewState": "AgIAACIAAAAAAAAAAAAiwDkAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-18T05:40:59.111Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-18T05:40:59.111Z"
             }
           ]
         }
