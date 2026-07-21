@@ -3,12 +3,56 @@
   "WorkspaceRootPath": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{409A12A5-97EB-0285-32B1-333587BC52AE}|Microservicio.Usuario\\Microservicio.Usuario.csproj|c:\\users\\rodri\\documents\\proyectos git\\proyecto-carnet-digital\\carnetdigital\\microservicio.usuario\\services\\usuarioendpoints.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{409A12A5-97EB-0285-32B1-333587BC52AE}|Microservicio.Usuario\\Microservicio.Usuario.csproj|solutionrelative:microservicio.usuario\\services\\usuarioendpoints.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E0CF225C-D4CD-429B-AE7D-0C83F5C3B248}|Microservicio.Carreras\\Microservicio.Carreras.csproj|c:\\users\\rodri\\documents\\proyectos git\\proyecto-carnet-digital\\carnetdigital\\microservicio.carreras\\carrerasendpoints.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0CF225C-D4CD-429B-AE7D-0C83F5C3B248}|Microservicio.Carreras\\Microservicio.Carreras.csproj|solutionrelative:microservicio.carreras\\carrerasendpoints.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{409A12A5-97EB-0285-32B1-333587BC52AE}|Microservicio.Usuario\\Microservicio.Usuario.csproj|c:\\users\\rodri\\documents\\proyectos git\\proyecto-carnet-digital\\carnetdigital\\microservicio.usuario\\services\\catalogosapiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{409A12A5-97EB-0285-32B1-333587BC52AE}|Microservicio.Usuario\\Microservicio.Usuario.csproj|solutionrelative:microservicio.usuario\\services\\catalogosapiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E0CF225C-D4CD-429B-AE7D-0C83F5C3B248}|Microservicio.Carreras\\Microservicio.Carreras.csproj|c:\\users\\rodri\\documents\\proyectos git\\proyecto-carnet-digital\\carnetdigital\\microservicio.carreras\\services\\institucionesvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0CF225C-D4CD-429B-AE7D-0C83F5C3B248}|Microservicio.Carreras\\Microservicio.Carreras.csproj|solutionrelative:microservicio.carreras\\services\\institucionesvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E0CF225C-D4CD-429B-AE7D-0C83F5C3B248}|Microservicio.Carreras\\Microservicio.Carreras.csproj|c:\\users\\rodri\\documents\\proyectos git\\proyecto-carnet-digital\\carnetdigital\\microservicio.carreras\\services\\iinstitucionesvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0CF225C-D4CD-429B-AE7D-0C83F5C3B248}|Microservicio.Carreras\\Microservicio.Carreras.csproj|solutionrelative:microservicio.carreras\\services\\iinstitucionesvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E0CF225C-D4CD-429B-AE7D-0C83F5C3B248}|Microservicio.Carreras\\Microservicio.Carreras.csproj|c:\\users\\rodri\\documents\\proyectos git\\proyecto-carnet-digital\\carnetdigital\\microservicio.carreras\\services\\icarrerasservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0CF225C-D4CD-429B-AE7D-0C83F5C3B248}|Microservicio.Carreras\\Microservicio.Carreras.csproj|solutionrelative:microservicio.carreras\\services\\icarrerasservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E0CF225C-D4CD-429B-AE7D-0C83F5C3B248}|Microservicio.Carreras\\Microservicio.Carreras.csproj|c:\\users\\rodri\\documents\\proyectos git\\proyecto-carnet-digital\\carnetdigital\\microservicio.carreras\\services\\ibitacoraservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0CF225C-D4CD-429B-AE7D-0C83F5C3B248}|Microservicio.Carreras\\Microservicio.Carreras.csproj|solutionrelative:microservicio.carreras\\services\\ibitacoraservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E0CF225C-D4CD-429B-AE7D-0C83F5C3B248}|Microservicio.Carreras\\Microservicio.Carreras.csproj|c:\\users\\rodri\\documents\\proyectos git\\proyecto-carnet-digital\\carnetdigital\\microservicio.carreras\\services\\carrerasservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0CF225C-D4CD-429B-AE7D-0C83F5C3B248}|Microservicio.Carreras\\Microservicio.Carreras.csproj|solutionrelative:microservicio.carreras\\services\\carrerasservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E0CF225C-D4CD-429B-AE7D-0C83F5C3B248}|Microservicio.Carreras\\Microservicio.Carreras.csproj|c:\\users\\rodri\\documents\\proyectos git\\proyecto-carnet-digital\\carnetdigital\\microservicio.carreras\\services\\bitacoraservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0CF225C-D4CD-429B-AE7D-0C83F5C3B248}|Microservicio.Carreras\\Microservicio.Carreras.csproj|solutionrelative:microservicio.carreras\\services\\bitacoraservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E0CF225C-D4CD-429B-AE7D-0C83F5C3B248}|Microservicio.Carreras\\Microservicio.Carreras.csproj|c:\\users\\rodri\\documents\\proyectos git\\proyecto-carnet-digital\\carnetdigital\\microservicio.carreras\\repository\\icarrerasrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0CF225C-D4CD-429B-AE7D-0C83F5C3B248}|Microservicio.Carreras\\Microservicio.Carreras.csproj|solutionrelative:microservicio.carreras\\repository\\icarrerasrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E0CF225C-D4CD-429B-AE7D-0C83F5C3B248}|Microservicio.Carreras\\Microservicio.Carreras.csproj|c:\\users\\rodri\\documents\\proyectos git\\proyecto-carnet-digital\\carnetdigital\\microservicio.carreras\\repository\\carrerasrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0CF225C-D4CD-429B-AE7D-0C83F5C3B248}|Microservicio.Carreras\\Microservicio.Carreras.csproj|solutionrelative:microservicio.carreras\\repository\\carrerasrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E0CF225C-D4CD-429B-AE7D-0C83F5C3B248}|Microservicio.Carreras\\Microservicio.Carreras.csproj|c:\\users\\rodri\\documents\\proyectos git\\proyecto-carnet-digital\\carnetdigital\\microservicio.carreras\\entities\\institucioninfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0CF225C-D4CD-429B-AE7D-0C83F5C3B248}|Microservicio.Carreras\\Microservicio.Carreras.csproj|solutionrelative:microservicio.carreras\\entities\\institucioninfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E0CF225C-D4CD-429B-AE7D-0C83F5C3B248}|Microservicio.Carreras\\Microservicio.Carreras.csproj|c:\\users\\rodri\\documents\\proyectos git\\proyecto-carnet-digital\\carnetdigital\\microservicio.carreras\\entities\\carrera.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0CF225C-D4CD-429B-AE7D-0C83F5C3B248}|Microservicio.Carreras\\Microservicio.Carreras.csproj|solutionrelative:microservicio.carreras\\entities\\carrera.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E0CF225C-D4CD-429B-AE7D-0C83F5C3B248}|Microservicio.Carreras\\Microservicio.Carreras.csproj|c:\\users\\rodri\\documents\\proyectos git\\proyecto-carnet-digital\\carnetdigital\\microservicio.carreras\\entities\\bitacorarequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0CF225C-D4CD-429B-AE7D-0C83F5C3B248}|Microservicio.Carreras\\Microservicio.Carreras.csproj|solutionrelative:microservicio.carreras\\entities\\bitacorarequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E0CF225C-D4CD-429B-AE7D-0C83F5C3B248}|Microservicio.Carreras\\Microservicio.Carreras.csproj|c:\\users\\rodri\\documents\\proyectos git\\proyecto-carnet-digital\\carnetdigital\\microservicio.carreras\\data\\carrerasdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0CF225C-D4CD-429B-AE7D-0C83F5C3B248}|Microservicio.Carreras\\Microservicio.Carreras.csproj|solutionrelative:microservicio.carreras\\data\\carrerasdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -31,27 +75,171 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "UsuarioEndpoints.cs",
-              "DocumentMoniker": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Usuario\\Services\\UsuarioEndpoints.cs",
-              "RelativeDocumentMoniker": "Microservicio.Usuario\\Services\\UsuarioEndpoints.cs",
-              "ToolTip": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Usuario\\Services\\UsuarioEndpoints.cs",
-              "RelativeToolTip": "Microservicio.Usuario\\Services\\UsuarioEndpoints.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAgwCAAAAArAAAAAAAAAA==",
+              "Title": "CarrerasEndpoints.cs",
+              "DocumentMoniker": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\CarrerasEndpoints.cs",
+              "RelativeDocumentMoniker": "Microservicio.Carreras\\CarrerasEndpoints.cs",
+              "ToolTip": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\CarrerasEndpoints.cs",
+              "RelativeToolTip": "Microservicio.Carreras\\CarrerasEndpoints.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAAABcAAABcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-18T05:53:27.487Z",
+              "WhenOpened": "2026-06-19T02:33:57.539Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "CatalogosApiClient.cs",
-              "DocumentMoniker": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Usuario\\Services\\CatalogosApiClient.cs",
-              "RelativeDocumentMoniker": "Microservicio.Usuario\\Services\\CatalogosApiClient.cs",
-              "ToolTip": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Usuario\\Services\\CatalogosApiClient.cs",
-              "RelativeToolTip": "Microservicio.Usuario\\Services\\CatalogosApiClient.cs",
-              "ViewState": "AgIAACIAAAAAAAAAAAAiwDkAAAANAAAAAAAAAA==",
+              "Title": "InstitucionesValidator.cs",
+              "DocumentMoniker": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Services\\InstitucionesValidator.cs",
+              "RelativeDocumentMoniker": "Microservicio.Carreras\\Services\\InstitucionesValidator.cs",
+              "ToolTip": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Services\\InstitucionesValidator.cs",
+              "RelativeToolTip": "Microservicio.Carreras\\Services\\InstitucionesValidator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-18T05:40:59.111Z"
+              "WhenOpened": "2026-06-19T02:33:51.064Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IInstitucionesValidator.cs",
+              "DocumentMoniker": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Services\\IInstitucionesValidator.cs",
+              "RelativeDocumentMoniker": "Microservicio.Carreras\\Services\\IInstitucionesValidator.cs",
+              "ToolTip": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Services\\IInstitucionesValidator.cs",
+              "RelativeToolTip": "Microservicio.Carreras\\Services\\IInstitucionesValidator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-19T02:33:47.621Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ICarrerasService.cs",
+              "DocumentMoniker": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Services\\ICarrerasService.cs",
+              "RelativeDocumentMoniker": "Microservicio.Carreras\\Services\\ICarrerasService.cs",
+              "ToolTip": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Services\\ICarrerasService.cs",
+              "RelativeToolTip": "Microservicio.Carreras\\Services\\ICarrerasService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-19T02:33:36.764Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IBitacoraService.cs",
+              "DocumentMoniker": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Services\\IBitacoraService.cs",
+              "RelativeDocumentMoniker": "Microservicio.Carreras\\Services\\IBitacoraService.cs",
+              "ToolTip": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Services\\IBitacoraService.cs",
+              "RelativeToolTip": "Microservicio.Carreras\\Services\\IBitacoraService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-19T02:33:34.571Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CarrerasService.cs",
+              "DocumentMoniker": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Services\\CarrerasService.cs",
+              "RelativeDocumentMoniker": "Microservicio.Carreras\\Services\\CarrerasService.cs",
+              "ToolTip": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Services\\CarrerasService.cs",
+              "RelativeToolTip": "Microservicio.Carreras\\Services\\CarrerasService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-19T02:33:24.1Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "BitacoraService.cs",
+              "DocumentMoniker": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Services\\BitacoraService.cs",
+              "RelativeDocumentMoniker": "Microservicio.Carreras\\Services\\BitacoraService.cs",
+              "ToolTip": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Services\\BitacoraService.cs",
+              "RelativeToolTip": "Microservicio.Carreras\\Services\\BitacoraService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-19T02:33:21.877Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ICarrerasRepository.cs",
+              "DocumentMoniker": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Repository\\ICarrerasRepository.cs",
+              "RelativeDocumentMoniker": "Microservicio.Carreras\\Repository\\ICarrerasRepository.cs",
+              "ToolTip": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Repository\\ICarrerasRepository.cs",
+              "RelativeToolTip": "Microservicio.Carreras\\Repository\\ICarrerasRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-19T02:33:17.288Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "CarrerasRepository.cs",
+              "DocumentMoniker": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Repository\\CarrerasRepository.cs",
+              "RelativeDocumentMoniker": "Microservicio.Carreras\\Repository\\CarrerasRepository.cs",
+              "ToolTip": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Repository\\CarrerasRepository.cs",
+              "RelativeToolTip": "Microservicio.Carreras\\Repository\\CarrerasRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-19T02:33:15.299Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "InstitucionInfo.cs",
+              "DocumentMoniker": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Entities\\InstitucionInfo.cs",
+              "RelativeDocumentMoniker": "Microservicio.Carreras\\Entities\\InstitucionInfo.cs",
+              "ToolTip": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Entities\\InstitucionInfo.cs",
+              "RelativeToolTip": "Microservicio.Carreras\\Entities\\InstitucionInfo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-19T02:33:08.709Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Carrera.cs",
+              "DocumentMoniker": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Entities\\Carrera.cs",
+              "RelativeDocumentMoniker": "Microservicio.Carreras\\Entities\\Carrera.cs",
+              "ToolTip": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Entities\\Carrera.cs",
+              "RelativeToolTip": "Microservicio.Carreras\\Entities\\Carrera.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-19T02:33:06.896Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "BitacoraRequest.cs",
+              "DocumentMoniker": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Entities\\BitacoraRequest.cs",
+              "RelativeDocumentMoniker": "Microservicio.Carreras\\Entities\\BitacoraRequest.cs",
+              "ToolTip": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Entities\\BitacoraRequest.cs",
+              "RelativeToolTip": "Microservicio.Carreras\\Entities\\BitacoraRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-19T02:33:05.144Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "CarrerasDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Data\\CarrerasDbContext.cs",
+              "RelativeDocumentMoniker": "Microservicio.Carreras\\Data\\CarrerasDbContext.cs",
+              "ToolTip": "C:\\Users\\rodri\\Documents\\PROYECTOS GIT\\PROYECTO-CARNET-DIGITAL\\CarnetDigital\\Microservicio.Carreras\\Data\\CarrerasDbContext.cs",
+              "RelativeToolTip": "Microservicio.Carreras\\Data\\CarrerasDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-19T02:33:00.463Z",
+              "EditorCaption": ""
             }
           ]
         }
