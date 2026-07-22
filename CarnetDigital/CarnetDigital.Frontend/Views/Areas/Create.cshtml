@@ -1,0 +1,12 @@
+@model CarnetDigital.Frontend.Models.Areas.AreaFormViewModel
+@{
+    ViewData["Title"] = "Nueva área de trabajo";
+}
+
+<h1>Nueva área de trabajo</h1>
+
+@await Html.PartialAsync("_Form", Model)
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
