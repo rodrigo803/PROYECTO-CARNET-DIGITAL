@@ -1,10 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using CarnetDigital.Frontend.Validation;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace CarnetDigital.Frontend.Models.Carreras
+namespace CarnetDigital.Frontend.Models.Instituciones
 {
-    public class CarreraFormViewModel
+    public class InstitucionFormViewModel
     {
         public int Id { get; set; }
 
@@ -13,12 +12,6 @@ namespace CarnetDigital.Frontend.Models.Carreras
         [NotWhitespace]
         [MaxLength(200, ErrorMessage = "El nombre no puede superar los 200 caracteres.")]
         public string Nombre { get; set; } = string.Empty;
-
-        [Display(Name = "Director")]
-        [Required(ErrorMessage = "El director es obligatorio.")]
-        [NotWhitespace]
-        [MaxLength(200, ErrorMessage = "El director no puede superar los 200 caracteres.")]
-        public string Director { get; set; } = string.Empty;
 
         [Display(Name = "Correo electrónico")]
         [Required(ErrorMessage = "El correo electrónico es obligatorio.")]
@@ -34,12 +27,9 @@ namespace CarnetDigital.Frontend.Models.Carreras
         [MaxLength(20, ErrorMessage = "El teléfono no puede superar los 20 caracteres.")]
         public string Telefono { get; set; } = string.Empty;
 
-        [Display(Name = "Institución")]
-        [Required(ErrorMessage = "Debe seleccionar una institución")]
-        public int? IdInstitucion { get; set; }
-
-        public List<SelectListItem> Instituciones { get; set; } = new();
-
-        public bool HayInstitucionesActivas => Instituciones.Count > 0;
+        [Display(Name = "Dominios")]
+        [Required(ErrorMessage = "Los dominios son obligatorios.")]
+        [AlMenosUnDominio]
+        public string DominiosTexto { get; set; } = string.Empty;
     }
 }

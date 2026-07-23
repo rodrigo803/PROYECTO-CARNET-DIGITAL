@@ -9,8 +9,9 @@ namespace CarnetDigital.Frontend.Models.Areas
         public int Id { get; set; }
 
         [Display(Name = "Nombre")]
+        [Required(ErrorMessage = "El nombre es obligatorio.")]
         [NotWhitespace]
-        [MaxLength(200)]
+        [MaxLength(200, ErrorMessage = "El nombre no puede superar los 200 caracteres.")]
         public string Nombre { get; set; } = string.Empty;
 
         [Display(Name = "Institución")]

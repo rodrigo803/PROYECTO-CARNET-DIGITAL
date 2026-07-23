@@ -53,6 +53,12 @@ builder.Services.AddHttpClient<ICarrerasApiService, CarrerasApiService>((sp, cli
     client.BaseAddress = new Uri(opciones.CarrerasServiceUrl);
 }).AddHttpMessageHandler<BearerTokenHandler>();
 
+builder.Services.AddHttpClient<IInstitucionesCrudApiService, InstitucionesCrudApiService>((sp, client) =>
+{
+    var opciones = sp.GetRequiredService<IOptions<MicroserviciosOptions>>().Value;
+    client.BaseAddress = new Uri(opciones.InstitucionesServiceUrl);
+}).AddHttpMessageHandler<BearerTokenHandler>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

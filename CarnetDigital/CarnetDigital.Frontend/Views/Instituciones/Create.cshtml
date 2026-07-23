@@ -1,0 +1,12 @@
+@model CarnetDigital.Frontend.Models.Instituciones.InstitucionFormViewModel
+@{
+    ViewData["Title"] = "Nueva institución";
+}
+
+<h1>Nueva institución</h1>
+
+@await Html.PartialAsync("_Form", Model)
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
