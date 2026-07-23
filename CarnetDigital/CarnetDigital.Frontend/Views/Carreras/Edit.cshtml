@@ -1,0 +1,12 @@
+@model CarnetDigital.Frontend.Models.Carreras.CarreraFormViewModel
+@{
+    ViewData["Title"] = "Editar carrera";
+}
+
+<h1>Editar carrera</h1>
+
+@await Html.PartialAsync("_Form", Model)
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

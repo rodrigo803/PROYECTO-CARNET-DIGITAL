@@ -2,6 +2,7 @@ using CarnetDigital.Frontend.Http;
 using CarnetDigital.Frontend.Options;
 using CarnetDigital.Frontend.Services.Areas;
 using CarnetDigital.Frontend.Services.Auth;
+using CarnetDigital.Frontend.Services.Carreras;
 using CarnetDigital.Frontend.Services.Instituciones;
 using Microsoft.Extensions.Options;
 
@@ -44,6 +45,12 @@ builder.Services.AddHttpClient<IInstitucionesApiService, InstitucionesApiService
 {
     var opciones = sp.GetRequiredService<IOptions<MicroserviciosOptions>>().Value;
     client.BaseAddress = new Uri(opciones.InstitucionesServiceUrl);
+}).AddHttpMessageHandler<BearerTokenHandler>();
+
+builder.Services.AddHttpClient<ICarrerasApiService, CarrerasApiService>((sp, client) =>
+{
+    var opciones = sp.GetRequiredService<IOptions<MicroserviciosOptions>>().Value;
+    client.BaseAddress = new Uri(opciones.CarrerasServiceUrl);
 }).AddHttpMessageHandler<BearerTokenHandler>();
 
 var app = builder.Build();
