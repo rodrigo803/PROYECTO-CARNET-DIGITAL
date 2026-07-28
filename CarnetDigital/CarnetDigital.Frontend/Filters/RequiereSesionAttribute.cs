@@ -31,7 +31,7 @@ namespace CarnetDigital.Frontend.Filters
             var tempData = _tempDataFactory.GetTempData(context.HttpContext);
             tempData["Error"] = "Por favor inicie sesión para utilizar el sistema";
 
-            context.Result = new RedirectToActionResult("Login", "TempAuth", null);
+            context.Result = new RedirectToActionResult("Login", "Auth", null);
         }
 
         public void OnActionExecuted(ActionExecutedContext context)

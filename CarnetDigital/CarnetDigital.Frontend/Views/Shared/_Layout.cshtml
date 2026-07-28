@@ -1,81 +1,105 @@
-﻿@using CarnetDigital.Frontend.Services.Auth
+@using CarnetDigital.Frontend.Services.Auth
 @inject ITokenProvider TokenProvider
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - CarnetDigital.Frontend</title>
-    <script type="importmap"></script>
+    <title>@ViewData["Title"] - Carnet Digital</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CarnetDigital.Frontend.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CarnetDigital.Frontend</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        @if (TokenProvider.IsAuthenticated())
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Areas" asp-action="Index">Áreas</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Carreras" asp-action="Index">Carreras</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Instituciones" asp-action="Index">Instituciones</a>
-                            </li>
-                        }
-                    </ul>
-                    <ul class="navbar-nav">
-                        @if (TokenProvider.IsAuthenticated())
-                        {
-                            <li class="nav-item">
-                                <form asp-controller="TempAuth" asp-action="Logout" method="post" class="d-flex">
-                                    <button type="submit" class="btn btn-link nav-link text-dark">Cerrar sesión</button>
-                                </form>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="TempAuth" asp-action="Login">Iniciar sesión</a>
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            <partial name="_Alert" />
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - CarnetDigital.Frontend - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+@if (TokenProvider.IsAuthenticated())
+{
+    <div class="d-flex">
+
+        <div class="bg-dark text-white p-3" style="width:250px; min-height:100vh;">
+
+            <h4>
+                <i class="bi bi-person-badge"></i>
+                Carnet Digital
+            </h4>
+
+            <hr />
+
+            <ul class="nav flex-column">
+
+                <li class="nav-item">
+                    <a asp-controller="Home" asp-action="Index" class="nav-link text-white">
+                        <i class="bi bi-house"></i>
+                        Inicio
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a asp-controller="Areas" asp-action="Index" class="nav-link text-white">
+                        <i class="bi bi-diagram-3"></i>
+                        Áreas
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a asp-controller="Carreras" asp-action="Index" class="nav-link text-white">
+                        <i class="bi bi-mortarboard"></i>
+                        Carreras
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a asp-controller="Instituciones" asp-action="Index" class="nav-link text-white">
+                        <i class="bi bi-building"></i>
+                        Instituciones
+                    </a>
+                </li>
+
+                <li class="nav-item mt-3">
+                    <form asp-controller="Auth" asp-action="Logout" method="post">
+                        <button type="submit" class="btn btn-link nav-link text-white p-0">
+                            <i class="bi bi-box-arrow-right"></i>
+                            Cerrar sesión
+                        </button>
+                    </form>
+                </li>
+
+            </ul>
+
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+
+        <div class="flex-grow-1">
+
+            <nav class="navbar navbar-light bg-light border-bottom">
+                <div class="container-fluid justify-content-end">
+                    <i class="bi bi-person-circle fs-3"></i>
+                </div>
+            </nav>
+
+            <main class="p-4">
+                <partial name="_Alert" />
+                @RenderBody()
+            </main>
+
+        </div>
+
+    </div>
+}
+else
+{
+    <div class="container mt-4">
+        <partial name="_Alert" />
+        @RenderBody()
+    </div>
+}
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+@await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

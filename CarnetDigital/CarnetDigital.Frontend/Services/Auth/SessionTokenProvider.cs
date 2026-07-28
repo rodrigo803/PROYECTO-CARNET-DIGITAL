@@ -1,9 +1,9 @@
-// TEMPORAL - reemplazar con Web1
 namespace CarnetDigital.Frontend.Services.Auth
 {
     public class SessionTokenProvider : ITokenProvider
     {
         private const string SessionKey = "AuthToken";
+        private const string UsernameKey = "AuthUsername";
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public SessionTokenProvider(IHttpContextAccessor httpContextAccessor)
@@ -17,8 +17,16 @@ namespace CarnetDigital.Frontend.Services.Auth
 
         public void SetToken(string token) => Session.SetString(SessionKey, token);
 
-        public void ClearToken() => Session.Remove(SessionKey);
+        public void ClearToken()
+        {
+            Session.Remove(SessionKey);
+            Session.Remove(UsernameKey);
+        }
 
         public bool IsAuthenticated() => !string.IsNullOrWhiteSpace(GetToken());
+
+        public string? GetUsername() => Session.GetString(UsernameKey);
+
+        public void SetUsername(string username) => Session.SetString(UsernameKey, username);
     }
 }

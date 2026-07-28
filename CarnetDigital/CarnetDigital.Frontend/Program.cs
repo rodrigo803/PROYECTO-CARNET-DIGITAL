@@ -8,7 +8,7 @@ using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Añadir servicios a contenedor
 builder.Services.AddControllersWithViews();
 
 builder.Services.Configure<MicroserviciosOptions>(builder.Configuration.GetSection("MicroserviciosUrls"));
@@ -23,13 +23,11 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
-// TEMPORAL - reemplazar con Web1: solo esta línea cambia cuando llegue el login real.
 builder.Services.AddScoped<ITokenProvider, SessionTokenProvider>();
 
 builder.Services.AddTransient<BearerTokenHandler>();
 
-// TEMPORAL - reemplazar con Web1
-builder.Services.AddHttpClient("AuthServiceClient", (sp, client) =>
+builder.Services.AddHttpClient<IAuthService, AuthService>((sp, client) =>
 {
     var opciones = sp.GetRequiredService<IOptions<MicroserviciosOptions>>().Value;
     client.BaseAddress = new Uri(opciones.AuthServiceUrl);
@@ -61,11 +59,10 @@ builder.Services.AddHttpClient<IInstitucionesCrudApiService, InstitucionesCrudAp
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configur el request de http
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

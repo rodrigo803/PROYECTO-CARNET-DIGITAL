@@ -7,5 +7,7 @@ namespace CarnetDigital.Frontend.Services.Auth
         void SetToken(string token);
         void ClearToken();
         bool IsAuthenticated();
+        string? GetUsername();
+        void SetUsername(string username);
     }
 }
