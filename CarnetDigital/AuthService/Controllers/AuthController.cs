@@ -37,16 +37,40 @@ namespace AuthService.Controllers
             using var conn = _db.CreateConnection();
 
             var user = await conn.QueryFirstOrDefaultAsync<dynamic>(
-                @"SELECT * FROM UsersAuth 
+                @"SELECT * FROM UsersAuth
                   WHERE Email = @email AND UserType = @type",
                 new { email = request.usuario, type = request.tipousuario }
             );
 
-            if (user == null ||
-                !BCrypt.Net.BCrypt.Verify(request.contrasena, (string)user.PasswordHash))
+            if (user == null)
             {
                 return Unauthorized(new { mensaje = "Usuario y/o contraseña incorrectos" });
             }
+
+            if ((bool)user.Bloqueado)
+            {
+                return StatusCode(403, new { mensaje = "Su usuario ha sido bloqueado por exceder el número de intentos permitidos." });
+            }
+
+            if (!BCrypt.Net.BCrypt.Verify(request.contrasena, (string)user.PasswordHash))
+            {
+                var quedoBloqueado = await conn.ExecuteScalarAsync<bool>(@"
+                    UPDATE UsersAuth
+                    SET IntentosFallidos = IntentosFallidos + 1,
+                        Bloqueado = CASE WHEN IntentosFallidos + 1 >= 3 THEN 1 ELSE Bloqueado END
+                    OUTPUT INSERTED.Bloqueado
+                    WHERE Id = @id",
+                    new { id = user.Id });
+
+                if (quedoBloqueado)
+                {
+                    return StatusCode(403, new { mensaje = "Su usuario ha sido bloqueado por exceder el número de intentos permitidos." });
+                }
+
+                return Unauthorized(new { mensaje = "Usuario y/o contraseña incorrectos" });
+            }
+
+            await conn.ExecuteAsync("UPDATE UsersAuth SET IntentosFallidos = 0 WHERE Id = @id", new { id = user.Id });
 
             // ✅ JWT
             var (token, exp) = _jwt.GenerateToken((int)user.Id);
