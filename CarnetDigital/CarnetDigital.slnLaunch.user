@@ -21,6 +21,10 @@
       {
         "Path": "Microservicio.Carreras\\Microservicio.Carreras.csproj",
         "Action": "Start"
+      },
+      {
+        "Path": "ParameterService\\ParameterService.csproj",
+        "Action": "Start"
       }
     ]
   }

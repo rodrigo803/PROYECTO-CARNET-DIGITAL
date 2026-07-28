@@ -6,5 +6,6 @@ namespace CarnetDigital.Frontend.Options
         public string AreasServiceUrl { get; set; } = string.Empty;
         public string InstitucionesServiceUrl { get; set; } = string.Empty;
         public string CarrerasServiceUrl { get; set; } = string.Empty;
+        public string ParametrosServiceUrl { get; set; } = string.Empty;
     }
 }
