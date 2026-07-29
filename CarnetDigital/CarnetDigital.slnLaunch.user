@@ -25,6 +25,14 @@
       {
         "Path": "ParameterService\\ParameterService.csproj",
         "Action": "Start"
+      },
+      {
+        "Path": "AccessControlService\\AccessControlService.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "AuditService\\AuditService.csproj",
+        "Action": "Start"
       }
     ]
   }

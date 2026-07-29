@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="AccessControlService/AccessControlService.csproj" />
   <Project Path="AuditService/AuditService.csproj" />
   <Project Path="AuthService/AuthService.csproj" />
   <Project Path="CarnetDigital.Frontend/CarnetDigital.Frontend.csproj" Id="08858e1d-8105-49fc-bc44-634661255253" />
