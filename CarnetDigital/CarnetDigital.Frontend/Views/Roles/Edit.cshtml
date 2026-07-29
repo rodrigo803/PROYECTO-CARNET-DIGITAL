@@ -1,0 +1,12 @@
+@model CarnetDigital.Frontend.Models.Roles.RolFormViewModel
+@{
+    ViewData["Title"] = "Editar rol";
+}
+
+<h1>Editar rol</h1>
+
+@await Html.PartialAsync("_Form", Model)
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

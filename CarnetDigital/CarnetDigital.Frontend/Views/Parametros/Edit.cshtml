@@ -1,0 +1,12 @@
+@model CarnetDigital.Frontend.Models.Parametros.ParametroFormViewModel
+@{
+    ViewData["Title"] = "Editar parámetro";
+}
+
+<h1>Editar parámetro</h1>
+
+@await Html.PartialAsync("_Form", Model)
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

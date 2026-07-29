@@ -1,0 +1,89 @@
+@model CarnetDigital.Frontend.Models.Shared.PagedResult<CarnetDigital.Frontend.Models.Roles.RolDto>
+@{
+    ViewData["Title"] = "Roles";
+}
+
+<h1>Roles</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Nuevo</a>
+</p>
+
+@if (!Model.Items.Any())
+{
+    <p>No hay roles registrados.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Pantallas</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rol in Model.Items)
+            {
+                <tr>
+                    <td>@rol.Id</td>
+                    <td>@rol.Nombre</td>
+                    <td>@string.Join(", ", rol.Pantallas)</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@rol.Id" class="btn btn-sm btn-outline-secondary">Editar</a>
+                        <button type="button" class="btn btn-sm btn-outline-danger"
+                                data-bs-toggle="modal" data-bs-target="#deleteModal"
+                                data-delete-url="@Url.Action("Delete", new { id = rol.Id })"
+                                data-nombre="@rol.Nombre">
+                            Eliminar
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (Model.TotalPages > 1)
+    {
+        <nav aria-label="Paginación de roles">
+            <ul class="pagination">
+                <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+                    <a class="page-link" asp-action="Index" asp-route-page="@(Model.PageNumber - 1)">Anterior</a>
+                </li>
+                <li class="page-item disabled">
+                    <span class="page-link">Página @Model.PageNumber de @Model.TotalPages</span>
+                </li>
+                <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+                    <a class="page-link" asp-action="Index" asp-route-page="@(Model.PageNumber + 1)">Siguiente</a>
+                </li>
+            </ul>
+        </nav>
+    }
+}
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalTitle" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="deleteForm" asp-action="Delete" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalTitle">Confirmar eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Realmente desea eliminar el elemento seleccionado?</p>
+                    <p class="fw-bold" id="deleteModalNombre"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-danger">Sí</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/confirm-delete.js"></script>
+}

@@ -1,0 +1,80 @@
+@model CarnetDigital.Frontend.Models.Shared.PagedResult<CarnetDigital.Frontend.Models.Bitacoras.BitacoraDto>
+@{
+    ViewData["Title"] = "Bitácoras";
+    var fecha = ViewBag.Fecha as string;
+    var usuarioId = ViewBag.UsuarioId as int?;
+    var descripcion = ViewBag.Descripcion as string;
+}
+
+<h1>Bitácoras</h1>
+
+<form asp-action="Index" method="get" class="row g-3 mb-4">
+    <div class="col-md-3">
+        <label class="form-label">Fecha</label>
+        <input type="date" name="fecha" value="@fecha" class="form-control" />
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Id de usuario</label>
+        <input type="number" name="usuarioId" value="@usuarioId" class="form-control" />
+    </div>
+    <div class="col-md-4">
+        <label class="form-label">Descripción / acción</label>
+        <input type="text" name="descripcion" value="@descripcion" class="form-control" />
+    </div>
+    <div class="col-md-2 d-flex align-items-end gap-2">
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Limpiar</a>
+    </div>
+</form>
+
+@if (!Model.Items.Any())
+{
+    <p>No hay registros de bitácora para los filtros indicados.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Usuario Id</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.Fecha.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                    <td>@item.UsuarioId</td>
+                    <td>@item.Descripcion</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (Model.TotalPages > 1)
+    {
+        <nav aria-label="Paginación de bitácoras">
+            <ul class="pagination">
+                <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+                    <a class="page-link" asp-action="Index"
+                       asp-route-page="@(Model.PageNumber - 1)"
+                       asp-route-fecha="@fecha"
+                       asp-route-usuarioId="@usuarioId"
+                       asp-route-descripcion="@descripcion">Anterior</a>
+                </li>
+                <li class="page-item disabled">
+                    <span class="page-link">Página @Model.PageNumber de @Model.TotalPages</span>
+                </li>
+                <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+                    <a class="page-link" asp-action="Index"
+                       asp-route-page="@(Model.PageNumber + 1)"
+                       asp-route-fecha="@fecha"
+                       asp-route-usuarioId="@usuarioId"
+                       asp-route-descripcion="@descripcion">Siguiente</a>
+                </li>
+            </ul>
+        </nav>
+    }
+}
