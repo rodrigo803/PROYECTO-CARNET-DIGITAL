@@ -3,69 +3,79 @@
     ViewData["Title"] = "Carreras";
 }
 
-<h1>Carreras</h1>
+<div class="card shadow-sm border-0 rounded-3">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1 class="h4 mb-0">Carreras</h1>
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-lg me-1"></i>Nuevo
+            </a>
+        </div>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Nuevo</a>
-</p>
+        @if (!Model.Items.Any())
+        {
+            <p class="text-muted mb-0">No hay carreras registradas.</p>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Id</th>
+                            <th>Nombre</th>
+                            <th>Director</th>
+                            <th>Email</th>
+                            <th>Teléfono</th>
+                            <th class="text-end">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var carrera in Model.Items)
+                        {
+                            <tr>
+                                <td>@carrera.Id</td>
+                                <td>@carrera.Nombre</td>
+                                <td>@carrera.Director</td>
+                                <td>@carrera.Email</td>
+                                <td>@carrera.Telefono</td>
+                                <td class="text-end">
+                                    <a asp-action="Edit" asp-route-id="@carrera.Id" class="btn btn-icon btn-primary" title="Editar">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </a>
+                                    <button type="button" class="btn btn-icon btn-danger"
+                                            data-bs-toggle="modal" data-bs-target="#deleteModal"
+                                            data-delete-url="@Url.Action("Delete", new { id = carrera.Id })"
+                                            data-nombre="@carrera.Nombre"
+                                            title="Eliminar">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
 
-@if (!Model.Items.Any())
-{
-    <p>No hay carreras registradas.</p>
-}
-else
-{
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Director</th>
-                <th>Email</th>
-                <th>Teléfono</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var carrera in Model.Items)
+            @if (Model.TotalPages > 1)
             {
-                <tr>
-                    <td>@carrera.Id</td>
-                    <td>@carrera.Nombre</td>
-                    <td>@carrera.Director</td>
-                    <td>@carrera.Email</td>
-                    <td>@carrera.Telefono</td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@carrera.Id" class="btn btn-sm btn-outline-secondary">Editar</a>
-                        <button type="button" class="btn btn-sm btn-outline-danger"
-                                data-bs-toggle="modal" data-bs-target="#deleteModal"
-                                data-delete-url="@Url.Action("Delete", new { id = carrera.Id })"
-                                data-nombre="@carrera.Nombre">
-                            Eliminar
-                        </button>
-                    </td>
-                </tr>
+                <nav aria-label="Paginación de carreras" class="mt-3">
+                    <ul class="pagination mb-0">
+                        <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+                            <a class="page-link" asp-action="Index" asp-route-page="@(Model.PageNumber - 1)">Anterior</a>
+                        </li>
+                        <li class="page-item disabled">
+                            <span class="page-link">Página @Model.PageNumber de @Model.TotalPages</span>
+                        </li>
+                        <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+                            <a class="page-link" asp-action="Index" asp-route-page="@(Model.PageNumber + 1)">Siguiente</a>
+                        </li>
+                    </ul>
+                </nav>
             }
-        </tbody>
-    </table>
-
-    @if (Model.TotalPages > 1)
-    {
-        <nav aria-label="Paginación de carreras">
-            <ul class="pagination">
-                <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
-                    <a class="page-link" asp-action="Index" asp-route-page="@(Model.PageNumber - 1)">Anterior</a>
-                </li>
-                <li class="page-item disabled">
-                    <span class="page-link">Página @Model.PageNumber de @Model.TotalPages</span>
-                </li>
-                <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
-                    <a class="page-link" asp-action="Index" asp-route-page="@(Model.PageNumber + 1)">Siguiente</a>
-                </li>
-            </ul>
-        </nav>
-    }
-}
+        }
+    </div>
+</div>
 
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalTitle" aria-hidden="true">
     <div class="modal-dialog">

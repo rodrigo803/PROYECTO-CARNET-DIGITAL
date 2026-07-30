@@ -19,7 +19,9 @@ namespace Microservicio.Instituciones
             {
                 return Results.Ok(await service.GetAllAsync());
             })
-            .WithName("GetAllInstituciones");
+            .WithName("GetAllInstituciones")
+            // AllowAnonymous: requerido por el autoregistro publico (Web16)
+            .AllowAnonymous();
             
 
             // GET /api/Instituciones/{id}
@@ -30,7 +32,9 @@ namespace Microservicio.Instituciones
                     ? Results.NotFound(new { mensaje = $"No se encontró una institución con ID {id}" })
                     : Results.Ok(institucion);
             })
-            .WithName("GetInstitucionById");
+            .WithName("GetInstitucionById")
+            // AllowAnonymous: requerido por el autoregistro publico (Web16) para validar catalogos sin sesion
+            .AllowAnonymous();
 
             // POST /api/Instituciones
             group.MapPost("/", async ([FromServices] IInstitucionesService service,

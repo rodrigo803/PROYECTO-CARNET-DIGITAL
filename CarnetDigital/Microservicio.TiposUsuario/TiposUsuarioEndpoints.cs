@@ -28,7 +28,9 @@ namespace Microservicio.TiposUsuario
                     ? Results.NotFound(new { mensaje = $"No se encontró un tipo de usuario con ID {id}" })
                     : Results.Ok(tipo);
             })
-            .WithName("GetTipoUsuarioById");
+            .WithName("GetTipoUsuarioById")
+            // AllowAnonymous: requerido por el autoregistro publico (Web16) para validar catalogos sin sesion
+            .AllowAnonymous();
 
             // POST /api/TiposUsuario
             group.MapPost("/", async ([FromServices] ITiposUsuarioService service,

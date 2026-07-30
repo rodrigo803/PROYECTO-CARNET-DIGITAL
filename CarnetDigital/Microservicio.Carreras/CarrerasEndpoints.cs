@@ -18,7 +18,9 @@ namespace Microservicio.Carreras
             {
                 return Results.Ok(await service.GetAllAsync());
             })
-            .WithName("GetAllCarreras");
+            .WithName("GetAllCarreras")
+            // AllowAnonymous: requerido por el autoregistro publico (Web16)
+            .AllowAnonymous();
 
             // GET /api/Carreras/{id}
             group.MapGet("/{id}", async ([FromServices] ICarrerasService service, int id) =>
@@ -28,7 +30,9 @@ namespace Microservicio.Carreras
                     ? Results.NotFound(new { mensaje = $"No se encontró una carrera con ID {id}" })
                     : Results.Ok(carrera);
             })
-            .WithName("GetCarreraById");
+            .WithName("GetCarreraById")
+            // AllowAnonymous: requerido por el autoregistro publico (Web16) para validar catalogos sin sesion
+            .AllowAnonymous();
 
             // POST /api/Carreras
             group.MapPost("/", async ([FromServices] ICarrerasService service,

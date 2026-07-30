@@ -18,7 +18,9 @@ namespace Microservicio.Areas
             {
                 return Results.Ok(await service.GetAllAsync());
             })
-            .WithName("GetAllAreas");
+            .WithName("GetAllAreas")
+            // AllowAnonymous: requerido por el autoregistro publico (Web16)
+            .AllowAnonymous();
 
             // GET /api/Areas/{id}
             group.MapGet("/{id}", async ([FromServices] IAreasService service, int id) =>
@@ -28,7 +30,9 @@ namespace Microservicio.Areas
                     ? Results.NotFound(new { mensaje = $"No se encontró un área de trabajo con ID {id}" })
                     : Results.Ok(area);
             })
-            .WithName("GetAreaById");
+            .WithName("GetAreaById")
+            // AllowAnonymous: requerido por el autoregistro publico (Web16) para validar catalogos sin sesion
+            .AllowAnonymous();
 
             // POST /api/Areas
             group.MapPost("/", async ([FromServices] IAreasService service,

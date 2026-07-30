@@ -8,6 +8,9 @@ using CarnetDigital.Frontend.Services.Instituciones;
 using CarnetDigital.Frontend.Services.Pantallas;
 using CarnetDigital.Frontend.Services.Parametros;
 using CarnetDigital.Frontend.Services.Roles;
+using CarnetDigital.Frontend.Services.TiposIdentificacion;
+using CarnetDigital.Frontend.Services.TiposUsuario;
+using CarnetDigital.Frontend.Services.Usuarios;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -83,6 +86,24 @@ builder.Services.AddHttpClient<IBitacorasApiService, BitacorasApiService>((sp, c
 {
     var opciones = sp.GetRequiredService<IOptions<MicroserviciosOptions>>().Value;
     client.BaseAddress = new Uri(opciones.AuditServiceUrl);
+}).AddHttpMessageHandler<BearerTokenHandler>();
+
+builder.Services.AddHttpClient<IUsuarioApiService, UsuarioApiService>((sp, client) =>
+{
+    var opciones = sp.GetRequiredService<IOptions<MicroserviciosOptions>>().Value;
+    client.BaseAddress = new Uri(opciones.UsuarioServiceUrl);
+}).AddHttpMessageHandler<BearerTokenHandler>();
+
+builder.Services.AddHttpClient<ITiposUsuarioApiService, TiposUsuarioApiService>((sp, client) =>
+{
+    var opciones = sp.GetRequiredService<IOptions<MicroserviciosOptions>>().Value;
+    client.BaseAddress = new Uri(opciones.TiposUsuarioServiceUrl);
+}).AddHttpMessageHandler<BearerTokenHandler>();
+
+builder.Services.AddHttpClient<ITiposIdentificacionApiService, TiposIdentificacionApiService>((sp, client) =>
+{
+    var opciones = sp.GetRequiredService<IOptions<MicroserviciosOptions>>().Value;
+    client.BaseAddress = new Uri(opciones.TiposIdentificacionServiceUrl);
 }).AddHttpMessageHandler<BearerTokenHandler>();
 
 var app = builder.Build();

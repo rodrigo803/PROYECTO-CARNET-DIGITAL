@@ -1,0 +1,101 @@
+@{
+    ViewData["Title"] = "Administración de Fotografía (WEB8)";
+    var fotoBase64 = ViewBag.FotoBase64 as string;
+}
+
+<style>
+    .foto-carnet {
+        width: 100%;
+        max-width: 300px;
+        aspect-ratio: 4/3; /* Fuerza la proporción 4:3 requerida */
+        object-fit: cover; /* Evita que la imagen se estire feo */
+        border: 4px solid #f8f9fa;
+        border-radius: 8px;
+    }
+</style>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h4 mb-0">Gestión de Fotografía</h1>
+    <span class="badge bg-secondary">ID: @ViewBag.Identificacion</span>
+</div>
+
+<div class="card shadow-sm border-0 rounded-3">
+    <div class="card-body p-4 text-center">
+        <h5 class="text-muted mb-4">@ViewBag.NombreCompleto</h5>
+
+        @if (TempData["Mensaje"] != null)
+        {
+            <div class="alert alert-success">@TempData["Mensaje"]</div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">@TempData["Error"]</div>
+        }
+
+        <!-- VISUALIZACIÓN DE LA FOTO -->
+        <div class="mb-4">
+            @if (!string.IsNullOrEmpty(fotoBase64))
+            {
+                <img src="data:image/jpeg;base64,@fotoBase64" alt="Fotografía del Usuario" class="foto-carnet shadow-sm" />
+            }
+            else
+            {
+                <div class="d-inline-flex align-items-center justify-content-center bg-light text-muted shadow-sm"
+                     style="width: 100%; max-width: 300px; aspect-ratio: 4/3; border-radius: 8px; border: 2px dashed #ccc;">
+                    <div>
+                        <i class="bi bi-person-bounding-box" style="font-size: 3rem;"></i>
+                        <p class="mt-2 mb-0">Sin fotografía</p>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <hr class="my-4" />
+
+        <div class="row g-3 justify-content-center">
+            <!-- FORMULARIO PARA ACTUALIZAR (SUBIR) -->
+            <div class="col-md-7 text-start">
+                <form asp-action="ActualizarFotografiaWEB8" method="post" enctype="multipart/form-data" id="formSubirFoto">
+                    <input type="hidden" name="identificacion" value="@ViewBag.Identificacion" />
+                    <label class="form-label fw-bold text-primary">Subir Nueva Fotografía</label>
+                    <div class="input-group">
+                        <input type="file" class="form-control" name="nuevaFoto" id="inputFoto" accept="image/png, image/jpeg" required />
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                    <small class="text-muted">Formato 4:3. Tamaño máximo: 1 MB.</small>
+                </form>
+            </div>
+
+            <!-- BOTÓN PARA ELIMINAR (Solo aparece si hay foto) -->
+            @if (!string.IsNullOrEmpty(fotoBase64))
+            {
+                <div class="col-md-5 d-flex align-items-end">
+                    <form asp-action="EliminarFotografiaWEB8" method="post" class="w-100" onsubmit="return confirm('¿Estás seguro de eliminar la fotografía actual?');">
+                        <input type="hidden" name="identificacion" value="@ViewBag.Identificacion" />
+                        <button type="submit" class="btn btn-outline-danger w-100">
+                            <i class="bi bi-trash"></i> Eliminar Foto Actual
+                        </button>
+                    </form>
+                </div>
+            }
+        </div>
+
+        <div class="mt-4 pt-3 border-top">
+            <a asp-action="WEB9" asp-route-id="@ViewBag.Identificacion" class="btn btn-secondary">← Volver al Perfil</a>
+        </div>
+    </div>
+</div>
+
+<!-- Script de validación de 1 MB en el navegador -->
+<script>
+    document.getElementById('formSubirFoto').addEventListener('submit', function(e) {
+        var inputFoto = document.getElementById('inputFoto');
+        if (inputFoto.files.length > 0) {
+            var fileSize = inputFoto.files[0].size; // Tamaño en bytes
+            if (fileSize > 1048576) { // 1 MB
+                e.preventDefault();
+                alert('La imagen seleccionada pesa más de 1 MB. Por favor elige una imagen más ligera.');
+            }
+        }
+    });
+</script>

@@ -1,6 +1,7 @@
 ﻿using BCrypt.Net;
 using Microservicio.Usuario.Entities;
 using Microservicio.Usuario.Repository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,12 +23,26 @@ namespace Microservicio.Usuario.Services
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly IBitacoraService _bitacora;
         private readonly IConfiguration _config;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UsuarioService(IServiceScopeFactory scopeFactory, IBitacoraService bitacora, IConfiguration config)
+        public UsuarioService(IServiceScopeFactory scopeFactory, IBitacoraService bitacora, IConfiguration config, IHttpContextAccessor httpContextAccessor)
         {
             _scopeFactory = scopeFactory;
             _bitacora = bitacora;
             _config = config;
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+        // Propaga el Bearer de la request entrante hacia los microservicios de catálogo,
+        // igual que InstitucionesValidator en Areas/Carreras. En /autoregistro (anónimo)
+        // no habrá token disponible.
+        private string? ObtenerTokenActual()
+        {
+            var authHeader = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"].ToString();
+            if (string.IsNullOrWhiteSpace(authHeader) || !authHeader.StartsWith("Bearer "))
+                return null;
+
+            return authHeader.Substring("Bearer ".Length).Trim();
         }
 
         public async Task<UsuarioActualizacionDto> CrearUsuarioAsync(Entities.Usuario usuario, string contrasenaPlana)
@@ -40,15 +55,20 @@ namespace Microservicio.Usuario.Services
             if (usuario.InstitucionesIds == null || usuario.InstitucionesIds.Count == 0)
                 throw new Exception("El usuario debe pertenecer a al menos una institución.");
 
-            if (usuario.TipoUsuarioId == 1 && (usuario.CarrerasIds == null || usuario.CarrerasIds.Count == 0))
+            var token = ObtenerTokenActual();
+            string nombreTipoUsuario = await _catalogos.ObtenerNombreTipoUsuarioAsync(usuario.TipoUsuarioId, token);
+
+            if (string.Equals(nombreTipoUsuario, "Estudiante", StringComparison.OrdinalIgnoreCase)
+                && (usuario.CarrerasIds == null || usuario.CarrerasIds.Count == 0))
                 throw new Exception("Si el usuario es estudiante, debe tener carreras asociadas.");
 
-            if (usuario.TipoUsuarioId == 2 && (usuario.AreasIds == null || usuario.AreasIds.Count == 0))
+            if (string.Equals(nombreTipoUsuario, "Funcionario", StringComparison.OrdinalIgnoreCase)
+                && (usuario.AreasIds == null || usuario.AreasIds.Count == 0))
                 throw new Exception("Si el usuario es funcionario, debe tener áreas asociadas.");
 
 
             // 2. VALIDAR CONTRA LOS MICROSERVICIOS
-            await _catalogos.ValidarCatalogosAsync(usuario.TipoIdentificacionId, usuario.TipoUsuarioId, usuario.InstitucionesIds, usuario.CarrerasIds, usuario.AreasIds);
+            await _catalogos.ValidarCatalogosAsync(usuario.TipoIdentificacionId, usuario.TipoUsuarioId, usuario.InstitucionesIds, usuario.CarrerasIds, usuario.AreasIds, token);
 
             usuario.ContrasenaEncriptada = BCrypt.Net.BCrypt.HashPassword(contrasenaPlana);
             usuario.EstadoId = 3;
@@ -82,10 +102,15 @@ namespace Microservicio.Usuario.Services
             if (dto.InstitucionesIds == null || dto.InstitucionesIds.Count == 0)
                 throw new Exception("El usuario debe pertenecer a al menos una institución.");
 
-            if (dto.TipoUsuarioId == 1 && (dto.CarrerasIds == null || dto.CarrerasIds.Count == 0))
+            var token = ObtenerTokenActual();
+            string nombreTipoUsuario = await _catalogos.ObtenerNombreTipoUsuarioAsync(dto.TipoUsuarioId, token);
+
+            if (string.Equals(nombreTipoUsuario, "Estudiante", StringComparison.OrdinalIgnoreCase)
+                && (dto.CarrerasIds == null || dto.CarrerasIds.Count == 0))
                 throw new Exception("Si el usuario es estudiante, debe tener carreras asociadas.");
 
-            if (dto.TipoUsuarioId == 2 && (dto.AreasIds == null || dto.AreasIds.Count == 0))
+            if (string.Equals(nombreTipoUsuario, "Funcionario", StringComparison.OrdinalIgnoreCase)
+                && (dto.AreasIds == null || dto.AreasIds.Count == 0))
                 throw new Exception("Si el usuario es funcionario, debe tener áreas asociadas.");
 
             // --- ESTO TE DIRÁ LA VERDAD ---
@@ -96,7 +121,7 @@ namespace Microservicio.Usuario.Services
             Console.WriteLine("------------------------------------------");
 
             // 2. VALIDAR CONTRA LOS MICROSERVICIOS
-            await _catalogos.ValidarCatalogosAsync(dto.TipoIdentificacionId, dto.TipoUsuarioId, dto.InstitucionesIds, dto.CarrerasIds, dto.AreasIds);
+            await _catalogos.ValidarCatalogosAsync(dto.TipoIdentificacionId, dto.TipoUsuarioId, dto.InstitucionesIds, dto.CarrerasIds, dto.AreasIds, token);
 
             var usuario = new Entities.Usuario
             {
@@ -268,9 +293,10 @@ namespace Microservicio.Usuario.Services
                 throw new Exception("Usuario no encontrado con esa identificación.");
 
             // Consultas asíncronas para obtener los nombres reales del ecosistema
-            string nombreTipo = await _catalogos.ObtenerNombreTipoUsuarioAsync(usuario.TipoUsuarioId);
-            string nombresInstituciones = await _catalogos.ObtenerNombresInstitucionesAsync(usuario.InstitucionesIds);
-            string nombresCarrerasAreas = await _catalogos.ObtenerNombresCarrerasOAreasAsync(usuario.TipoUsuarioId, usuario.CarrerasIds, usuario.AreasIds);
+            var token = ObtenerTokenActual();
+            string nombreTipo = await _catalogos.ObtenerNombreTipoUsuarioAsync(usuario.TipoUsuarioId, token);
+            string nombresInstituciones = await _catalogos.ObtenerNombresInstitucionesAsync(usuario.InstitucionesIds, token);
+            string nombresCarrerasAreas = await _catalogos.ObtenerNombresCarrerasOAreasAsync(usuario.TipoUsuarioId, usuario.CarrerasIds, usuario.AreasIds, token);
 
             // Reemplazo del texto estático por los datos reales de los catálogos
             var datosCarnet = new
@@ -348,6 +374,101 @@ namespace Microservicio.Usuario.Services
             await _bitacora.RegistrarAccionAsync(cedulaInt, $"El usuario con cédula {usuario.Identificacion} fue eliminado permanentemente del sistema.");
 
             return datosEliminados;
+        }
+
+        public async Task<IEnumerable<UsuarioResumenDto>> ObtenerTodosAsync()
+        {
+            using var scope = _scopeFactory.CreateScope();
+            var _context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+            return await _context.Usuarios
+                .Select(u => MapearResumen(u))
+                .ToListAsync();
+        }
+
+        public async Task<UsuarioResumenDto?> ObtenerPorIdAsync(string identificacion)
+        {
+            using var scope = _scopeFactory.CreateScope();
+            var _context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+            var usuario = await _context.Usuarios.FindAsync(identificacion);
+            return usuario == null ? null : MapearResumen(usuario);
+        }
+
+        public async Task<IEnumerable<UsuarioResumenDto>> FiltrarAsync(string? identificacion, string? nombre, int? tipoUsuarioId)
+        {
+            using var scope = _scopeFactory.CreateScope();
+            var _context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+            var query = _context.Usuarios.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(identificacion))
+                query = query.Where(u => u.Identificacion.Contains(identificacion));
+
+            if (!string.IsNullOrWhiteSpace(nombre))
+                query = query.Where(u => u.NombreCompleto.Contains(nombre));
+
+            if (tipoUsuarioId.HasValue)
+                query = query.Where(u => u.TipoUsuarioId == tipoUsuarioId.Value);
+
+            var usuarios = await query.ToListAsync();
+            return usuarios.Select(MapearResumen);
+        }
+
+        public async Task<FotografiaDto?> ObtenerFotografiaAsync(string identificacion)
+        {
+            using var scope = _scopeFactory.CreateScope();
+            var _context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+            var usuario = await _context.Usuarios.FindAsync(identificacion);
+            if (usuario == null) return null;
+
+            return new FotografiaDto
+            {
+                Identificacion = usuario.Identificacion,
+                FotoBase64 = usuario.FotografiaBase64
+            };
+        }
+
+        public async Task<UsuarioActualizacionDto?> EliminarFotografiaAsync(string identificacion)
+        {
+            using var scope = _scopeFactory.CreateScope();
+            var _context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+            var usuario = await _context.Usuarios.FindAsync(identificacion);
+            if (usuario == null) return null;
+
+            usuario.FotografiaBase64 = "";
+            await _context.SaveChangesAsync();
+
+            int cedulaInt = int.TryParse(usuario.Identificacion, out int result) ? result : 0;
+            await _bitacora.RegistrarAccionAsync(cedulaInt, $"El usuario {usuario.Identificacion} eliminó su fotografía del carnet.");
+
+            return new UsuarioActualizacionDto
+            {
+                Identificacion = usuario.Identificacion,
+                Email = usuario.Email,
+                NombreCompleto = usuario.NombreCompleto
+            };
+        }
+
+        private static UsuarioResumenDto MapearResumen(Entities.Usuario usuario)
+        {
+            return new UsuarioResumenDto
+            {
+                Identificacion = usuario.Identificacion,
+                Email = usuario.Email,
+                NombreCompleto = usuario.NombreCompleto,
+                EstadoId = usuario.EstadoId,
+                TipoIdentificacionId = usuario.TipoIdentificacionId,
+                TipoUsuarioId = usuario.TipoUsuarioId,
+                RolId = usuario.RolId,
+                TipoIdentificacion = usuario.TipoIdentificacion,
+                TipoUsuario = usuario.TipoUsuario,
+                InstitucionesIds = usuario.InstitucionesIds,
+                CarrerasIds = usuario.CarrerasIds,
+                AreasIds = usuario.AreasIds
+            };
         }
     }
 }

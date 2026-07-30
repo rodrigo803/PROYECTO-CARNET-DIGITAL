@@ -1,0 +1,101 @@
+@model CarnetDigital.Frontend.Models.Usuarios.UsuarioDTO
+
+<h1 class="h4 mb-4">Registro de Nuevo Usuario</h1>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.Error
+    </div>
+}
+
+<div class="card shadow-sm border-0 rounded-3">
+    <div class="card-body">
+        <form asp-action="WEB4" method="post">
+            <!-- Cambiamos a ModelOnly para que solo muestre errores críticos y oculte los ruidos de binding -->
+            <div asp-validation-summary="ModelOnly" class="text-danger fw-bold mb-3"></div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Nombre Completo</label>
+                <input type="text" name="NombreCompleto" class="form-control"
+                       required
+                       pattern=".*\S+.*"
+                       title="El nombre no puede estar vacío ni contener únicamente espacios en blanco."
+                       placeholder="Ej. Juan Pérez" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Correo Electrónico</label>
+                <input type="email" name="Email" class="form-control"
+                       required
+                       pattern="^[\w\.-]+@@(cuc\.cr|cuc\.ac\.cr)$"
+                       title="El correo debe terminar estrictamente en @@cuc.cr o @@cuc.ac.cr"
+                       placeholder="ejemplo@cuc.cr" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Contrasena" class="form-label">Contraseña</label>
+                <input asp-for="Contrasena" type="password" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Identificacion" class="form-label">Identificación</label>
+                <input asp-for="Identificacion" class="form-control" required />
+            </div>
+
+            <div class="row">
+                <!-- SELECT PARA TIPO DE IDENTIFICACIÓN -->
+                <div class="col-md-4 mb-3">
+                    <label asp-for="TipoIdentificacionId" class="form-label">Tipo de Identificación</label>
+                    <select asp-for="TipoIdentificacionId" class="form-select" asp-items="ViewBag.TiposIdentificacionList" required>
+                        <option value="">-- Seleccione Tipo ID --</option>
+                    </select>
+                </div>
+
+                <!-- SELECT PARA TIPO DE USUARIO -->
+                <div class="col-md-4 mb-3">
+                    <label asp-for="TipoUsuarioId" class="form-label">Tipo de Usuario</label>
+                    <select asp-for="TipoUsuarioId" class="form-select" asp-items="ViewBag.TiposUsuariosList" required>
+                        <option value="">-- Seleccione Tipo Usuario --</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label asp-for="RolId" class="form-label">Rol ID</label>
+                    <input asp-for="RolId" type="number" class="form-control" value="1" required />
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- SELECT PARA INSTITUCIÓN (Usamos name temporal para evitar errores de binding en listas) -->
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Institución</label>
+                    <select name="InstitucionTemp" class="form-select" asp-items="ViewBag.InstitucionesList" required>
+                        <option value="">-- Seleccione Institución --</option>
+                    </select>
+                </div>
+
+                <!-- SELECT PARA CARRERA -->
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Carrera (Solo si es estudiante)</label>
+                    <select name="CarreraTemp" class="form-select" asp-items="ViewBag.CarrerasList">
+                        <option value="">-- Seleccione Carrera --</option>
+                    </select>
+                </div>
+
+                <!-- SELECT PARA ÁREA -->
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Área (Solo si es profesor)</label>
+                    <select name="AreaTemp" class="form-select" asp-items="ViewBag.AreasList">
+                        <option value="">-- Seleccione Área --</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Guardar Usuario</button>
+                <a asp-action="WEB16" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
