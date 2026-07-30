@@ -60,14 +60,38 @@ namespace CarnetDigital.Frontend.Services.TiposIdentificacion
 
         private static async Task<ApiResult<TipoIdentificacionDto>> LeerResultadoAsync(HttpResponseMessage response)
         {
+            var contenido = await response.Content.ReadAsStringAsync();
+
             if (response.IsSuccessStatusCode)
             {
-                var tipo = await response.Content.ReadFromJsonAsync<TipoIdentificacionDto>();
-                return ApiResult<TipoIdentificacionDto>.Ok(tipo!);
+                if (string.IsNullOrWhiteSpace(contenido))
+                    return ApiResult<TipoIdentificacionDto>.Fail("Error al procesar la solicitud");
+
+                try
+                {
+                    var tipo = System.Text.Json.JsonSerializer.Deserialize<TipoIdentificacionDto>(contenido,
+                        new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                    return ApiResult<TipoIdentificacionDto>.Ok(tipo!);
+                }
+                catch (System.Text.Json.JsonException)
+                {
+                    return ApiResult<TipoIdentificacionDto>.Fail($"Error al procesar la solicitud (status {(int)response.StatusCode})");
+                }
             }
 
-            var error = await response.Content.ReadFromJsonAsync<ErrorResponseDto>();
-            return ApiResult<TipoIdentificacionDto>.Fail(error?.mensaje ?? "Ocurrió un error al procesar la solicitud");
+            if (string.IsNullOrWhiteSpace(contenido))
+                return ApiResult<TipoIdentificacionDto>.Fail($"Error al procesar la solicitud (status {(int)response.StatusCode})");
+
+            try
+            {
+                var error = System.Text.Json.JsonSerializer.Deserialize<ErrorResponseDto>(contenido,
+                    new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                return ApiResult<TipoIdentificacionDto>.Fail(error?.mensaje ?? "Ocurrió un error al procesar la solicitud");
+            }
+            catch (System.Text.Json.JsonException)
+            {
+                return ApiResult<TipoIdentificacionDto>.Fail($"Error al procesar la solicitud (status {(int)response.StatusCode})");
+            }
         }
 
         private class TipoIdentificacionRequestDto
