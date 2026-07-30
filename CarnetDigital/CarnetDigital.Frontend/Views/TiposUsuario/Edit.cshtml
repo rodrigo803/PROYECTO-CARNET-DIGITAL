@@ -1,0 +1,12 @@
+@model CarnetDigital.Frontend.Models.TiposUsuario.TipoUsuarioFormViewModel
+@{
+    ViewData["Title"] = "Editar tipo de usuario";
+}
+
+<h1 class="h4 mb-4">Editar tipo de usuario</h1>
+
+@await Html.PartialAsync("_Form", Model)
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

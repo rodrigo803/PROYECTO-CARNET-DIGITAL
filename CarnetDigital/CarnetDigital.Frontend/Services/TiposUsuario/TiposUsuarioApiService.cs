@@ -1,5 +1,6 @@
 using System.Net.Http.Json;
 using CarnetDigital.Frontend.Models.TiposUsuario;
+using CarnetDigital.Frontend.Services.Areas;
 
 namespace CarnetDigital.Frontend.Services.TiposUsuario
 {
@@ -26,6 +27,58 @@ namespace CarnetDigital.Frontend.Services.TiposUsuario
                 _logger.LogError(ex, "Error al obtener tipos de usuario");
                 return new List<TipoUsuarioDto>();
             }
+        }
+
+        public async Task<TipoUsuarioDto?> GetByIdAsync(int id)
+        {
+            var response = await _httpClient.GetAsync($"/api/TiposUsuario/{id}");
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            return await response.Content.ReadFromJsonAsync<TipoUsuarioDto>();
+        }
+
+        public async Task<ApiResult<TipoUsuarioDto>> CreateAsync(string nombre)
+        {
+            var body = new TipoUsuarioRequestDto { Nombre = nombre, Activo = true };
+            var response = await _httpClient.PostAsJsonAsync("/api/TiposUsuario", body);
+            return await LeerResultadoAsync(response);
+        }
+
+        public async Task<ApiResult<TipoUsuarioDto>> UpdateAsync(int id, string nombre)
+        {
+            var body = new TipoUsuarioRequestDto { Nombre = nombre, Activo = true };
+            var response = await _httpClient.PutAsJsonAsync($"/api/TiposUsuario/{id}", body);
+            return await LeerResultadoAsync(response);
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var response = await _httpClient.DeleteAsync($"/api/TiposUsuario/{id}");
+            return response.IsSuccessStatusCode;
+        }
+
+        private static async Task<ApiResult<TipoUsuarioDto>> LeerResultadoAsync(HttpResponseMessage response)
+        {
+            if (response.IsSuccessStatusCode)
+            {
+                var tipo = await response.Content.ReadFromJsonAsync<TipoUsuarioDto>();
+                return ApiResult<TipoUsuarioDto>.Ok(tipo!);
+            }
+
+            var error = await response.Content.ReadFromJsonAsync<ErrorResponseDto>();
+            return ApiResult<TipoUsuarioDto>.Fail(error?.mensaje ?? "Ocurrió un error al procesar la solicitud");
+        }
+
+        private class TipoUsuarioRequestDto
+        {
+            public string Nombre { get; set; } = string.Empty;
+            public bool Activo { get; set; }
+        }
+
+        private class ErrorResponseDto
+        {
+            public string? mensaje { get; set; }
         }
     }
 }
