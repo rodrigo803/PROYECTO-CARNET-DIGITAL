@@ -74,7 +74,9 @@ namespace Microservicio.Usuario.Services
             }
 
             bool esEstudiante = string.Equals(resTipoUsr.Nombre, "Estudiante", StringComparison.OrdinalIgnoreCase);
-            bool esFuncionario = string.Equals(resTipoUsr.Nombre, "Funcionario", StringComparison.OrdinalIgnoreCase);
+            // CORRECCIÓN AQUÍ: Agregamos Profesor a la validación de Áreas
+            bool esFuncionario = string.Equals(resTipoUsr.Nombre, "Funcionario", StringComparison.OrdinalIgnoreCase) ||
+                                 string.Equals(resTipoUsr.Nombre, "Profesor", StringComparison.OrdinalIgnoreCase);
 
             if (esEstudiante && carrerasIds != null)
             {
@@ -116,8 +118,11 @@ namespace Microservicio.Usuario.Services
         public async Task<string> ObtenerNombresCarrerasOAreasAsync(int tipoUsr, List<int> carreras, List<int> areas, string? token)
         {
             var nombreTipoUsr = await ObtenerNombreTipoUsuarioAsync(tipoUsr, token);
+
             bool esEstudiante = string.Equals(nombreTipoUsr, "Estudiante", StringComparison.OrdinalIgnoreCase);
-            bool esFuncionario = string.Equals(nombreTipoUsr, "Funcionario", StringComparison.OrdinalIgnoreCase);
+            // CORRECCIÓN AQUÍ: Agregamos Profesor para la generación del texto en el QR
+            bool esFuncionario = string.Equals(nombreTipoUsr, "Funcionario", StringComparison.OrdinalIgnoreCase) ||
+                                 string.Equals(nombreTipoUsr, "Profesor", StringComparison.OrdinalIgnoreCase);
 
             var nombres = new List<string>();
             if (esEstudiante && carreras != null)
@@ -136,6 +141,7 @@ namespace Microservicio.Usuario.Services
                     if (res.Existe) nombres.Add(res.Nombre);
                 }
             }
+
             return nombres.Count > 0 ? string.Join(", ", nombres) : "Ninguna asignada";
         }
     }

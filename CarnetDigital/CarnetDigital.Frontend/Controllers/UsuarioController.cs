@@ -61,6 +61,16 @@ namespace CarnetDigital.Frontend.Controllers
 
             await ResolverNombresAsync(usuario);
 
+            // SOLUCIÓN PARA EL ROL: Mapeamos el ID a su texto descriptivo usando ViewBag
+            // Nota: Ajusta los nombres ("Seguridad", "Estudiante") según la lógica real de tu sistema
+            ViewBag.RolNombre = usuario.RolId switch
+            {
+                1 => "Administrador",
+                2 => "Seguridad",
+                3 => "Estudiante / Regular",
+                _ => "Desconocido"
+            };
+
             ViewBag.QrCode = await _usuarioApiService.ObtenerQRAsync(id);
 
             return View(usuario);
@@ -285,24 +295,33 @@ namespace CarnetDigital.Frontend.Controllers
 
         private async Task ResolverNombresAsync(UsuarioDTO usuario)
         {
-            if (usuario.InstitucionesIds.Count > 0)
+            // 1. Resolver Institución
+            if (usuario.InstitucionesIds != null && usuario.InstitucionesIds.Count > 0)
             {
                 var instituciones = await _institucionesApiService.ObtenerActivasAsync();
                 usuario.Institucion = instituciones
                     .FirstOrDefault(i => i.Id == usuario.InstitucionesIds[0])?.Nombre;
             }
 
+            // 2. Resolver Tipo de Usuario
             var tiposUsuario = await _tiposUsuarioApiService.GetAllAsync();
             var nombreTipoUsuario = tiposUsuario.FirstOrDefault(t => t.Id == usuario.TipoUsuarioId)?.Nombre;
 
-            if (string.Equals(nombreTipoUsuario, "Estudiante", StringComparison.OrdinalIgnoreCase) && usuario.CarrerasIds.Count > 0)
+            usuario.TipoUsuario = nombreTipoUsuario;
+
+            // 3. Resolver Carrera o Área (Aquí está la corrección)
+            if (string.Equals(nombreTipoUsuario, "Estudiante", StringComparison.OrdinalIgnoreCase)
+                && usuario.CarrerasIds != null && usuario.CarrerasIds.Count > 0)
             {
                 var carreras = await _carrerasApiService.GetAllAsync();
                 usuario.CarreraOArea = carreras
                     .FirstOrDefault(c => c.Id == usuario.CarrerasIds[0])?.Nombre;
             }
-            else if (string.Equals(nombreTipoUsuario, "Funcionario", StringComparison.OrdinalIgnoreCase) && usuario.AreasIds.Count > 0)
+            else if ((string.Equals(nombreTipoUsuario, "Funcionario", StringComparison.OrdinalIgnoreCase) ||
+                      string.Equals(nombreTipoUsuario, "Profesor", StringComparison.OrdinalIgnoreCase))
+                      && usuario.AreasIds != null && usuario.AreasIds.Count > 0)
             {
+                // Si es Funcionario O Profesor, buscamos en el catálogo de Áreas
                 var areas = await _areasApiService.GetAllAsync();
                 usuario.CarreraOArea = areas
                     .FirstOrDefault(a => a.Id == usuario.AreasIds[0])?.Nombre;

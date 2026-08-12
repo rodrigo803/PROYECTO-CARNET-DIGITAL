@@ -165,7 +165,13 @@ namespace Microservicio.Usuario.Services
         {
             try
             {
-                string enlaceConfirmacion = $"https://localhost:7123/api/usuario/autoregistro/confirmar?token={token}";
+                // 1. Leemos la URL del frontend desde el appsettings.json
+                // Si no la encuentra, usa un localhost por defecto (debes poner el puerto real de tu frontend aquí)
+                string urlBaseFrontend = _config["Urls:Frontend"] ?? "https://localhost:7216";
+
+                // 2. Armamos el enlace apuntando a la VISTA del frontend, no a la API
+                // NOTA: Cambia "/confirmar-registro" por la ruta real de la página en tu frontend
+                string enlaceConfirmacion = $"{urlBaseFrontend}/Auth/ConfirmarCorreo?token={token}";
 
                 var smtpSettings = _config.GetSection("SmtpSettings");
                 string servidor = smtpSettings["Server"] ?? "smtp.gmail.com";
