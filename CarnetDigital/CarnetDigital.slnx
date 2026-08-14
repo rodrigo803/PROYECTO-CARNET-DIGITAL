@@ -3,6 +3,7 @@
   <Project Path="AuditService/AuditService.csproj" />
   <Project Path="AuthService/AuthService.csproj" />
   <Project Path="CarnetDigital.Frontend/CarnetDigital.Frontend.csproj" Id="08858e1d-8105-49fc-bc44-634661255253" />
+  <Project Path="CarnetDigital.Gateway/CarnetDigital.Gateway.csproj" Id="024e115b-2b33-4a1b-a129-7a7f3c7ca584" />
   <Project Path="Microservicio.Areas/Microservicio.Areas.csproj" Id="8afe6bc4-a76f-48dc-a736-5d94b9799454" />
   <Project Path="Microservicio.Carreras/Microservicio.Carreras.csproj" Id="e0cf225c-d4cd-429b-ae7d-0c83f5c3b248" />
   <Project Path="Microservicio.Instituciones/Microservicio.Instituciones.csproj" Id="b92447c6-f970-41bf-a25b-afe99cea0d54" />
