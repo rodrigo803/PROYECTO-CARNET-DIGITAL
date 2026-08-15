@@ -1,0 +1,51 @@
+[
+  {
+    "Name": "Nuevo perfil",
+    "Projects": [
+      {
+        "Path": "AuthService\\AuthService.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "CarnetDigital.Gateway\\CarnetDigital.Gateway.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "AccessControlService\\AccessControlService.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "AuditService\\AuditService.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Microservicio.Areas\\Microservicio.Areas.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Microservicio.Carreras\\Microservicio.Carreras.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Microservicio.Instituciones\\Microservicio.Instituciones.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Microservicio.TiposIdentificacion\\Microservicio.TiposIdentificacion.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Microservicio.TiposUsuario\\Microservicio.TiposUsuario.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Microservicio.Usuario\\Microservicio.Usuario.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "ParameterService\\ParameterService.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

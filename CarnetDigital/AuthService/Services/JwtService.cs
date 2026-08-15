@@ -14,7 +14,7 @@ namespace AuthService.Services
             _config = config;
         }
 
-        public (string token, DateTime expires) GenerateToken(int userId)
+        public (string token, DateTime expires) GenerateToken(int userId, string email)
         {
             var key = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(_config["Jwt:SigningKey"]!)
@@ -28,7 +28,8 @@ namespace AuthService.Services
 
             var claims = new[]
             {
-                new Claim("uid", userId.ToString())
+                new Claim("uid", userId.ToString()),
+                new Claim("email", email)
             };
 
             var token = new JwtSecurityToken(

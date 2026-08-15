@@ -1,0 +1,39 @@
+package cr.ac.cuc.carnetdigital.usuario.data.repository
+
+import cr.ac.cuc.carnetdigital.usuario.core.network.NetworkResult
+import cr.ac.cuc.carnetdigital.usuario.data.remote.UsuarioApi
+import cr.ac.cuc.carnetdigital.usuario.data.remote.dto.toDomain
+import cr.ac.cuc.carnetdigital.usuario.domain.model.Perfil
+import cr.ac.cuc.carnetdigital.usuario.domain.repository.UsuarioRepository
+import java.io.IOException
+
+/** Implementación del repositorio de usuario que encapsula Retrofit, mapeos y errores de red. */
+class UsuarioRepositoryImpl(private val api: UsuarioApi) : UsuarioRepository {
+    override suspend fun obtenerPerfil(): NetworkResult<Perfil> = try {
+        val response = api.obtenerPerfil()
+        val body = response.body()
+        if (response.isSuccessful && body != null) {
+            NetworkResult.Success(body.toDomain())
+        } else {
+            NetworkResult.Error(response.errorBody()?.string(), response.code())
+        }
+    } catch (_: IOException) {
+        NetworkResult.Error()
+    } catch (_: Exception) {
+        NetworkResult.Error()
+    }
+
+    override suspend fun obtenerFotografiaBase64(identificacion: String): NetworkResult<String> = try {
+        val response = api.obtenerFotografia(identificacion)
+        val body = response.body()
+        if (response.isSuccessful && body != null) {
+            NetworkResult.Success(body.fotoBase64)
+        } else {
+            NetworkResult.Error(response.errorBody()?.string(), response.code())
+        }
+    } catch (_: IOException) {
+        NetworkResult.Error()
+    } catch (_: Exception) {
+        NetworkResult.Error()
+    }
+}

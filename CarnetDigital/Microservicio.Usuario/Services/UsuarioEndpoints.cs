@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using System;
+using System.Security.Claims;
 using static Microservicio.Usuario.Entities.UsuarioDTOs;
 
 namespace Microservicio.Usuario.Services
@@ -143,6 +144,17 @@ namespace Microservicio.Usuario.Services
             {
                 var usuarioActualizado = await servicio.EliminarFotografiaAsync(identificacion);
                 return usuarioActualizado != null ? Results.Ok(usuarioActualizado) : Results.NotFound(new { Mensaje = "Usuario no encontrado." });
+            }).RequireAuthorization();
+
+            // 14. USR2: Perfil del usuario autenticado (a partir del claim "email" del token, sin parámetros)
+            grupo.MapGet("/perfil", async (HttpContext context, IUsuarioService servicio) =>
+            {
+                var email = context.User.FindFirst(ClaimTypes.Email)?.Value;
+                if (string.IsNullOrWhiteSpace(email))
+                    return Results.Unauthorized();
+
+                var perfil = await servicio.ObtenerPerfilPorEmailAsync(email);
+                return perfil != null ? Results.Ok(perfil) : Results.NotFound(new { Mensaje = "Usuario no encontrado." });
             }).RequireAuthorization();
 
             // 13. Obtener un usuario por identificación (Web9/Editar)
