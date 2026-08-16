@@ -73,7 +73,7 @@ namespace AuthService.Controllers
             await conn.ExecuteAsync("UPDATE UsersAuth SET IntentosFallidos = 0 WHERE Id = @id", new { id = user.Id });
 
             // ✅ JWT
-            var (token, exp) = _jwt.GenerateToken((int)user.Id);
+            var (token, exp) = _jwt.GenerateToken((int)user.Id, (string)user.Email);
 
             // ✅ Refresh Token
             var refreshToken = Guid.NewGuid().ToString();
@@ -104,6 +104,41 @@ namespace AuthService.Controllers
         }
 
         // ==========================
+        // REGISTRO INTERNO (usado por Microservicio.Usuario para mantener sincronizadas las cuentas
+        // de UsersAuth cuando un usuario confirma su registro en Usuarios)
+        // ==========================
+        [HttpPost("registro-interno")]
+        public async Task<IActionResult> RegistroInterno([FromBody] RegistroInternoRequest request)
+        {
+            if (string.IsNullOrWhiteSpace(request.Email) ||
+                string.IsNullOrWhiteSpace(request.PasswordHash) ||
+                string.IsNullOrWhiteSpace(request.UserType))
+            {
+                return BadRequest(new { mensaje = "Datos requeridos no pueden ser vacíos" });
+            }
+
+            using var conn = _db.CreateConnection();
+
+            var existe = await conn.QueryFirstOrDefaultAsync<dynamic>(
+                "SELECT Id FROM UsersAuth WHERE Email = @email",
+                new { email = request.Email }
+            );
+
+            if (existe != null)
+            {
+                return Ok(new { mensaje = "La cuenta ya existía en UsersAuth, no se duplicó." });
+            }
+
+            await conn.ExecuteAsync(@"
+                INSERT INTO UsersAuth (Email, PasswordHash, UserType, IsActive, CreatedAt)
+                VALUES (@Email, @PasswordHash, @UserType, 1, GETDATE())",
+                new { request.Email, request.PasswordHash, request.UserType }
+            );
+
+            return StatusCode(201, new { mensaje = "Cuenta creada en UsersAuth." });
+        }
+
+        // ==========================
         // REFRESH
         // ==========================
         [HttpPost("refresh")]
@@ -129,8 +164,12 @@ namespace AuthService.Controllers
                 new { id = tokenData.Id }
             );
 
-            // ✅ Generar nuevo JWT
-            var (newAccessToken, exp) = _jwt.GenerateToken((int)tokenData.UserId);
+            // ✅ Generar nuevo JWT (necesita el email para el claim "email")
+            var email = await conn.ExecuteScalarAsync<string>(
+                "SELECT Email FROM UsersAuth WHERE Id = @id",
+                new { id = tokenData.UserId }
+            );
+            var (newAccessToken, exp) = _jwt.GenerateToken((int)tokenData.UserId, email);
 
             // ✅ Nuevo refresh token
             var newRefreshToken = Guid.NewGuid().ToString();

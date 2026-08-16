@@ -13,6 +13,7 @@ namespace Microservicio.Usuario.Services
     {
         Task ValidarCatalogosAsync(int tipoId, int tipoUsr, List<int> instIds, List<int> carrerasIds, List<int> areasIds, string? token);
         Task<string> ObtenerNombreTipoUsuarioAsync(int id, string? token);
+        Task<string> ObtenerNombreTipoIdentificacionAsync(int id, string? token);
         Task<string> ObtenerNombresInstitucionesAsync(List<int> ids, string? token);
         Task<string> ObtenerNombresCarrerasOAreasAsync(int tipoUsuarioId, List<int> carrerasIds, List<int> areasIds, string? token);
     }
@@ -100,6 +101,12 @@ namespace Microservicio.Usuario.Services
         public async Task<string> ObtenerNombreTipoUsuarioAsync(int id, string? token)
         {
             var res = await ConsultarMicroservicioAsync("TiposUsuarios", $"/api/TiposUsuario/{id}", token);
+            return res.Existe ? res.Nombre : "Desconocido";
+        }
+
+        public async Task<string> ObtenerNombreTipoIdentificacionAsync(int id, string? token)
+        {
+            var res = await ConsultarMicroservicioAsync("TiposIdentificacion", $"/api/tiposidentificacion/{id}", token);
             return res.Existe ? res.Nombre : "Desconocido";
         }
 

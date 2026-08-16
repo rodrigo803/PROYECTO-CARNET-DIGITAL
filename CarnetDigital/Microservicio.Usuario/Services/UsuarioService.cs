@@ -24,13 +24,15 @@ namespace Microservicio.Usuario.Services
         private readonly IBitacoraService _bitacora;
         private readonly IConfiguration _config;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IAuthSyncClient _authSync;
 
-        public UsuarioService(IServiceScopeFactory scopeFactory, IBitacoraService bitacora, IConfiguration config, IHttpContextAccessor httpContextAccessor)
+        public UsuarioService(IServiceScopeFactory scopeFactory, IBitacoraService bitacora, IConfiguration config, IHttpContextAccessor httpContextAccessor, IAuthSyncClient authSync)
         {
             _scopeFactory = scopeFactory;
             _bitacora = bitacora;
             _config = config;
             _httpContextAccessor = httpContextAccessor;
+            _authSync = authSync;
         }
 
         // Propaga el Bearer de la request entrante hacia los microservicios de catálogo,
@@ -205,6 +207,7 @@ namespace Microservicio.Usuario.Services
         {
             using var scope = _scopeFactory.CreateScope();
             var _context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var _catalogos = scope.ServiceProvider.GetRequiredService<ICatalogosApiClient>();
 
             var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.TokenConfirmacion == token);
 
@@ -218,6 +221,11 @@ namespace Microservicio.Usuario.Services
             usuario.FechaExpiracionToken = null;
 
             await _context.SaveChangesAsync();
+
+            // Sincroniza la cuenta de acceso en AuthService ahora que el usuario queda Activo,
+            // reusando el mismo hash BCrypt que ya se calculó al crear/autoregistrar el usuario.
+            string nombreTipoUsuario = await _catalogos.ObtenerNombreTipoUsuarioAsync(usuario.TipoUsuarioId, null);
+            await _authSync.SincronizarCuentaAsync(usuario.Email, usuario.ContrasenaEncriptada, UserTypeMapper.ToUserType(nombreTipoUsuario));
 
             int cedulaInt = int.TryParse(usuario.Identificacion, out int result) ? result : 0;
             await _bitacora.RegistrarAccionAsync(cedulaInt, $"El usuario {usuario.Identificacion} confirmó su cuenta exitosamente mediante el token.");
@@ -399,6 +407,40 @@ namespace Microservicio.Usuario.Services
 
             var usuario = await _context.Usuarios.FindAsync(identificacion);
             return usuario == null ? null : MapearResumen(usuario);
+        }
+
+        public async Task<PerfilUsuarioDto?> ObtenerPerfilPorEmailAsync(string email)
+        {
+            using var scope = _scopeFactory.CreateScope();
+            var _context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var _catalogos = scope.ServiceProvider.GetRequiredService<ICatalogosApiClient>();
+
+            var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == email);
+            if (usuario == null) return null;
+
+            var token = ObtenerTokenActual();
+
+            // Resuelve los nombres desde los catálogos; si alguno no responde, cae al ID como texto
+            // en vez de romper el endpoint.
+            string nombreTipoUsuario = await _catalogos.ObtenerNombreTipoUsuarioAsync(usuario.TipoUsuarioId, token);
+            string nombreTipoIdentificacion = await _catalogos.ObtenerNombreTipoIdentificacionAsync(usuario.TipoIdentificacionId, token);
+            string carreraOArea = await _catalogos.ObtenerNombresCarrerasOAreasAsync(usuario.TipoUsuarioId, usuario.CarrerasIds, usuario.AreasIds, token);
+
+            return new PerfilUsuarioDto
+            {
+                Identificacion = usuario.Identificacion,
+                Email = usuario.Email,
+                NombreCompleto = usuario.NombreCompleto,
+                TipoIdentificacionId = usuario.TipoIdentificacionId,
+                TipoIdentificacion = nombreTipoIdentificacion == "Desconocido" ? usuario.TipoIdentificacionId.ToString() : nombreTipoIdentificacion,
+                TipoUsuarioId = usuario.TipoUsuarioId,
+                TipoUsuario = nombreTipoUsuario == "Desconocido" ? usuario.TipoUsuarioId.ToString() : nombreTipoUsuario,
+                InstitucionesIds = usuario.InstitucionesIds,
+                CarrerasIds = usuario.CarrerasIds,
+                AreasIds = usuario.AreasIds,
+                CarreraOArea = carreraOArea,
+                TieneFotografia = !string.IsNullOrEmpty(usuario.FotografiaBase64)
+            };
         }
 
         public async Task<IEnumerable<UsuarioResumenDto>> FiltrarAsync(string? identificacion, string? nombre, int? tipoUsuarioId)

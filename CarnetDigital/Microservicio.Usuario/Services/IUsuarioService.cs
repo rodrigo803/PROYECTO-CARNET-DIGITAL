@@ -16,6 +16,7 @@ namespace Microservicio.Usuario.Services
 
         Task<IEnumerable<UsuarioResumenDto>> ObtenerTodosAsync();
         Task<UsuarioResumenDto?> ObtenerPorIdAsync(string identificacion);
+        Task<PerfilUsuarioDto?> ObtenerPerfilPorEmailAsync(string email);
         Task<IEnumerable<UsuarioResumenDto>> FiltrarAsync(string? identificacion, string? nombre, int? tipoUsuarioId);
         Task<FotografiaDto?> ObtenerFotografiaAsync(string identificacion);
         Task<UsuarioActualizacionDto?> EliminarFotografiaAsync(string identificacion);

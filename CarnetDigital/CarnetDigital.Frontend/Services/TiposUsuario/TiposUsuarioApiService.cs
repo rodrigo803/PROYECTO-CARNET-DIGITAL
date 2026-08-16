@@ -60,14 +60,38 @@ namespace CarnetDigital.Frontend.Services.TiposUsuario
 
         private static async Task<ApiResult<TipoUsuarioDto>> LeerResultadoAsync(HttpResponseMessage response)
         {
+            var contenido = await response.Content.ReadAsStringAsync();
+
             if (response.IsSuccessStatusCode)
             {
-                var tipo = await response.Content.ReadFromJsonAsync<TipoUsuarioDto>();
-                return ApiResult<TipoUsuarioDto>.Ok(tipo!);
+                if (string.IsNullOrWhiteSpace(contenido))
+                    return ApiResult<TipoUsuarioDto>.Fail("Error al procesar la solicitud");
+
+                try
+                {
+                    var tipo = System.Text.Json.JsonSerializer.Deserialize<TipoUsuarioDto>(contenido,
+                        new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                    return ApiResult<TipoUsuarioDto>.Ok(tipo!);
+                }
+                catch (System.Text.Json.JsonException)
+                {
+                    return ApiResult<TipoUsuarioDto>.Fail($"Error al procesar la solicitud (status {(int)response.StatusCode})");
+                }
             }
 
-            var error = await response.Content.ReadFromJsonAsync<ErrorResponseDto>();
-            return ApiResult<TipoUsuarioDto>.Fail(error?.mensaje ?? "Ocurrió un error al procesar la solicitud");
+            if (string.IsNullOrWhiteSpace(contenido))
+                return ApiResult<TipoUsuarioDto>.Fail($"Error al procesar la solicitud (status {(int)response.StatusCode})");
+
+            try
+            {
+                var error = System.Text.Json.JsonSerializer.Deserialize<ErrorResponseDto>(contenido,
+                    new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                return ApiResult<TipoUsuarioDto>.Fail(error?.mensaje ?? "Ocurrió un error al procesar la solicitud");
+            }
+            catch (System.Text.Json.JsonException)
+            {
+                return ApiResult<TipoUsuarioDto>.Fail($"Error al procesar la solicitud (status {(int)response.StatusCode})");
+            }
         }
 
         private class TipoUsuarioRequestDto

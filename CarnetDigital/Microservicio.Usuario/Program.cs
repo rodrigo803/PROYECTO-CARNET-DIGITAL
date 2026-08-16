@@ -39,6 +39,9 @@ builder.Services.AddHttpClient<IBitacoraService, BitacoraApiClient>();
 // Registramos el cliente para el microservicio de Sergio
 builder.Services.AddHttpClient<ICatalogosApiClient, CatalogosApiClient>();
 
+// Sincroniza la cuenta de acceso en AuthService al confirmar el registro
+builder.Services.AddHttpClient<IAuthSyncClient, AuthSyncClient>();
+
 // Registramos el servicio principal como Singleton (utilizando el ScopeFactory internamente)
 builder.Services.AddSingleton<IUsuarioService, UsuarioService>();
 

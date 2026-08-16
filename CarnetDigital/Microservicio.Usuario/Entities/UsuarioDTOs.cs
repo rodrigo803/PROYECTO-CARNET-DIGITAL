@@ -45,6 +45,22 @@
             public string Identificacion { get; set; }
         }
 
+        public class PerfilUsuarioDto
+        {
+            public string Identificacion { get; set; }
+            public string Email { get; set; }
+            public string NombreCompleto { get; set; }
+            public int TipoIdentificacionId { get; set; }
+            public string TipoIdentificacion { get; set; }
+            public int TipoUsuarioId { get; set; }
+            public string TipoUsuario { get; set; }
+            public List<int> InstitucionesIds { get; set; } = new List<int>();
+            public List<int> CarrerasIds { get; set; } = new List<int>();
+            public List<int> AreasIds { get; set; } = new List<int>();
+            public string CarreraOArea { get; set; }
+            public bool TieneFotografia { get; set; }
+        }
+
         public class UsuarioResumenDto
         {
             public string Identificacion { get; set; }
