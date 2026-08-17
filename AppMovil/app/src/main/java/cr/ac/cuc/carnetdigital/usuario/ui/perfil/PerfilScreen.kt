@@ -1,7 +1,10 @@
 package cr.ac.cuc.carnetdigital.usuario.ui.perfil
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.Base64
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -71,7 +74,12 @@ private fun PerfilScreen(state: PerfilUiState, onLogout: () -> Unit) {
                         .padding(padding)
                         .fillMaxSize()
                 ) { page ->
-                    if (page == 0) PerfilPage(state.perfil, state.fotoBitmap) else QrPlaceholderPage()
+                    if (page == 0) {
+                        PerfilPage(state.perfil, state.fotoBitmap)
+                    } else {
+                        // USR3: Pantalla real del QR enviando el Base64 y el estado de error
+                        QrPage(state.qrBase64, state.qrError)
+                    }
                 }
             }
         }
@@ -123,11 +131,72 @@ private fun PerfilPage(perfil: Perfil, fotoBitmap: Bitmap?) {
     }
 }
 
-/** Placeholder de USR3 (QR), a cargo de otro integrante del equipo. */
+/**
+ * Vista correspondiente a la USR3.
+ * Muestra el código QR institucional del usuario o el error detallado si falla.
+ */
 @Composable
-private fun QrPlaceholderPage() {
-    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text("USR3 - QR próximamente")
+private fun QrPage(qrBase64: String?, qrError: String?) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = "Código QR Institucional",
+            style = MaterialTheme.typography.headlineSmall,
+            textAlign = TextAlign.Center
+        )
+
+        Spacer(Modifier.height(32.dp))
+
+        when {
+            !qrBase64.isNullOrEmpty() -> {
+                val imageBytes = Base64.decode(qrBase64, Base64.DEFAULT)
+                val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+
+                Image(
+                    bitmap = bitmap.asImageBitmap(),
+                    contentDescription = "Código QR para validación por seguridad",
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier
+                        .size(260.dp)
+                        .background(MaterialTheme.colorScheme.surface)
+                )
+
+                Spacer(Modifier.height(32.dp))
+
+                Text(
+                    text = "Desliza hacia la derecha para regresar a tu perfil",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center
+                )
+            }
+            !qrError.isNullOrEmpty() -> {
+                // Muestra el error detallado en pantalla si algo falla en la red
+                Text(
+                    text = "No se pudo cargar el QR:\n$qrError",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.error,
+                    textAlign = TextAlign.Center
+                )
+            }
+            else -> {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(48.dp),
+                    color = MaterialTheme.colorScheme.primary
+                )
+                Spacer(Modifier.height(16.dp))
+                Text(
+                    text = "Cargando código QR...",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
     }
 }
 

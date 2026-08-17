@@ -16,22 +16,34 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-/** ViewModel que carga el perfil del usuario autenticado (USR2) y, si tiene, su fotografía. */
+/** ViewModel que carga el perfil del usuario autenticado (USR2), su fotografía y su QR (USR3). */
 class PerfilViewModel(private val repository: UsuarioRepository) : ViewModel() {
+
+    // Única fuente de la verdad para la pantalla (Single Source of Truth)
     private val _uiState = MutableStateFlow(PerfilUiState())
     val uiState = _uiState.asStateFlow()
 
-    init { cargarPerfil() }
+    init {
+        cargarPerfil()
+    }
 
     fun cargarPerfil() {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, error = null) }
+            _uiState.update { it.copy(isLoading = true, error = null, qrError = null) }
+
             when (val result = repository.obtenerPerfil()) {
                 is NetworkResult.Success -> {
                     _uiState.update { it.copy(isLoading = false, perfil = result.data) }
-                    if (result.data.tieneFotografia) cargarFotografia(result.data.identificacion)
+
+                    // Si el usuario tiene fotografía, cargamos la imagen y el QR[cite: 1]
+                    if (result.data.tieneFotografia) {
+                        cargarFotografia(result.data.identificacion)
+                        cargarQrInstitucional(result.data.identificacion)
+                    }
                 }
-                is NetworkResult.Error -> _uiState.update { it.copy(isLoading = false, error = result.message) }
+                is NetworkResult.Error -> {
+                    _uiState.update { it.copy(isLoading = false, error = result.message) }
+                }
             }
         }
     }
@@ -43,7 +55,21 @@ class PerfilViewModel(private val repository: UsuarioRepository) : ViewModel() {
                 val bitmap = withContext(Dispatchers.Default) { decodificarBase64(result.data) }
                 _uiState.update { it.copy(fotoBitmap = bitmap) }
             }
-            // Si falla la descarga o el decode, se queda con el avatar genérico; no bloquea la pantalla.
+            // Si falla, se muestra el avatar genérico en la UI
+        }
+    }
+
+    private fun cargarQrInstitucional(identificacion: String) {
+        viewModelScope.launch {
+            when (val result = repository.obtenerQrBase64(identificacion)) {
+                is NetworkResult.Success -> {
+                    _uiState.update { it.copy(qrBase64 = result.data, qrError = null) }
+                }
+                is NetworkResult.Error -> {
+                    // Actualizamos qrError para que la interfaz sepa exactamente qué falló y quite el loader
+                    _uiState.update { it.copy(qrError = result.message ?: "No se pudo cargar el código QR") }
+                }
+            }
         }
     }
 
@@ -55,11 +81,13 @@ class PerfilViewModel(private val repository: UsuarioRepository) : ViewModel() {
     }
 }
 
-/** Estado inmutable que la pantalla de perfil observa. */
+/** Estado inmutable que la pantalla de perfil observa. Se unificó aquí el estado del QR y su error. */
 data class PerfilUiState(
     val isLoading: Boolean = true,
     val perfil: Perfil? = null,
     val fotoBitmap: Bitmap? = null,
+    val qrBase64: String? = null,
+    val qrError: String? = null, // <- Propiedad de error requerida por QrPage en PerfilScreen.kt
     val error: String? = null
 )
 
