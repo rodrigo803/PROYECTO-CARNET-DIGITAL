@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">AppUsuario</string>
+
+    <!-- USR1: Login -->
+    <string name="login_correo_electronico">Email</string>
+    <string name="login_contrasena">Password</string>
+    <string name="login_tipo_usuario">User type</string>
+    <string name="login_ingresar">Sign in</string>
+    <string name="cd_ajustes">Settings</string>
+
+    <!-- USR2: Profile -->
+    <string name="perfil_titulo">My ID Card</string>
+    <string name="perfil_cerrar_sesion">Log out</string>
+    <string name="perfil_foto_desc">Profile photo</string>
+    <string name="perfil_avatar_generico">Generic avatar</string>
+    <string name="perfil_sin_foto">This application will not be validated for use until you have registered your photo.</string>
+    <string name="perfil_error_default">Could not load profile.</string>
+
+    <!-- USR3: QR -->
+    <string name="qr_titulo">Institutional QR Code</string>
+    <string name="qr_imagen_desc">QR code for security validation</string>
+    <string name="qr_swipe_hint">Swipe right to return to your profile</string>
+    <string name="qr_error_prefix">Could not load QR code:\n%1$s</string>
+    <string name="qr_cargando">Loading QR code…</string>
+
+    <!-- Settings -->
+    <string name="ajustes_titulo">Settings</string>
+    <string name="ajustes_tema_label">Theme</string>
+    <string name="ajustes_tema_auto">Automatic</string>
+    <string name="ajustes_tema_claro">Light</string>
+    <string name="ajustes_tema_oscuro">Dark</string>
+    <string name="ajustes_idioma_label">Language</string>
+    <string name="ajustes_idioma_es">Español</string>
+    <string name="ajustes_idioma_en">English</string>
+    <string name="ajustes_cerrar">Close</string>
+</resources>

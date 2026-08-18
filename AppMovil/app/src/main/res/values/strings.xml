@@ -1,3 +1,36 @@
 <resources>
     <string name="app_name">AppUsuario</string>
+
+    <!-- USR1: Login -->
+    <string name="login_correo_electronico">Correo electrónico</string>
+    <string name="login_contrasena">Contraseña</string>
+    <string name="login_tipo_usuario">Tipo de usuario</string>
+    <string name="login_ingresar">Ingresar</string>
+    <string name="cd_ajustes">Ajustes</string>
+
+    <!-- USR2: Perfil -->
+    <string name="perfil_titulo">Mi Carnet</string>
+    <string name="perfil_cerrar_sesion">Cerrar sesión</string>
+    <string name="perfil_foto_desc">Foto de perfil</string>
+    <string name="perfil_avatar_generico">Avatar genérico</string>
+    <string name="perfil_sin_foto">No se validará el uso de esta aplicación hasta que haya registrado su fotografía.</string>
+    <string name="perfil_error_default">No se pudo cargar el perfil.</string>
+
+    <!-- USR3: QR -->
+    <string name="qr_titulo">Código QR Institucional</string>
+    <string name="qr_imagen_desc">Código QR para validación por seguridad</string>
+    <string name="qr_swipe_hint">Desliza hacia la derecha para regresar a tu perfil</string>
+    <string name="qr_error_prefix">No se pudo cargar el QR:\n%1$s</string>
+    <string name="qr_cargando">Cargando código QR…</string>
+
+    <!-- Ajustes -->
+    <string name="ajustes_titulo">Ajustes</string>
+    <string name="ajustes_tema_label">Tema</string>
+    <string name="ajustes_tema_auto">Automático</string>
+    <string name="ajustes_tema_claro">Claro</string>
+    <string name="ajustes_tema_oscuro">Oscuro</string>
+    <string name="ajustes_idioma_label">Idioma</string>
+    <string name="ajustes_idioma_es">Español</string>
+    <string name="ajustes_idioma_en">English</string>
+    <string name="ajustes_cerrar">Cerrar</string>
 </resources>
