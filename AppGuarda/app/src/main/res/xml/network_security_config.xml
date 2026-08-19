@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Confía en certificados instalados por el usuario, además de los del sistema.
+  Necesario porque el Gateway corre en HTTPS con el certificado autofirmado de
+  desarrollo de ASP.NET Core (dotnet dev-certs), que Android no confía por defecto.
+
+  Para que funcione en el emulador:
+  1. En Windows: dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\devcert.cer -f
+  2. Arrastra ese archivo .cer al emulador (o Configuración > Seguridad > Instalar
+     certificado > Certificado de CA), o usa:
+     adb push devcert.cer /sdcard/devcert.cer
+     y luego instálalo desde Ajustes del emulador.
+-->
+<network-security-config>
+    <base-config>
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>
