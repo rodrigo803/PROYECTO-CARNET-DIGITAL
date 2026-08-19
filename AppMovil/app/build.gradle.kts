@@ -19,12 +19,20 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
 
-        buildConfigField(
-            "String",
-            "GATEWAY_BASE_URL",
-            "\"https://10.0.2.2:7000/\""
-        )
+    flavorDimensions += "target"
+    productFlavors {
+        create("emulator") {
+            dimension = "target"
+            buildConfigField("String", "GATEWAY_BASE_URL", "\"https://10.0.2.2:7000/\"")
+            buildConfigField("boolean", "USE_TLS_BYPASS", "true")
+        }
+        create("device") {
+            dimension = "target"
+            buildConfigField("String", "GATEWAY_BASE_URL", "\"http://192.168.18.75:5000/\"")
+            buildConfigField("boolean", "USE_TLS_BYPASS", "false")
+        }
     }
 
     buildTypes {

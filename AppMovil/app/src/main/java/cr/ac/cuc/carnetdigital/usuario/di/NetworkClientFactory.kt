@@ -17,7 +17,7 @@ object NetworkClientFactory {
         val builder = OkHttpClient.Builder()
             .addInterceptor(AuthInterceptor(sessionManager))
 
-        if (!BuildConfig.DEBUG || !BuildConfig.GATEWAY_BASE_URL.contains("10.0.2.2")) {
+        if (!BuildConfig.DEBUG || !BuildConfig.USE_TLS_BYPASS) {
             return builder.build()
         }
 
