@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import cr.ac.cuc.carnetdigital.guarda.data.session.SessionManager
 import cr.ac.cuc.carnetdigital.guarda.ui.login.LoginScreen
 import cr.ac.cuc.carnetdigital.guarda.ui.perfil.PerfilScreen
+import cr.ac.cuc.carnetdigital.guarda.ui.scanner.ScannerScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,8 +31,11 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+/** Pantallas disponibles una vez autenticado el guarda. */
+private enum class PantallaGuarda { Perfil, Escaner }
+
 /**
- * Navegación simple entre las dos pantallas de este alcance (GRD1 y GRD2).
+ * Navegación simple entre las pantallas de este alcance (GRD1, GRD2 y GRD3).
  * No usa Navigation Compose a propósito, para no agregar una dependencia
  * nueva que el resto del proyecto (AppUsuario) no trae — si tu equipo ya la
  * usa en otra app, aquí es fácil migrar a un NavHost real.
@@ -39,9 +43,15 @@ class MainActivity : ComponentActivity() {
 @androidx.compose.runtime.Composable
 private fun AppGuardaNavHost() {
     var autenticado by remember { mutableStateOf(SessionManager.estaAutenticado()) }
+    var pantalla by remember { mutableStateOf(PantallaGuarda.Perfil) }
 
     if (autenticado) {
-        PerfilScreen()
+        when (pantalla) {
+            PantallaGuarda.Perfil -> PerfilScreen(
+                onEscanearQr = { pantalla = PantallaGuarda.Escaner }
+            )
+            PantallaGuarda.Escaner -> ScannerScreen()
+        }
     } else {
         LoginScreen(onLoginExitoso = { autenticado = true })
     }

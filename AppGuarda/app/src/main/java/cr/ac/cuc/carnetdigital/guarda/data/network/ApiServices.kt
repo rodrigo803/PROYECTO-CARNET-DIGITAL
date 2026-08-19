@@ -4,6 +4,7 @@ import cr.ac.cuc.carnetdigital.guarda.data.model.FotografiaDto
 import cr.ac.cuc.carnetdigital.guarda.data.model.LoginRequest
 import cr.ac.cuc.carnetdigital.guarda.data.model.LoginResponse
 import cr.ac.cuc.carnetdigital.guarda.data.model.PerfilUsuarioDto
+import cr.ac.cuc.carnetdigital.guarda.data.model.UsuarioBackendDto
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -23,4 +24,8 @@ interface UsuarioApi {
 
     @GET("gateway/usuarios/fotografia/{identificacion}")
     suspend fun obtenerFotografia(@Path("identificacion") identificacion: String): Response<FotografiaDto>
+
+    /** GRD3: consulta por llave primaria para validar el QR escaneado por el guarda. */
+    @GET("gateway/usuarios/{identificacion}")
+    suspend fun obtenerUsuarioPorId(@Path("identificacion") identificacion: String): Response<UsuarioBackendDto>
 }
