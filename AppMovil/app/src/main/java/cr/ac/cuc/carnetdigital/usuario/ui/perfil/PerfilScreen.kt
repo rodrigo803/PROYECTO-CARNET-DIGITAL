@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -29,34 +30,57 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import cr.ac.cuc.carnetdigital.usuario.R
 import cr.ac.cuc.carnetdigital.usuario.domain.model.Perfil
+import cr.ac.cuc.carnetdigital.usuario.settings.AppSettings
+import cr.ac.cuc.carnetdigital.usuario.settings.ThemeMode
+import cr.ac.cuc.carnetdigital.usuario.ui.settings.SettingsDialog
 
 /** Ruta Compose que conecta el estado del perfil (USR2) con la pantalla. */
 @Composable
-fun PerfilRoute(viewModel: PerfilViewModel, onLogout: () -> Unit) {
+fun PerfilRoute(
+    viewModel: PerfilViewModel,
+    onLogout: () -> Unit,
+    settings: AppSettings,
+    onThemeChanged: (ThemeMode) -> Unit
+) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-    PerfilScreen(state, onLogout)
+    PerfilScreen(state, onLogout, settings, onThemeChanged)
 }
 
 /** Muestra el perfil del usuario y, deslizando, el QR (USR3) — bloqueado si no tiene fotografía. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun PerfilScreen(state: PerfilUiState, onLogout: () -> Unit) {
+private fun PerfilScreen(
+    state: PerfilUiState,
+    onLogout: () -> Unit,
+    settings: AppSettings,
+    onThemeChanged: (ThemeMode) -> Unit
+) {
+    var showSettings by remember { mutableStateOf(false) }
+
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Mi Carnet") },
+                title = { Text(stringResource(R.string.perfil_titulo)) },
                 actions = {
+                    IconButton(onClick = { showSettings = true }) {
+                        Icon(Icons.Default.Settings, contentDescription = stringResource(R.string.cd_ajustes))
+                    }
                     IconButton(onClick = onLogout) {
-                        Icon(Icons.AutoMirrored.Filled.ExitToApp, contentDescription = "Cerrar sesión")
+                        Icon(Icons.AutoMirrored.Filled.ExitToApp, contentDescription = stringResource(R.string.perfil_cerrar_sesion))
                     }
                 }
             )
@@ -84,6 +108,14 @@ private fun PerfilScreen(state: PerfilUiState, onLogout: () -> Unit) {
             }
         }
     }
+
+    if (showSettings) {
+        SettingsDialog(
+            settings = settings,
+            onThemeChanged = onThemeChanged,
+            onDismiss = { showSettings = false }
+        )
+    }
 }
 
 /** Datos personales del usuario autenticado, con avatar genérico si aún no registró fotografía. */
@@ -99,7 +131,7 @@ private fun PerfilPage(perfil: Perfil, fotoBitmap: Bitmap?) {
         if (fotoBitmap != null) {
             Image(
                 bitmap = fotoBitmap.asImageBitmap(),
-                contentDescription = "Foto de perfil",
+                contentDescription = stringResource(R.string.perfil_foto_desc),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(160.dp)
@@ -108,7 +140,7 @@ private fun PerfilPage(perfil: Perfil, fotoBitmap: Bitmap?) {
         } else {
             Icon(
                 Icons.Default.AccountCircle,
-                contentDescription = "Avatar genérico",
+                contentDescription = stringResource(R.string.perfil_avatar_generico),
                 modifier = Modifier.size(160.dp),
                 tint = MaterialTheme.colorScheme.outline
             )
@@ -123,7 +155,7 @@ private fun PerfilPage(perfil: Perfil, fotoBitmap: Bitmap?) {
         if (!perfil.tieneFotografia) {
             Spacer(Modifier.height(16.dp))
             Text(
-                "No se validará el uso de esta aplicación hasta que haya registrado su fotografía.",
+                stringResource(R.string.perfil_sin_foto),
                 color = MaterialTheme.colorScheme.error,
                 textAlign = TextAlign.Center
             )
@@ -145,7 +177,7 @@ private fun QrPage(qrBase64: String?, qrError: String?) {
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Código QR Institucional",
+            text = stringResource(R.string.qr_titulo),
             style = MaterialTheme.typography.headlineSmall,
             textAlign = TextAlign.Center
         )
@@ -159,7 +191,7 @@ private fun QrPage(qrBase64: String?, qrError: String?) {
 
                 Image(
                     bitmap = bitmap.asImageBitmap(),
-                    contentDescription = "Código QR para validación por seguridad",
+                    contentDescription = stringResource(R.string.qr_imagen_desc),
                     contentScale = ContentScale.Fit,
                     modifier = Modifier
                         .size(260.dp)
@@ -169,7 +201,7 @@ private fun QrPage(qrBase64: String?, qrError: String?) {
                 Spacer(Modifier.height(32.dp))
 
                 Text(
-                    text = "Desliza hacia la derecha para regresar a tu perfil",
+                    text = stringResource(R.string.qr_swipe_hint),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center
@@ -178,7 +210,7 @@ private fun QrPage(qrBase64: String?, qrError: String?) {
             !qrError.isNullOrEmpty() -> {
                 // Muestra el error detallado en pantalla si algo falla en la red
                 Text(
-                    text = "No se pudo cargar el QR:\n$qrError",
+                    text = stringResource(R.string.qr_error_prefix, qrError),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.error,
                     textAlign = TextAlign.Center
@@ -191,7 +223,7 @@ private fun QrPage(qrBase64: String?, qrError: String?) {
                 )
                 Spacer(Modifier.height(16.dp))
                 Text(
-                    text = "Cargando código QR...",
+                    text = stringResource(R.string.qr_cargando),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -210,6 +242,6 @@ private fun LoadingContent(modifier: Modifier) {
 @Composable
 private fun ErrorContent(mensaje: String?, modifier: Modifier) {
     Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text(mensaje ?: "No se pudo cargar el perfil.", textAlign = TextAlign.Center)
+        Text(mensaje ?: stringResource(R.string.perfil_error_default), textAlign = TextAlign.Center)
     }
 }

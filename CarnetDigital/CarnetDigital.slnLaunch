@@ -45,10 +45,6 @@
       {
         "Path": "ParameterService\\ParameterService.csproj",
         "Action": "Start"
-      },
-      {
-        "Path": "CarnetDigital.Frontend\\CarnetDigital.Frontend.csproj",
-        "Action": "Start"
       }
     ]
   }

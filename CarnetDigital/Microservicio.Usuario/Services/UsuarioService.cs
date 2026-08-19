@@ -2,6 +2,7 @@
 using Microservicio.Usuario.Entities;
 using Microservicio.Usuario.Repository;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
