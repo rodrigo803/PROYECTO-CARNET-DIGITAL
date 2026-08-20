@@ -1,4 +1,0 @@
-$kind: http-request
-url: https://localhost:7123/api/usuario/usuario/qr/11112222
-method: GET
-order: 6000
