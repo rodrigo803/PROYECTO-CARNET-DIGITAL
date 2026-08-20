@@ -7,10 +7,6 @@
         "Action": "Start"
       },
       {
-        "Path": "CarnetDigital.Gateway\\CarnetDigital.Gateway.csproj",
-        "Action": "Start"
-      },
-      {
         "Path": "AccessControlService\\AccessControlService.csproj",
         "Action": "Start"
       },

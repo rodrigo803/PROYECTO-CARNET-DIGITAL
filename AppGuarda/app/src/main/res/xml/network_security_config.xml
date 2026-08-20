@@ -10,9 +10,14 @@
      certificado > Certificado de CA), o usa:
      adb push devcert.cer /sdcard/devcert.cer
      y luego instálalo desde Ajustes del emulador.
+
+  cleartextTrafficPermitted="true": permite HTTP plano contra la IP del Gateway
+  configurable desde Ajustes (teléfono físico en la misma red LAN). Va acá y no en
+  android:usesCleartextTraffic del Manifest porque, habiendo network_security_config,
+  Android ignora ese atributo del Manifest por completo.
 -->
 <network-security-config>
-    <base-config>
+    <base-config cleartextTrafficPermitted="true">
         <trust-anchors>
             <certificates src="system" />
             <certificates src="user" />

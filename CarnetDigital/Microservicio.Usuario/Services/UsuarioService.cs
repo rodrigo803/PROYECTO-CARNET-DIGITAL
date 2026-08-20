@@ -404,9 +404,22 @@ namespace Microservicio.Usuario.Services
         {
             using var scope = _scopeFactory.CreateScope();
             var _context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var _catalogos = scope.ServiceProvider.GetRequiredService<ICatalogosApiClient>();
 
             var usuario = await _context.Usuarios.FindAsync(identificacion);
-            return usuario == null ? null : MapearResumen(usuario);
+            if (usuario == null) return null;
+
+            var resumen = MapearResumen(usuario);
+
+            // TipoUsuario es [NotMapped] en la entidad (no existe como columna en BD), así
+            // que MapearResumen siempre lo deja en null. Lo resolvemos del catálogo aquí,
+            // igual que ya hacen GenerarQRBase64Async y ObtenerPerfilPorEmailAsync, para que
+            // coincida con el "Tipo" que trae el QR generado para este mismo usuario.
+            var token = ObtenerTokenActual();
+            string nombreTipoUsuario = await _catalogos.ObtenerNombreTipoUsuarioAsync(usuario.TipoUsuarioId, token);
+            resumen.TipoUsuario = nombreTipoUsuario == "Desconocido" ? usuario.TipoUsuarioId.ToString() : nombreTipoUsuario;
+
+            return resumen;
         }
 
         public async Task<PerfilUsuarioDto?> ObtenerPerfilPorEmailAsync(string email)

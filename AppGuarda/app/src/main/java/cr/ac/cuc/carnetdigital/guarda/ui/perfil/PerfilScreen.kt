@@ -1,5 +1,6 @@
 package cr.ac.cuc.carnetdigital.guarda.ui.perfil
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -7,18 +8,25 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import cr.ac.cuc.carnetdigital.guarda.settings.AppSettings
 
 /**
  * GRD2: Yo como guarda autenticado, quiero ver mis datos personales básicos,
@@ -34,6 +42,9 @@ fun PerfilScreen(
     viewModel: PerfilViewModel = viewModel()
 ) {
     val perfil = viewModel.perfil
+    val activity = LocalContext.current as Activity
+    val settings = remember { AppSettings(activity) }
+    var showAjustes by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize()) {
         when {
@@ -132,7 +143,64 @@ fun PerfilScreen(
                 }
             }
         }
+
+        IconButton(
+            onClick = { showAjustes = true },
+            modifier = Modifier.align(Alignment.TopEnd)
+        ) {
+            Icon(Icons.Filled.Settings, contentDescription = "Ajustes")
+        }
     }
+
+    if (showAjustes) {
+        GatewayIpDialog(
+            settings = settings,
+            activity = activity,
+            onDismiss = { showAjustes = false }
+        )
+    }
+}
+
+/**
+ * Diálogo mínimo para configurar la IP del Gateway (teléfono físico en la misma red
+ * LAN). Público a propósito: se reusa también desde LoginScreen, porque hay que poder
+ * configurar la IP antes de loguearse (sin eso no se puede llegar a esta pantalla).
+ */
+@Composable
+fun GatewayIpDialog(
+    settings: AppSettings,
+    activity: Activity,
+    onDismiss: () -> Unit
+) {
+    var ip by remember { mutableStateOf(settings.gatewayIp()) }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Ajustes") },
+        text = {
+            OutlinedTextField(
+                value = ip,
+                onValueChange = { ip = it },
+                label = { Text("Dirección del Gateway") },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth()
+            )
+        },
+        confirmButton = {
+            TextButton(onClick = {
+                if (ip.isNotBlank()) {
+                    settings.setGatewayIp(ip.trim(), activity)
+                }
+            }) {
+                Text("Guardar")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancelar")
+            }
+        }
+    )
 }
 
 @Composable

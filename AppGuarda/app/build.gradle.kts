@@ -19,14 +19,6 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        // Misma base del Gateway que usa AppUsuario (10.0.2.2 = localhost del host visto
-        // desde el emulador Android).
-        buildConfigField(
-            "String",
-            "GATEWAY_BASE_URL",
-            "\"https://10.0.2.2:7000/\""
-        )
     }
 
     buildTypes {

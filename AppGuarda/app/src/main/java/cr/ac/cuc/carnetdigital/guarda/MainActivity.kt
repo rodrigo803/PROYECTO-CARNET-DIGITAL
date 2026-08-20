@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import cr.ac.cuc.carnetdigital.guarda.data.network.RetrofitClient
 import cr.ac.cuc.carnetdigital.guarda.data.session.SessionManager
 import cr.ac.cuc.carnetdigital.guarda.ui.login.LoginScreen
 import cr.ac.cuc.carnetdigital.guarda.ui.perfil.PerfilScreen
@@ -20,6 +21,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         SessionManager.init(applicationContext)
+        RetrofitClient.init(applicationContext)
 
         setContent {
             MaterialTheme {

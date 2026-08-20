@@ -1,18 +1,24 @@
 package cr.ac.cuc.carnetdigital.guarda.ui.login
 
+import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -20,6 +26,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import cr.ac.cuc.carnetdigital.guarda.settings.AppSettings
+import cr.ac.cuc.carnetdigital.guarda.ui.perfil.GatewayIpDialog
 
 /**
  * GRD1: Yo como guarda de seguridad, quiero poder ingresar con mi usuario y
@@ -33,6 +41,10 @@ fun LoginScreen(
     LaunchedEffect(viewModel.loginExitoso) {
         if (viewModel.loginExitoso) onLoginExitoso()
     }
+
+    val activity = LocalContext.current as Activity
+    val settings = remember { AppSettings(activity) }
+    var showAjustes by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -123,6 +135,21 @@ fun LoginScreen(
                 }
             }
         }
+
+        IconButton(
+            onClick = { showAjustes = true },
+            modifier = Modifier.align(Alignment.TopEnd)
+        ) {
+            Icon(Icons.Filled.Settings, contentDescription = "Ajustes", tint = Color.White)
+        }
+    }
+
+    if (showAjustes) {
+        GatewayIpDialog(
+            settings = settings,
+            activity = activity,
+            onDismiss = { showAjustes = false }
+        )
     }
 }
 

@@ -32,5 +32,8 @@
     <string name="ajustes_idioma_label">Language</string>
     <string name="ajustes_idioma_es">Español</string>
     <string name="ajustes_idioma_en">English</string>
+    <string name="ajustes_gateway_label">Gateway address</string>
+    <string name="ajustes_gateway_hint">Gateway IP</string>
+    <string name="ajustes_gateway_guardar">Save</string>
     <string name="ajustes_cerrar">Close</string>
 </resources>

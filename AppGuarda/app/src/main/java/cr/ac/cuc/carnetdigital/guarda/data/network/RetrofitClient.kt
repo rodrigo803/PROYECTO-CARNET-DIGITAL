@@ -1,6 +1,8 @@
 package cr.ac.cuc.carnetdigital.guarda.data.network
 
+import android.content.Context
 import cr.ac.cuc.carnetdigital.guarda.BuildConfig
+import cr.ac.cuc.carnetdigital.guarda.settings.AppSettings
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -14,6 +16,13 @@ import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
 
 object RetrofitClient {
+
+    private lateinit var appContext: Context
+
+    /** Debe llamarse una vez, antes de la primera lectura de authApi/usuarioApi (ver MainActivity.onCreate). */
+    fun init(context: Context) {
+        appContext = context.applicationContext
+    }
 
     private val okHttpClient: OkHttpClient by lazy {
         val logging = HttpLoggingInterceptor().apply {
@@ -51,7 +60,7 @@ object RetrofitClient {
 
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl(BuildConfig.GATEWAY_BASE_URL)
+            .baseUrl("http://${AppSettings(appContext).gatewayIp()}:5000/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

@@ -4,7 +4,9 @@ import android.app.Activity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BrightnessAuto
 import androidx.compose.material.icons.filled.DarkMode
@@ -12,12 +14,19 @@ import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import cr.ac.cuc.carnetdigital.usuario.BuildConfig
 import cr.ac.cuc.carnetdigital.usuario.R
 import cr.ac.cuc.carnetdigital.usuario.settings.AppSettings
 import cr.ac.cuc.carnetdigital.usuario.settings.ThemeMode
@@ -71,6 +80,27 @@ fun SettingsDialog(
                     }
                     TextButton(onClick = { settings.setLanguage("en", activity) }) {
                         Text(stringResource(R.string.ajustes_idioma_en))
+                    }
+                }
+
+                // Solo tiene sentido en el flavor "device": en "emulator" la IP del
+                // Gateway es fija (10.0.2.2) y este campo no se llega a leer.
+                if (!BuildConfig.USE_TLS_BYPASS) {
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Text(stringResource(R.string.ajustes_gateway_label))
+                    var gatewayIp by remember { mutableStateOf(settings.gatewayIp()) }
+                    OutlinedTextField(
+                        value = gatewayIp,
+                        onValueChange = { gatewayIp = it },
+                        label = { Text(stringResource(R.string.ajustes_gateway_hint)) },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    TextButton(onClick = {
+                        if (gatewayIp.isNotBlank()) {
+                            settings.setGatewayIp(gatewayIp.trim(), activity)
+                        }
+                    }) {
+                        Text(stringResource(R.string.ajustes_gateway_guardar))
                     }
                 }
             }

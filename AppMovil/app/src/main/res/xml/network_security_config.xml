@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
-    <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="false">192.168.18.75</domain>
-    </domain-config>
+    <!--
+      cleartextTrafficPermitted="true" general (no acotado a un dominio): la IP del
+      Gateway para el flavor "device" es configurable en runtime desde Ajustes, así
+      que no se puede fijar de antemano en este XML estático. El flavor "emulator"
+      no depende de este archivo para su HTTPS: el bypass de certificado vive en
+      código (NetworkClientFactory.kt), no en trust-anchors de acá.
+    -->
+    <base-config cleartextTrafficPermitted="true" />
 </network-security-config>

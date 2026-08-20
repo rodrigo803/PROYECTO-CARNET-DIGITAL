@@ -46,10 +46,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val sessionManager = remember { SessionManager(applicationContext) }
-            val container = remember { AppContainer(sessionManager) }
+            val settings = remember { AppSettings(this) }
+            val container = remember { AppContainer(sessionManager, settings) }
             var loggedIn by remember { mutableStateOf(sessionManager.isLoggedIn()) }
 
-            val settings = remember { AppSettings(this) }
             var themeMode by remember { mutableStateOf(settings.themeMode) }
             val darkTheme = when (themeMode) {
                 ThemeMode.SYSTEM -> isSystemInDarkTheme()
