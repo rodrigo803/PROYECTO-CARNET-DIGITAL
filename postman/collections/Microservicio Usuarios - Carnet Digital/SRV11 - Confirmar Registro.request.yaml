@@ -1,6 +1,0 @@
-$kind: http-request
-url: https://localhost:7123/api/usuario/autoregistro/confirmar?token=PEGA_AQUI_EL_TOKEN_DE_LA_BASE_DE_DATOS
-method: GET
-queryParams:
-  token: PEGA_AQUI_EL_TOKEN_DE_LA_BASE_DE_DATOS
-order: 2000
